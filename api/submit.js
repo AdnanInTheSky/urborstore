@@ -1,6 +1,5 @@
 // api/submit.js
-// Production-grade secure proxy to Google Apps Script
-// Runtime: Vercel Edge (fast cold starts, global distribution)
+// Vercel Edge Function - Secure proxy to Google Apps Script (No API Key)
 
 export const config = {
   runtime: 'edge',
@@ -9,12 +8,9 @@ export const config = {
 // ✅ Your Google Apps Script endpoint (server-side only)
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwmS4l61c_M0xxQMhfnsNSClUpxhmShPuXulv4kF8vlzqEWD3BGb4VyrneXXMUG9AOf/exec';
 
-// In-memory rate limiting store (MVP-safe; use @vercel/kv for production scale)
+// In-memory rate limiting store
 const rateLimitStore = new Map();
 
-/**
- * Rate limiting: Allow N requests per window per identifier
- */
 function isRateLimited(identifier, limit = 15, windowMs = 60000) {
   const now = Date.now();
   const record = rateLimitStore.get(identifier) || { count: 0, resetAt: now + windowMs };
@@ -30,34 +26,19 @@ function isRateLimited(identifier, limit = 15, windowMs = 60000) {
   return record.count > limit;
 }
 
-/**
- * Sanitize user input: prevent formula injection & XSS
- */
 function sanitizeInput(str) {
   if (typeof str !== 'string') return str;
-  return str
-    .replace(/^[=+\-@]/, "'$&")  // Block Google Sheets formula injection
-    .replace(/[<>]/g, '')         // Block basic XSS
-    .trim();
+  return str.replace(/^[=+\-@]/, "'$&").replace(/[<>]/g, '').trim();
 }
 
-/**
- * Validate email format
- */
 function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-/**
- * Validate Bangladesh mobile number format
- */
 function validatePhone(phone) {
   return /^01[3-9]\d{8}$/.test(phone);
 }
 
-/**
- * Validate bKash transaction ID format (8-12 alphanumeric)
- */
 function validateTransactionId(txnId) {
   return /^[0-9a-zA-Z]{8,12}$/.test(txnId);
 }
@@ -68,7 +49,7 @@ export default async function handler(request) {
   const corsHeaders = {
     'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, X-API-Key',
+    'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
   };
 
@@ -87,7 +68,7 @@ export default async function handler(request) {
 
   try {
     // ─────────────────────────────────────
-    // 1. RATE LIMITING
+    // 1. RATE LIMITING (Still Active!)
     // ─────────────────────────────────────
     const clientIP = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown';
     if (isRateLimited(clientIP)) {
@@ -98,19 +79,7 @@ export default async function handler(request) {
     }
 
     // ─────────────────────────────────────
-    // 2. API KEY AUTHENTICATION
-    // ─────────────────────────────────────
-    const apiKey = request.headers.get('x-api-key');
-    if (!apiKey || apiKey !== process.env.API_SECRET_KEY) {
-      console.warn(`[UNAUTHORIZED] IP: ${clientIP}, Key: ${apiKey?.slice(0, 8)}...`);
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // ─────────────────────────────────────
-    // 3. PARSE & VALIDATE REQUEST BODY
+    // 2. PARSE & VALIDATE REQUEST BODY
     // ─────────────────────────────────────
     let body;
     try {
@@ -133,7 +102,7 @@ export default async function handler(request) {
     }
 
     // ─────────────────────────────────────
-    // 4. SANITIZE & FORMAT DATA
+    // 3. SANITIZE & FORMAT DATA
     // ─────────────────────────────────────
     const cleanData = {
       transactionId: sanitizeInput(body.transactionId),
@@ -148,28 +117,16 @@ export default async function handler(request) {
     };
 
     // ─────────────────────────────────────
-    // 5. BUSINESS LOGIC VALIDATION
+    // 4. BUSINESS LOGIC VALIDATION
     // ─────────────────────────────────────
     const validationErrors = [];
     
-    if (!validateEmail(cleanData.email)) {
-      validationErrors.push('Invalid email format');
-    }
-    if (!validatePhone(cleanData.phone)) {
-      validationErrors.push('Invalid phone number (use: 017XXXXXXXX)');
-    }
-    if (!validateTransactionId(cleanData.transactionId)) {
-      validationErrors.push('Invalid transaction ID (8-12 alphanumeric chars)');
-    }
-    if (cleanData.total <= 0 || cleanData.total > 50000) {
-      validationErrors.push('Invalid order total (1-50000 BDT)');
-    }
-    if (cleanData.name.length < 2 || cleanData.name.length > 100) {
-      validationErrors.push('Name must be 2-100 characters');
-    }
-    if (cleanData.address.length < 10 || cleanData.address.length > 300) {
-      validationErrors.push('Address must be 10-300 characters');
-    }
+    if (!validateEmail(cleanData.email)) validationErrors.push('Invalid email format');
+    if (!validatePhone(cleanData.phone)) validationErrors.push('Invalid phone number (use: 017XXXXXXXX)');
+    if (!validateTransactionId(cleanData.transactionId)) validationErrors.push('Invalid transaction ID (8-12 alphanumeric chars)');
+    if (cleanData.total <= 0 || cleanData.total > 50000) validationErrors.push('Invalid order total (1-50000 BDT)');
+    if (cleanData.name.length < 2 || cleanData.name.length > 100) validationErrors.push('Name must be 2-100 characters');
+    if (cleanData.address.length < 10 || cleanData.address.length > 300) validationErrors.push('Address must be 10-300 characters');
 
     if (validationErrors.length > 0) {
       return new Response(
@@ -179,16 +136,14 @@ export default async function handler(request) {
     }
 
     // ─────────────────────────────────────
-    // 6. FORWARD TO GOOGLE APPS SCRIPT
+    // 5. FORWARD TO GOOGLE APPS SCRIPT
     // ─────────────────────────────────────
     const scriptResponse = await fetch(SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(cleanData),
-      // Timeout: 30 seconds max for Google Script response
     });
 
-    // Check for network-level errors
     if (!scriptResponse.ok) {
       const errorText = await scriptResponse.text().catch(() => 'Unknown error');
       console.error(`[SCRIPT_ERROR] Status: ${scriptResponse.status}, Body: ${errorText.slice(0, 200)}`);
@@ -206,10 +161,9 @@ export default async function handler(request) {
     }
 
     // ─────────────────────────────────────
-    // 7. HANDLE GOOGLE SCRIPT RESPONSE
+    // 6. HANDLE GOOGLE SCRIPT RESPONSE
     // ─────────────────────────────────────
     if (scriptResult?.result === 'success') {
-      // Return sanitized success response (never expose full transaction ID)
       return new Response(
         JSON.stringify({
           success: true,
@@ -220,28 +174,19 @@ export default async function handler(request) {
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     } else {
-      const errorMsg = scriptResult?.message || 'Order processing failed';
-      console.error(`[SCRIPT_LOGIC_ERROR] ${errorMsg}`);
-      throw new Error(errorMsg);
+      throw new Error(scriptResult.message || 'Order processing failed');
     }
 
   } catch (error) {
-    // ─────────────────────────────────────
-    // ERROR LOGGING (Vercel Logs)
-    // ─────────────────────────────────────
     console.error('[ORDER_API_ERROR]', {
       message: error.message,
       type: error.name,
       ip: request.headers.get('x-forwarded-for')?.split(',')[0],
-      userAgent: request.headers.get('user-agent')?.slice(0, 100),
-      // Only log stack in development
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
     });
 
-    // Return generic, user-friendly error (never leak internals)
     return new Response(
       JSON.stringify({
-        error: 'Order submission failed. Please try again or contact support at hello@urboressentials.com'
+        error: 'Order submission failed. Please try again or contact support.'
       }),
       {
         status: 500,

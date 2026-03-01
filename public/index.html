@@ -21,8 +21,10 @@
             theme: {
                 extend: {
                     colors: {
-                        'urbor-red': '#c41e3a',
-                        'urbor-dark': '#1e1b1b',
+                        'urbor-green': '#2d6a4f',
+                        'urbor-green-dark': '#1b4332',
+                        'urbor-green-light': '#40916c',
+                        'urbor-cream': '#faf7f2',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -58,19 +60,14 @@
         }
         .glass-card-premium:hover {
             transform: translateY(-6px);
-            box-shadow: 0 30px 45px -12px rgba(196, 30, 58, 0.2);
-            border-color: rgba(196, 30, 58, 0.25);
+            box-shadow: 0 30px 45px -12px rgba(45, 106, 79, 0.2);
+            border-color: rgba(45, 106, 79, 0.25);
             background: rgba(255, 255, 255, 0.95);
-        }
-
-        /* Hero overlay */
-        .hero-overlay-premium {
-            background: linear-gradient(112deg, rgba(0,0,0,0.7) 0%, rgba(140, 30, 50, 0.6) 48%, rgba(0,0,0,0.65) 100%);
         }
 
         /* Premium button with sheen animation */
         .btn-premium {
-            background: linear-gradient(145deg, #c41e3a, #9f1830);
+            background: linear-gradient(145deg, #2d6a4f, #1b4332);
             position: relative;
             isolation: isolate;
             overflow: hidden;
@@ -92,7 +89,7 @@
         .btn-premium:hover::before { left: 100%; }
         .btn-premium:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px -8px #c41e3a99;
+            box-shadow: 0 12px 28px -8px #2d6a4f99;
         }
         .btn-premium:disabled {
             opacity: 0.7;
@@ -127,8 +124,8 @@
 
         /* Loader */
         .premium-loader {
-            border: 3px solid rgba(196,30,58,0.1);
-            border-top: 3px solid #c41e3a;
+            border: 3px solid rgba(45,106,79,0.1);
+            border-top: 3px solid #2d6a4f;
             border-radius: 50%;
             width: 28px; height: 28px;
             animation: spin 0.9s linear infinite;
@@ -138,7 +135,7 @@
         /* Cart scrollbar */
         .cart-scroll::-webkit-scrollbar { width: 5px; }
         .cart-scroll::-webkit-scrollbar-track { background: #f0eae4; border-radius: 10px; }
-        .cart-scroll::-webkit-scrollbar-thumb { background: #c41e3a; border-radius: 10px; }
+        .cart-scroll::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 10px; }
 
         /* Fade-up animation */
         .fade-up {
@@ -158,7 +155,7 @@
         /* Form focus styles */
         input:focus, textarea:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.15);
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
         }
     </style>
 </head>
@@ -170,39 +167,39 @@
         <div class="flex justify-between h-20 items-center">
             <!-- Logo -->
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#c41e3a] to-[#9f1830] shadow-md flex items-center justify-center shrink-0">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#2d6a4f] to-[#1b4332] shadow-md flex items-center justify-center shrink-0">
                     <img src="/images/logo.jpeg" alt="Urbor Essentials Logo" class="w-10 h-10 object-contain" onerror="this.parentElement.innerHTML='<i class=\'fas fa-drumstick-bite text-white text-xl\'></i>'">
                 </div>
                 <span class="text-2xl font-display font-semibold tracking-tight text-gray-900">
-                    Urbor<span class="text-urbor-red">Essentials</span>
+                    Urbor<span class="text-urbor-green">Essentials</span>
                 </span>
             </div>
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <a href="#products" class="text-gray-800 hover:text-urbor-red transition-colors relative group py-2">
+                <a href="#products" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
                     Our products
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-red transition-all group-hover:w-full"></span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
                 </a>
-                <a href="#why-us" class="text-gray-800 hover:text-urbor-red transition-colors relative group py-2">
+                <a href="#why-us" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
                     Why us
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-red transition-all group-hover:w-full"></span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
                 </a>
-                <a href="#testimonials" class="text-gray-800 hover:text-urbor-red transition-colors relative group py-2">
+                <a href="#testimonials" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
                     Testimonials
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-red transition-all group-hover:w-full"></span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
                 </a>
-                <a href="#faq" class="text-gray-800 hover:text-urbor-red transition-colors relative group py-2">
+                <a href="#faq" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
                     FAQ
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-red transition-all group-hover:w-full"></span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
                 </a>
             </div>
 
             <!-- Right Icons -->
             <div class="flex items-center space-x-5">
-                <button onclick="toggleCart()" class="relative p-2 text-gray-800 hover:text-urbor-red transition group" aria-label="View cart">
+                <button onclick="toggleCart()" class="relative p-2 text-gray-800 hover:text-urbor-green transition group" aria-label="View cart">
                     <i class="fas fa-bag-shopping text-xl group-hover:scale-110 transition"></i>
-                    <span id="cart-count" class="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-urbor-red rounded-full shadow-sm">0</span>
+                    <span id="cart-count" class="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-urbor-green rounded-full shadow-sm">0</span>
                 </button>
                 <button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800 p-2" aria-label="Toggle menu">
                     <i class="fas fa-bars"></i>
@@ -213,29 +210,20 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-white/30 px-4 py-5 space-y-3 text-base shadow-xl mobile-enter">
-        <a href="#products" class="block py-2 font-medium text-gray-800 hover:text-urbor-red">Our products</a>
-        <a href="#why-us" class="block py-2 font-medium text-gray-800 hover:text-urbor-red">Why us</a>
-        <a href="#testimonials" class="block py-2 font-medium text-gray-800 hover:text-urbor-red">Testimonials</a>
-        <a href="#faq" class="block py-2 font-medium text-gray-800 hover:text-urbor-red">FAQ</a>
+        <a href="#products" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">Our products</a>
+        <a href="#why-us" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">Why us</a>
+        <a href="#testimonials" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">Testimonials</a>
+        <a href="#faq" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">FAQ</a>
     </div>
 </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION - Image Only, No Text Overlay -->
     <section class="relative">
         <img src="/images/hero-chicken.jpeg" 
              alt="Premium antibiotic-free chicken" 
              class="w-full h-auto object-cover max-h-[680px] md:max-h-[750px]"
-             onerror="this.src='https://via.placeholder.com/1920x750/1e1b1b/c41e3a?text=Urbor+Essentials'">
-        <div class="absolute inset-0 hero-overlay-premium pointer-events-none"></div>
-        <div class="absolute inset-0 flex items-center justify-center">
-            <div class="text-center text-white px-4 max-w-3xl">
-                <h1 class="text-4xl md:text-6xl font-display font-bold mb-4">Pure. Natural. Trusted.</h1>
-                <p class="text-lg md:text-xl mb-8 opacity-95">Antibiotic-free chicken, ethically raised and delivered fresh to your door in Dhaka.</p>
-                <a href="#products" class="btn-premium inline-flex items-center px-8 py-4 rounded-xl text-lg font-medium shadow-lg">
-                    Shop Now <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
+             onerror="this.src='https://via.placeholder.com/1920x750/1b4332/ffffff?text=Urbor+Essentials'">
+        <!-- No overlay, no text - pure image -->
     </section>
 
     <!-- TRUST BADGES -->
@@ -243,29 +231,29 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 <div class="float-slow">
-                    <div class="w-16 h-16 mx-auto bg-gradient-to-b from-red-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-red-100">
-                        <i class="fas fa-leaf text-2xl text-urbor-red"></i>
+                    <div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
+                        <i class="fas fa-leaf text-2xl text-urbor-green"></i>
                     </div>
                     <p class="font-semibold text-gray-800">100% Natural</p>
                     <p class="text-xs text-gray-500 mt-1">no additives</p>
                 </div>
                 <div class="float-slow-delay">
-                    <div class="w-16 h-16 mx-auto bg-gradient-to-b from-red-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-red-100">
-                        <i class="fas fa-shield-alt text-2xl text-urbor-red"></i>
+                    <div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
+                        <i class="fas fa-shield-alt text-2xl text-urbor-green"></i>
                     </div>
                     <p class="font-semibold text-gray-800">Antibiotic-Free</p>
                     <p class="text-xs text-gray-500 mt-1">raised without</p>
                 </div>
                 <div class="float-slow" style="animation-delay: 1s;">
-                    <div class="w-16 h-16 mx-auto bg-gradient-to-b from-red-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-red-100">
-                        <i class="fas fa-truck text-2xl text-urbor-red"></i>
+                    <div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
+                        <i class="fas fa-truck text-2xl text-urbor-green"></i>
                     </div>
                     <p class="font-semibold text-gray-800">Fresh Delivery</p>
                     <p class="text-xs text-gray-500 mt-1">chilled bags</p>
                 </div>
                 <div class="float-slow" style="animation-delay: 1.5s;">
-                    <div class="w-16 h-16 mx-auto bg-gradient-to-b from-red-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-red-100">
-                        <i class="fas fa-heart text-2xl text-urbor-red"></i>
+                    <div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
+                        <i class="fas fa-heart text-2xl text-urbor-green"></i>
                     </div>
                     <p class="font-semibold text-gray-800">Ethically Raised</p>
                     <p class="text-xs text-gray-500 mt-1">pasture‑raised</p>
@@ -278,8 +266,8 @@
     <section id="products" class="py-20 bg-[#faf7f2]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-14 fade-up">
-                <span class="text-urbor-red uppercase tracking-[0.2em] text-sm font-semibold">Lab tested</span>
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2 mb-5">Our premium <span class="text-urbor-red">selection</span></h2>
+                <span class="text-urbor-green uppercase tracking-[0.2em] text-sm font-semibold">Lab tested</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2 mb-5">Our premium <span class="text-urbor-green">selection</span></h2>
                 <p class="text-gray-600 text-lg">Thoughtfully raised, expertly cut — antibiotic‑free chicken delivered fresh.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-container"></div>
@@ -290,8 +278,8 @@
     <section id="testimonials" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-14 fade-up">
-                <span class="text-urbor-red uppercase tracking-[0.2em] text-sm font-semibold">trusted voices</span>
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2 mb-5">Loved by <span class="text-urbor-red">families</span></h2>
+                <span class="text-urbor-green uppercase tracking-[0.2em] text-sm font-semibold">trusted voices</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2 mb-5">Loved by <span class="text-urbor-green">families</span></h2>
                 <p class="text-gray-600 text-lg">Real stories from our community</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -299,7 +287,7 @@
                     <div class="flex text-amber-400 text-lg mb-5">★★★★★</div>
                     <p class="text-gray-700 mb-7 italic">"The chicken is incredibly fresh and tender. My family loves it!"</p>
                     <div class="flex items-center">
-                        <span class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-urbor-red font-bold text-xl mr-4">SR</span>
+                        <span class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-xl mr-4">SR</span>
                         <div><h4 class="font-bold text-gray-900">Sadia Rahman</h4><p class="text-gray-500 text-sm">Gulshan, Dhaka</p></div>
                     </div>
                 </div>
@@ -307,7 +295,7 @@
                     <div class="flex text-amber-400 text-lg mb-5">★★★★★</div>
                     <p class="text-gray-700 mb-7 italic">"Finally, chicken I can trust. No weird smell, just pure quality."</p>
                     <div class="flex items-center">
-                        <span class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-urbor-red font-bold text-xl mr-4">AK</span>
+                        <span class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-xl mr-4">AK</span>
                         <div><h4 class="font-bold text-gray-900">Ahmed Khan</h4><p class="text-gray-500 text-sm">Banani, Dhaka</p></div>
                     </div>
                 </div>
@@ -315,7 +303,7 @@
                     <div class="flex text-amber-400 text-lg mb-5">★★★★★</div>
                     <p class="text-gray-700 mb-7 italic">"Fast delivery and excellent packaging. Will order again!"</p>
                     <div class="flex items-center">
-                        <span class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-urbor-red font-bold text-xl mr-4">NT</span>
+                        <span class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-xl mr-4">NT</span>
                         <div><h4 class="font-bold text-gray-900">Nusrat Tasnim</h4><p class="text-gray-500 text-sm">Dhanmondi</p></div>
                     </div>
                 </div>
@@ -327,35 +315,35 @@
     <section id="faq" class="py-20 bg-[#faf7f2]">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 fade-up">
-                <span class="text-urbor-red uppercase tracking-[0.2em] text-sm font-semibold">answers</span>
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2">Frequently asked <span class="text-urbor-red">questions</span></h2>
+                <span class="text-urbor-green uppercase tracking-[0.2em] text-sm font-semibold">answers</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2">Frequently asked <span class="text-urbor-green">questions</span></h2>
             </div>
             <div class="space-y-5">
                 <div class="glass-card-premium rounded-2xl overflow-hidden">
-                    <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-red-50/60 transition" aria-expanded="false">
+                    <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
                         <span>What does "antibiotic‑free" really mean?</span>
-                        <i class="fas fa-chevron-down text-urbor-red transition-transform duration-300"></i>
+                        <i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
                     </button>
                     <div class="faq-content hidden px-6 pb-6 text-gray-600">Our chickens are never given antibiotics at any stage. Raised in clean, spacious environments with natural feed — cleaner, safer chicken for your family.</div>
                 </div>
                 <div class="glass-card-premium rounded-2xl overflow-hidden">
-                    <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-red-50/60 transition" aria-expanded="false">
+                    <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
                         <span>How is the chicken delivered and stored?</span>
-                        <i class="fas fa-chevron-down text-urbor-red transition-transform duration-300"></i>
+                        <i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
                     </button>
                     <div class="faq-content hidden px-6 pb-6 text-gray-600">We use blast‑freeze packaging with ice packs. Refrigerate upon arrival. Best within 2‑3 days or freeze for longer storage.</div>
                 </div>
                 <div class="glass-card-premium rounded-2xl overflow-hidden">
-                    <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-red-50/60 transition" aria-expanded="false">
+                    <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
                         <span>Do you deliver nationwide in Bangladesh?</span>
-                        <i class="fas fa-chevron-down text-urbor-red transition-transform duration-300"></i>
+                        <i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
                     </button>
                     <div class="faq-content hidden px-6 pb-6 text-gray-600">Currently serving Dhaka city (Gulshan, Banani, Dhanmondi, Uttara, Mirpur). Expanding soon — follow us on social media for updates!</div>
                 </div>
                 <div class="glass-card-premium rounded-2xl overflow-hidden">
-                    <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-red-50/60 transition" aria-expanded="false">
+                    <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
                         <span>How do I pay with bKash?</span>
-                        <i class="fas fa-chevron-down text-urbor-red transition-transform duration-300"></i>
+                        <i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
                     </button>
                     <div class="faq-content hidden px-6 pb-6 text-gray-600">At checkout you'll see our bKash number. Send exact amount via "Send Money", paste the 10‑digit Transaction ID into the form. We verify within 30 minutes.</div>
                 </div>
@@ -368,20 +356,20 @@
         <div class="relative top-4 md:top-12 mx-auto p-6 w-full max-w-lg shadow-2xl rounded-3xl bg-white m-4 border border-white/40">
             <div class="flex justify-between items-center mb-6 pb-3 border-b border-gray-100">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-urbor-red flex items-center justify-center"><i class="fas fa-lock text-white text-sm"></i></div>
+                    <div class="w-8 h-8 rounded-lg bg-urbor-green flex items-center justify-center"><i class="fas fa-lock text-white text-sm"></i></div>
                     <h3 id="checkout-title" class="text-xl font-display font-bold text-gray-900">Secure checkout</h3>
                 </div>
-                <button onclick="toggleCart()" class="text-gray-400 hover:text-urbor-red p-1 transition" aria-label="Close checkout">
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-urbor-green p-1 transition" aria-label="Close checkout">
                     <i class="fas fa-times text-2xl"></i>
                 </button>
             </div>
             
             <!-- bKash instructions -->
-            <div class="bg-gradient-to-br from-red-50 to-amber-50 border border-red-200 rounded-2xl p-5 mb-6">
-                <h4 class="font-bold text-urbor-red flex items-center gap-2 text-base"><i class="fas fa-mobile-alt"></i> bKash payment</h4>
+            <div class="bg-gradient-to-br from-green-50 to-amber-50 border border-green-200 rounded-2xl p-5 mb-6">
+                <h4 class="font-bold text-urbor-green flex items-center gap-2 text-base"><i class="fas fa-mobile-alt"></i> bKash payment</h4>
                 <ol class="list-decimal list-inside text-sm text-gray-700 space-y-2 mt-3">
                     <li>Open bKash → <span class="font-medium">Send Money</span></li>
-                    <li>Send <span class="font-bold text-gray-900" id="instruction-total">0.00</span> BDT to <span class="font-mono font-bold text-urbor-red bg-white/50 px-1.5 py-0.5 rounded" id="merchant-number">01700000000</span></li>
+                    <li>Send <span class="font-bold text-gray-900" id="instruction-total">0.00</span> BDT to <span class="font-mono font-bold text-urbor-green bg-white/50 px-1.5 py-0.5 rounded" id="merchant-number">01700000000</span></li>
                     <li>Copy the 10‑digit Transaction ID</li>
                     <li>Paste below</li>
                 </ol>
@@ -389,11 +377,11 @@
             
             <!-- Order summary -->
             <div class="bg-gray-50/90 rounded-2xl p-5 mb-5 border border-gray-200">
-                <h4 class="font-semibold text-gray-800 flex items-center gap-2"><i class="fas fa-receipt text-urbor-red"></i> Order summary</h4>
+                <h4 class="font-semibold text-gray-800 flex items-center gap-2"><i class="fas fa-receipt text-urbor-green"></i> Order summary</h4>
                 <ul id="cart-items-list" class="text-sm text-gray-700 space-y-2 my-4 max-h-36 overflow-y-auto cart-scroll pr-1"></ul>
                 <div class="border-t border-gray-200 pt-3 flex justify-between font-bold text-lg">
                     <span>Total payable</span>
-                    <span id="cart-total-display" class="text-urbor-red">0.00 BDT</span>
+                    <span id="cart-total-display" class="text-urbor-green">0.00 BDT</span>
                 </div>
             </div>
             
@@ -402,25 +390,25 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     <div>
                         <label for="name" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Name *</label>
-                        <input type="text" id="name" name="name" required minlength="2" maxlength="100" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-red focus:ring-urbor-red sm:text-sm border p-3 bg-white">
+                        <input type="text" id="name" name="name" required minlength="2" maxlength="100" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white">
                     </div>
                     <div>
                         <label for="phone" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Phone *</label>
-                        <input type="tel" id="phone" name="phone" placeholder="017XXXXXXXX" required pattern="^01[3-9]\d{8}$" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-red focus:ring-urbor-red sm:text-sm border p-3 bg-white">
+                        <input type="tel" id="phone" name="phone" placeholder="017XXXXXXXX" required pattern="^01[3-9]\d{8}$" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white">
                     </div>
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Email *</label>
-                    <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-red focus:ring-urbor-red sm:text-sm border p-3 bg-white">
+                    <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white">
                 </div>
                 <div class="mb-4">
                     <label for="address" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Delivery address *</label>
-                    <textarea id="address" name="address" required rows="2" minlength="10" maxlength="300" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-red focus:ring-urbor-red sm:text-sm border p-3 bg-white"></textarea>
+                    <textarea id="address" name="address" required rows="2" minlength="10" maxlength="300" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white"></textarea>
                 </div>
                 <div class="mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200">
                     <label for="bkash-trx" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">bKash transaction ID *</label>
-                    <input type="text" id="bkash-trx" name="transactionId" placeholder="10-digit ID (e.g., 8H5K2L9P4R)" pattern="[0-9a-zA-Z]{8,12}" required class="block w-full rounded-xl border-gray-300 shadow-sm focus:border-urbor-red focus:ring-urbor-red sm:text-sm border p-3 font-mono uppercase bg-white">
-                    <p class="text-xs text-gray-500 mt-2 flex items-center"><i class="fas fa-info-circle mr-1 text-urbor-red"></i> from your bKash confirmation SMS</p>
+                    <input type="text" id="bkash-trx" name="transactionId" placeholder="10-digit ID (e.g., 8H5K2L9P4R)" pattern="[0-9a-zA-Z]{8,12}" required class="block w-full rounded-xl border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 font-mono uppercase bg-white">
+                    <p class="text-xs text-gray-500 mt-2 flex items-center"><i class="fas fa-info-circle mr-1 text-urbor-green"></i> from your bKash confirmation SMS</p>
                 </div>
                 <input type="hidden" name="total" id="form-total">
                 <button type="submit" id="submit-btn" class="w-full flex justify-center py-4 px-4 rounded-xl text-base font-medium text-white btn-premium shadow-lg transition-all">
@@ -441,13 +429,13 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12">
                 <div class="md:col-span-2">
                     <div class="flex items-center space-x-3 mb-5">
-                        <span class="text-2xl font-display font-semibold text-white">Urbor<span class="text-urbor-red">Essentials</span></span>
+                        <span class="text-2xl font-display font-semibold text-white">Urbor<span class="text-urbor-green">Essentials</span></span>
                     </div>
                     <p class="text-gray-400 max-w-md">Premium antibiotic‑free chicken, ethically raised and delivered fresh across Dhaka.</p>
                     <div class="flex mt-6 space-x-4">
-                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-red transition" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-red transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-red transition" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-green transition" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-green transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-green transition" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 <div>
@@ -462,9 +450,9 @@
                 <div>
                     <h4 class="font-bold text-white mb-4">Contact</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li class="flex"><i class="fas fa-map-marker-alt mt-1 mr-3 text-urbor-red"></i>Dhaka, Bangladesh</li>
-                        <li class="flex"><i class="fas fa-phone-alt mr-3 text-urbor-red"></i>+880 1700-000000</li>
-                        <li class="flex"><i class="fas fa-envelope mr-3 text-urbor-red"></i>hello@urboressentials.com</li>
+                        <li class="flex"><i class="fas fa-map-marker-alt mt-1 mr-3 text-urbor-green"></i>Dhaka, Bangladesh</li>
+                        <li class="flex"><i class="fas fa-phone-alt mr-3 text-urbor-green"></i>+880 1700-000000</li>
+                        <li class="flex"><i class="fas fa-envelope mr-3 text-urbor-green"></i>hello@urboressentials.com</li>
                     </ul>
                 </div>
             </div>
@@ -476,13 +464,12 @@
 
     <!-- Test API button (hidden in production) -->
     <div class="fixed bottom-4 right-4 z-40">
-        <button onclick="testAPI()" class="bg-gray-800 text-white px-4 py-2 rounded-xl shadow-lg text-sm hover:bg-urbor-red transition hidden md:block" title="Test API endpoint">🧪 Test</button>
+        <button onclick="testAPI()" class="bg-gray-800 text-white px-4 py-2 rounded-xl shadow-lg text-sm hover:bg-urbor-green transition hidden md:block" title="Test API endpoint">🧪 Test</button>
     </div>
 
     <script>
         // ================== CONFIG ==================
         const API_ENDPOINT = '/api/submit'; // Vercel serverless function
-        const API_KEY = 'urbor-frontend-key-2026'; // Must match Vercel env var API_SECRET_KEY
         const MERCHANT_BKASH_NUMBER = '01700000000';
 
         const products = [
@@ -514,11 +501,11 @@
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="flex justify-between items-start mb-3">
                             <h3 class="text-xl font-display font-bold text-gray-900">${p.name}</h3>
-                            <span class="bg-red-50 text-urbor-red text-xs font-semibold px-3 py-1 rounded-full border border-red-200">premium</span>
+                            <span class="bg-green-50 text-urbor-green text-xs font-semibold px-3 py-1 rounded-full border border-green-200">premium</span>
                         </div>
                         <p class="text-gray-600 mb-5 flex-grow text-sm">${p.desc}</p>
                         <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-                            <span class="text-2xl font-bold text-urbor-red">৳${p.price.toLocaleString()}</span>
+                            <span class="text-2xl font-bold text-urbor-green">৳${p.price.toLocaleString()}</span>
                             <button onclick="addToCart(${p.id})" class="btn-premium text-white px-5 py-2.5 rounded-xl text-sm font-medium flex items-center space-x-2" aria-label="Add ${p.name} to cart">
                                 <i class="fas fa-plus text-xs"></i><span>Add</span>
                             </button>
@@ -571,7 +558,7 @@
                 const item = products.find(p => p.name === name);
                 return `<li class='flex justify-between py-2 border-b border-gray-100 text-sm'>
                     <span>${name} <span class='text-gray-400'>×${qty}</span></span>
-                    <span class='font-semibold text-urbor-red'>৳${(item.price * qty).toLocaleString()}</span>
+                    <span class='font-semibold text-urbor-green'>৳${(item.price * qty).toLocaleString()}</span>
                 </li>`;
             }).join('');
         }
@@ -672,8 +659,7 @@
                 const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-API-Key': API_KEY
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data),
                 });
@@ -739,8 +725,7 @@
                 const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-API-Key': API_KEY
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         transactionId: 'TEST' + Date.now().toString().slice(-6),
@@ -769,7 +754,7 @@
                 setTimeout(() => {
                     btn.innerHTML = originalText;
                     btn.disabled = false;
-                    btn.className = 'bg-gray-800 text-white px-4 py-2 rounded-xl shadow-lg text-sm hover:bg-urbor-red transition';
+                    btn.className = 'bg-gray-800 text-white px-4 py-2 rounded-xl shadow-lg text-sm hover:bg-urbor-green transition';
                 }, 2000);
             }
         }
