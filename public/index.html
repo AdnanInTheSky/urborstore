@@ -490,29 +490,29 @@
             updateCartUI();
         });
 
-        // Render product cards
-        function renderProducts() {
-            const container = document.getElementById('product-container');
-            container.innerHTML = products.map((p, i) => `
-                <article class="glass-card-premium rounded-3xl overflow-hidden flex flex-col h-full fade-up" style="animation-delay:${i*0.1}s">
-                    <div class="image-shine">
-                        <img src="${p.image}" alt="${p.name}" class="w-full h-56 object-cover transition duration-700 hover:scale-105" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Product+Image'">
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-xl font-display font-bold text-gray-900">${p.name}</h3>
-                            <span class="bg-green-50 text-urbor-green text-xs font-semibold px-3 py-1 rounded-full border border-green-200">premium</span>
-                        </div>
-                        <p class="text-gray-600 mb-5 flex-grow text-sm">${p.desc}</p>
-                        <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-                            <span class="text-2xl font-bold text-urbor-green">৳${p.price.toLocaleString()}</span>
-                            <button onclick="addToCart(${p.id})" class="btn-premium text-white px-5 py-2.5 rounded-xl text-sm font-medium flex items-center space-x-2" aria-label="Add ${p.name} to cart">
-                                <i class="fas fa-plus text-xs"></i><span>Add</span>
-                            </button>
-                        </div>
-                    </div>
-                </article>`).join('');
-        }
+function renderProducts() {
+    const container = document.getElementById('product-container');
+    container.innerHTML = products.map((p, i) => `
+        <article class="glass-card-premium rounded-3xl overflow-hidden flex flex-col h-full fade-up" style="animation-delay:${i*0.1}s">
+            <div class="image-shine bg-gray-100">
+                <img src="${p.image}" alt="${p.name}" class="w-full h-56 object-cover transition duration-700 hover:scale-105" loading="lazy"
+                    onerror="this.style.display='none'; this.parentElement.style.backgroundImage='linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%)'; this.parentElement.innerHTML='<div class=\'w-full h-56 flex items-center justify-center\'><i class=\'fas fa-drumstick-bite text-6xl text-white/50\'></i></div>'">
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="flex justify-between items-start mb-3">
+                    <h3 class="text-xl font-display font-bold text-gray-900">${p.name}</h3>
+                    <span class="bg-green-50 text-urbor-green text-xs font-semibold px-3 py-1 rounded-full border border-green-200">premium</span>
+                </div>
+                <p class="text-gray-600 mb-5 flex-grow text-sm">${p.desc}</p>
+                <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+                    <span class="text-2xl font-bold text-urbor-green">৳${p.price.toLocaleString()}</span>
+                    <button onclick="addToCart(${p.id})" class="btn-premium text-white px-5 py-2.5 rounded-xl text-sm font-medium flex items-center space-x-2" aria-label="Add ${p.name} to cart">
+                        <i class="fas fa-plus text-xs"></i><span>Add</span>
+                    </button>
+                </div>
+            </div>
+        </article>`).join('');
+}
 
         // Add product to cart
         function addToCart(id) {
