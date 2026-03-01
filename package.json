@@ -2,7 +2,6 @@
   "name": "urbor-essentials",
   "version": "1.0.0",
   "private": true,
-  "description": "Premium antibiotic-free chicken ecommerce - Urbor Essentials",
   "scripts": {
     "dev": "vercel dev",
     "build": "echo 'Static site - no build step'",
@@ -10,8 +9,5 @@
   },
   "devDependencies": {
     "vercel": "^34.0.0"
-  },
-  "engines": {
-    "node": "18.x"
   }
 }
