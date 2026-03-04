@@ -1,1 +1,437 @@
- j xckkj
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order | Urbor Essentials</title>
+  <meta name="description" content="Order premium antibiotic-free chicken with bKash"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'urbor-green': '#2d6a4f',
+            'urbor-green-dark': '#1b4332',
+            'urbor-cream': '#faf7f2',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Playfair Display', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body {
+      background-color: #faf7f2;
+      color: #1e1b1b;
+      font-family: 'Inter', sans-serif;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      border-radius: 1.5rem;
+    }
+    .btn-premium {
+      background: linear-gradient(145deg, #2d6a4f, #1b4332);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: none;
+      color: white;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .btn-premium::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s ease;
+      z-index: 0;
+    }
+    .btn-premium:hover::before { left: 100%; }
+    .btn-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px #2d6a4f99;
+    }
+    .btn-premium:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .premium-loader {
+      border: 3px solid rgba(45,106,79,0.1);
+      border-top: 3px solid #2d6a4f;
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      animation: spin 0.9s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+      border-color: #2d6a4f;
+    }
+    .product-option { transition: all 0.2s ease; border: 2px solid transparent; }
+    .product-option:hover { border-color: rgba(45, 106, 79, 0.3); transform: translateX(4px); }
+    .product-option input:checked + label {
+      border-color: #2d6a4f;
+      background: rgba(45, 106, 79, 0.05);
+    }
+    .quantity-control button { transition: all 0.15s ease; }
+    .quantity-control button:active { transform: scale(0.95); }
+    @media (max-width: 640px) { .product-grid { grid-template-columns: 1fr !important; } }
+  </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="py-4 px-4 sm:px-6 border-b border-gray-200/60 bg-white/80 backdrop-blur-sm sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#2d6a4f] to-[#1b4332] shadow-md flex items-center justify-center shrink-0">
+          <i class="fas fa-drumstick-bite text-white text-lg"></i>
+        </div>
+        <span class="text-xl font-display font-semibold tracking-tight text-gray-900">
+          Urbor<span class="text-urbor-green"> Essentials</span>
+        </span>
+      </a>
+      <a href="/" class="text-sm font-medium text-gray-600 hover:text-urbor-green transition flex items-center gap-1">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 py-6 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto">
+      
+      <div class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-display font-bold text-gray-900">
+          Place Your <span class="text-urbor-green">Order</span>
+        </h1>
+        <p class="text-gray-600 mt-2">Select products, pay with bKash, get fresh delivery</p>
+      </div>
+
+      <form id="order-form" class="glass-card p-6 sm:p-8" onsubmit="handleSubmit(event)" novalidate>
+        
+        <!-- bKash Instructions -->
+        <div class="bg-gradient-to-br from-green-50 to-amber-50 border border-green-200 rounded-2xl p-5 mb-6">
+          <h4 class="font-bold text-urbor-green flex items-center gap-2 text-base">
+            <i class="fas fa-mobile-alt"></i> How to Pay with bKash
+          </h4>
+          <ol class="list-decimal list-inside text-sm text-gray-700 space-y-2 mt-3">
+            <li>Open bKash app → <span class="font-medium">Send Money</span></li>
+            <li>Send the <span class="font-bold text-gray-900">exact total</span> to <span class="font-mono font-bold text-urbor-green bg-white/70 px-2 py-0.5 rounded" id="merchant-number">01700000000</span></li>
+            <li>Copy the <span class="font-medium">10-digit Transaction ID</span> from SMS</li>
+            <li>Enter it below to confirm your order</li>
+          </ol>
+        </div>
+
+        <!-- Product Selection -->
+        <section class="mb-8">
+          <h3 class="font-display font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+            <i class="fas fa-drumstick-bite text-urbor-green"></i> Select Products
+          </h3>
+          <div class="product-grid grid grid-cols-1 md:grid-cols-2 gap-4" id="product-list"></div>
+        </section>
+
+        <!-- Order Summary -->
+        <div class="bg-gray-50 rounded-2xl p-5 mb-6 border border-gray-200">
+          <div class="flex justify-between items-center mb-3">
+            <span class="font-semibold text-gray-800">Order Total</span>
+            <span id="live-total" class="text-2xl font-bold text-urbor-green">৳0.00</span>
+          </div>
+          <p class="text-xs text-gray-500 flex items-center gap-1">
+            <i class="fas fa-truck text-urbor-green"></i>
+            Free delivery across Dhaka · Payment on delivery via bKash
+          </p>
+        </div>
+
+        <!-- Customer Details (Required by API) -->
+        <section class="mb-6">
+          <h3 class="font-display font-bold text-lg text-gray-900 mb-4">Delivery Details</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="name" class="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Full Name *</label>
+              <input type="text" id="name" name="name" required minlength="2" maxlength="100" 
+                     class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 bg-white transition"
+                     placeholder="Your name">
+            </div>
+            <div>
+              <label for="phone" class="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Phone *</label>
+              <input type="tel" id="phone" name="phone" placeholder="017XXXXXXXX" required pattern="^01[3-9]\d{8}$"
+                     class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 bg-white transition"
+                     title="Valid Bangladeshi mobile number">
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="email" class="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Email *</label>
+            <input type="email" id="email" name="email" required
+                   class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 bg-white transition"
+                   placeholder="you@example.com">
+          </div>
+          <div class="mb-2">
+            <label for="address" class="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Delivery Address *</label>
+            <textarea id="address" name="address" required rows="3" minlength="10" maxlength="300"
+                      class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 bg-white transition resize-none"
+                      placeholder="House #, Road, Area, Landmark..."></textarea>
+          </div>
+        </section>
+
+        <!-- bKash Transaction ID (Required) -->
+        <section class="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
+          <label for="bkash-trx" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">
+            <i class="fas fa-key text-urbor-green mr-1"></i> bKash Transaction ID *
+          </label>
+          <input type="text" id="bkash-trx" name="transactionId" 
+                 placeholder="e.g., 8H5K2L9P4R" 
+                 pattern="[0-9a-zA-Z]{8,12}" required
+                 class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 font-mono uppercase bg-white transition tracking-wider"
+                 title="8-12 alphanumeric characters from bKash SMS">
+          <p class="text-xs text-gray-500 mt-2 flex items-center">
+            <i class="fas fa-info-circle mr-1 text-urbor-green"></i> 
+            From your bKash confirmation after sending money
+          </p>
+        </section>
+
+        <!-- Hidden Fields for API -->
+        <input type="hidden" name="total" id="form-total" value="0">
+        <input type="hidden" name="items" id="form-items" value="">
+
+        <!-- Submit -->
+        <button type="submit" id="submit-btn" class="w-full btn-premium py-4 px-6 rounded-xl text-base font-medium shadow-lg flex justify-center items-center gap-2 transition-all">
+          <span>Confirm Order & Pay with bKash</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <!-- Loading & Status -->
+        <div id="loading-container" class="hidden mt-4 text-center">
+          <span class="premium-loader mr-2"></span>
+          <span class="text-gray-600 text-sm">Verifying payment...</span>
+        </div>
+        <p id="status-msg" class="text-center text-sm mt-4 min-h-[24px] font-medium" role="status" aria-live="polite"></p>
+
+        <!-- Trust Badges -->
+        <div class="mt-8 pt-6 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
+          <div class="flex flex-col items-center"><i class="fas fa-lock text-urbor-green text-lg mb-1"></i><span class="text-xs text-gray-500">Secure</span></div>
+          <div class="flex flex-col items-center"><i class="fas fa-truck text-urbor-green text-lg mb-1"></i><span class="text-xs text-gray-500">7 day Delivery</span></div>
+          <div class="flex flex-col items-center"><i class="fas fa-leaf text-urbor-green text-lg mb-1"></i><span class="text-xs text-gray-500">Antibiotic-Free</span></div>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-6 px-4 text-center text-sm text-gray-500 border-t border-gray-200/60 bg-white/50">
+    <p>© <span id="year"></span> Urbor Essentials — purity, naturally.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // ================== CONFIG ==================
+    const API_ENDPOINT = '/api/submit';
+    const MERCHANT_BKASH_NUMBER = '01700000000';
+    
+    // Product Catalog (matches your offerings)
+    const PRODUCTS = [
+      { id: 'whole-3kg', name: 'Whole Chicken (3kg)', price: 1260, desc: 'Perfect for small families', image: "" },
+      { id: 'whole-5kg', name: 'Whole Chicken (5kg)', price: 2100, desc: 'Ideal for family gatherings', image:"" },
+      { id: 'whole-8kg', name: 'Whole Chicken (8kg)', price: 3300, desc: 'Best value for events', image:"" },
+      { id: 'whole-10kg', name: 'Whole Chicken (3kg)', price: 1260, desc: 'Perfect for small families', image:"" }
+    ];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('year').textContent = new Date().getFullYear();
+      document.getElementById('merchant-number').textContent = MERCHANT_BKASH_NUMBER;
+      renderProducts();
+      calculateTotal();
+    });
+
+    // Render product selection
+    function renderProducts() {
+      const container = document.getElementById('product-list');
+      container.innerHTML = PRODUCTS.map(product => `
+        <div class="product-option relative">
+          <input type="checkbox" id="prod-${product.id}" name="products" value="${product.id}" 
+                 data-price="${product.price}" data-name="${product.name}"
+                 class="absolute opacity-0 peer" onchange="calculateTotal()">
+          <label for="prod-${product.id}" class="flex items-center gap-4 p-4 rounded-2xl border border-gray-200 bg-white cursor-pointer select-none">
+            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-50 to-amber-50 flex items-center justify-center text-2xl flex-shrink-0">
+              ${product.image}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold text-gray-900">${product.name}</p>
+                  <p class="text-xs text-gray-500">${product.desc}</p>
+                </div>
+                <span class="font-bold text-urbor-green">৳${product.price.toLocaleString()}</span>
+              </div>
+              <div class="quantity-control hidden peer-checked:flex items-center gap-3 mt-3 pt-3 border-t border-gray-100">
+                <button type="button" onclick="adjustQty('${product.id}', -1)" 
+                        class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold transition">−</button>
+                <input type="number" id="qty-${product.id}" name="qty-${product.id}" value="1" min="1" max="10" 
+                       class="w-12 text-center rounded-lg border border-gray-300 py-1 text-sm focus:border-urbor-green focus:ring-urbor-green"
+                       onchange="calculateTotal()" oninput="calculateTotal()">
+                <button type="button" onclick="adjustQty('${product.id}', 1)" 
+                        class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold transition">+</button>
+                <span class="text-xs text-gray-500 ml-2">units</span>
+              </div>
+            </div>
+          </label>
+        </div>
+      `).join('');
+    }
+
+    function adjustQty(productId, delta) {
+      const input = document.getElementById(`qty-${productId}`);
+      if (!input) return;
+      let val = parseInt(input.value) || 1;
+      val = Math.max(1, Math.min(10, val + delta));
+      input.value = val;
+      calculateTotal();
+    }
+
+    // Calculate total & format items string for API
+    function calculateTotal() {
+      let total = 0;
+      const itemsArray = [];
+      
+      PRODUCTS.forEach(product => {
+        const checkbox = document.getElementById(`prod-${product.id}`);
+        if (checkbox?.checked) {
+          const qtyInput = document.getElementById(`qty-${product.id}`);
+          const qty = parseInt(qtyInput?.value) || 1;
+          total += product.price * qty;
+          itemsArray.push(`${product.name} ×${qty}`);
+        }
+      });
+      
+      // Update UI
+      document.getElementById('live-total').textContent = `৳${total.toLocaleString('en-BD', {minimumFractionDigits: 2})}`;
+      document.getElementById('form-total').value = total; // API expects number for parseFloat()
+      
+      // ⚠️ API expects items as a STRING, not JSON array
+      document.getElementById('form-items').value = itemsArray.join(', ');
+      
+      return { total, items: itemsArray.join(', ') };
+    }
+
+    // Handle form submission - matches your api/submit.js expectations
+    async function handleSubmit(e) {
+      e.preventDefault();
+      
+      const { total, items } = calculateTotal();
+      
+      // Validate: at least one product
+      if (!items || items.trim() === '') {
+        showStatus("Please select at least one product", "error");
+        return;
+      }
+      
+      // Validate transaction ID format (matches your API validation)
+      const trx = document.getElementById('bkash-trx').value.trim().toUpperCase();
+      if (!/^[0-9a-zA-Z]{8,12}$/.test(trx)) {
+        showStatus("Enter a valid 8-12 character bKash Transaction ID", "error");
+        document.getElementById('bkash-trx').focus();
+        return;
+      }
+      
+      // Build payload matching your API's expected structure
+      const payload = {
+        transactionId: trx,
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim().toLowerCase(),
+        phone: document.getElementById('phone').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        total: total,  // Number, not string - your API does parseFloat()
+        items: items   // STRING format: "Product A ×2, Product B ×1"
+      };
+      
+      // UI: Loading state
+      const btn = document.getElementById('submit-btn');
+      const loading = document.getElementById('loading-container');
+      btn.disabled = true;
+      btn.classList.add('opacity-70', 'cursor-wait');
+      loading.classList.remove('hidden');
+      showStatus("Verifying payment with bKash...", "info");
+      
+      try {
+        const response = await fetch(API_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        
+        const result = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(result.error || 'Order submission failed');
+        }
+        
+        // Success
+        showStatus(`✓ Order confirmed! Ref: ${result.transactionId || 'UE' + Date.now().toString().slice(-6)}`, "success");
+        
+        // Reset form after delay
+        setTimeout(() => {
+          e.target.reset();
+          PRODUCTS.forEach(p => {
+            const cb = document.getElementById(`prod-${p.id}`);
+            if (cb) cb.checked = false;
+          });
+          calculateTotal();
+          btn.disabled = false;
+          btn.classList.remove('opacity-70', 'cursor-wait');
+          loading.classList.add('hidden');
+        }, 3500);
+        
+      } catch (error) {
+        console.error('Submit error:', error);
+        showStatus(`✗ ${error.message || 'Failed to place order. Try again.'}`, "error");
+        btn.disabled = false;
+        btn.classList.remove('opacity-70', 'cursor-wait');
+        loading.classList.add('hidden');
+      }
+    }
+
+    function showStatus(message, type) {
+      const el = document.getElementById('status-msg');
+      const icons = {
+        success: '<i class="fas fa-check-circle text-green-600 mr-1"></i>',
+        error: '<i class="fas fa-exclamation-circle text-red-500 mr-1"></i>',
+        info: '<i class="fas fa-spinner fa-spin text-urbor-green mr-1"></i>'
+      };
+      const colors = { success: 'text-green-700', error: 'text-red-600', info: 'text-urbor-green' };
+      el.innerHTML = `${icons[type] || ''}${message}`;
+      el.className = `text-center text-sm mt-4 min-h-[24px] font-medium ${colors[type]}`;
+    }
+
+    // Auto-format phone input
+    document.getElementById('phone')?.addEventListener('input', function(e) {
+      let val = e.target.value.replace(/\D/g, '');
+      if (val.startsWith('01') && val.length > 2) val = val.slice(0, 11);
+      e.target.value = val;
+    });
+  </script>
+</body>
+</html>
