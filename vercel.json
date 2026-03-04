@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "index.html",
+      "src": "*.html",
       "use": "@vercel/static"
     },
     {
@@ -24,9 +24,11 @@
     {
       "src": "/api/(.*)",
       "status": 404,
-      "headers": {
-        "X-Content-Type-Options": "nosniff"
-      }
+      "headers": { "X-Content-Type-Options": "nosniff" }
+    },
+    {
+      "src": "/(.+\\.html)",
+      "dest": "/$1"
     },
     {
       "src": "/(.*)",
@@ -43,8 +45,5 @@
   "trailingSlash": false,
   "env": {
     "NODE_ENV": "production"
-  },
-  "github": {
-    "silent": true
   }
 }
