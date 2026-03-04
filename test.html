@@ -14,161 +14,111 @@
 <!-- Tailwind Config for Custom Colors -->
 <script>
 tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        'urbor-green': '#2d6a4f',
-        'urbor-green-dark': '#1b4332',
-        'urbor-green-light': '#40916c',
-        'urbor-cream': '#faf7f2',
-      },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
-      }
-    }
-  }
+theme: {
+extend: {
+colors: {
+'urbor-green': '#2d6a4f',
+'urbor-green-dark': '#1b4332',
+'urbor-green-light': '#40916c',
+'urbor-cream': '#faf7f2',
+},
+fontFamily: {
+sans: ['Inter', 'sans-serif'],
+display: ['Playfair Display', 'serif'],
+}
+}
+}
 }
 </script>
 <style>
 /* Premium base styles */
 body {
-  background-color: #faf7f2;
-  color: #1e1b1b;
-  scroll-behavior: smooth;
+background-color: #faf7f2;
+color: #1e1b1b;
+scroll-behavior: smooth;
 }
 /* Glassmorphism */
 .glass-premium {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.1);
+background: rgba(255, 255, 255, 0.75);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.5);
+box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.1);
 }
 .glass-card-premium {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.6);
-  box-shadow: 0 20px 35px -10px rgba(0,0,0,0.08);
-  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+background: rgba(255, 255, 255, 0.85);
+backdrop-filter: blur(8px);
+border: 1px solid rgba(255,255,255,0.6);
+box-shadow: 0 20px 35px -10px rgba(0,0,0,0.08);
+transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 .glass-card-premium:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 30px 45px -12px rgba(45, 106, 79, 0.2);
-  border-color: rgba(45, 106, 79, 0.25);
-  background: rgba(255, 255, 255, 0.95);
+transform: translateY(-6px);
+box-shadow: 0 30px 45px -12px rgba(45, 106, 79, 0.2);
+border-color: rgba(45, 106, 79, 0.25);
+background: rgba(255, 255, 255, 0.95);
 }
 /* Premium button with sheen animation */
 .btn-premium {
-  background: linear-gradient(145deg, #2d6a4f, #1b4332);
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  border: none;
-  color: white;
-  font-weight: 500;
-  letter-spacing: 0.3px;
+background: linear-gradient(145deg, #2d6a4f, #1b4332);
+position: relative;
+isolation: isolate;
+overflow: hidden;
+transition: all 0.3s ease;
+border: none;
+color: white;
+font-weight: 500;
+letter-spacing: 0.3px;
 }
 .btn-premium::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  transition: left 0.6s ease;
-  z-index: 0;
+content: '';
+position: absolute;
+top: 0; left: -100%;
+width: 100%; height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+transition: left 0.6s ease;
+z-index: 0;
 }
 .btn-premium:hover::before { left: 100%; }
 .btn-premium:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px -8px #2d6a4f99;
+transform: translateY(-2px);
+box-shadow: 0 12px 28px -8px #2d6a4f99;
 }
 .btn-premium:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  transform: none;
-}
-/* Quantity Control Styles */
-.qty-control {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  background: #f0eae4;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(45, 106, 79, 0.15);
-  transition: all 0.3s ease;
-}
-.qty-control.highlight {
-  background: rgba(45, 106, 79, 0.2);
-  border-color: rgba(45, 106, 79, 0.4);
-}
-.qty-btn {
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  color: #2d6a4f;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.qty-btn:hover {
-  background: rgba(45, 106, 79, 0.1);
-}
-.qty-btn:active {
-  transform: scale(0.95);
-}
-.qty-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-.qty-value {
-  min-width: 40px;
-  text-align: center;
-  font-weight: 600;
-  color: #1e1b1b;
-  font-size: 15px;
-  transition: all 0.2s ease;
-}
-.qty-value.pop {
-  transform: scale(1.3);
-  color: #2d6a4f;
+opacity: 0.7;
+cursor: not-allowed;
+transform: none;
 }
 /* Floating animation */
 .float-slow { animation: float 5s ease-in-out infinite; }
 .float-slow-delay { animation: float 5s ease-in-out 0.5s infinite; }
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-5px); }
 }
 /* Product image shine effect */
 .image-shine {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1.5rem 1.5rem 0 0;
+position: relative;
+overflow: hidden;
+border-radius: 1.5rem 1.5rem 0 0;
 }
 .image-shine::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -75%;
-  width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
-  transform: skewX(-15deg);
-  transition: left 0.7s ease;
+content: '';
+position: absolute;
+top: 0; left: -75%;
+width: 50%; height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+transform: skewX(-15deg);
+transition: left 0.7s ease;
 }
 .image-shine:hover::after { left: 125%; }
 /* Loader */
 .premium-loader {
-  border: 3px solid rgba(45,106,79,0.1);
-  border-top: 3px solid #2d6a4f;
-  border-radius: 50%;
-  width: 28px; height: 28px;
-  animation: spin 0.9s linear infinite;
+border: 3px solid rgba(45,106,79,0.1);
+border-top: 3px solid #2d6a4f;
+border-radius: 50%;
+width: 28px; height: 28px;
+animation: spin 0.9s linear infinite;
 }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 /* Cart scrollbar */
@@ -177,1116 +127,720 @@ body {
 .cart-scroll::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 10px; }
 /* Fade-up animation */
 .fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 0.6s forwards;
+opacity: 0;
+transform: translateY(20px);
+animation: fadeUp 0.6s forwards;
 }
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 /* Mobile menu animation */
 .mobile-enter { animation: slideDown 0.2s ease-out; }
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+from { opacity: 0; transform: translateY(-10px); }
+to { opacity: 1; transform: translateY(0); }
 }
 /* Form focus styles */
 input:focus, textarea:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+outline: none;
+box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
 }
 /* Sidebar Transition */
 .sidebar-enter { transform: translateX(0); }
 .sidebar-exit { transform: translateX(-100%); }
-/* Toast Notification Styles */
-.toast-container {
-  position: fixed;
-  top: 100px;
-  right: 20px;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  pointer-events: none;
-}
-.toast {
-  background: white;
-  border-radius: 16px;
-  padding: 16px 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-  border-left: 4px solid #2d6a4f;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 320px;
-  max-width: 400px;
-  pointer-events: auto;
-  transform: translateX(120%);
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.toast.show {
-  transform: translateX(0);
-  opacity: 1;
-}
-.toast.hide {
-  transform: translateX(120%);
-  opacity: 0;
-}
-.toast-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.toast-icon.success {
-  background: rgba(45, 106, 79, 0.1);
-  color: #2d6a4f;
-}
-.toast-icon.info {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-}
-.toast-icon.warning {
-  background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
-}
-.toast-content {
-  flex-grow: 1;
-}
-.toast-title {
-  font-weight: 600;
-  color: #1e1b1b;
-  font-size: 14px;
-  margin-bottom: 2px;
-}
-.toast-message {
-  font-size: 13px;
-  color: #6b7280;
-}
-.toast-close {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  color: #9ca3af;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.toast-close:hover {
-  background: #f3f4f6;
-  color: #4b5563;
-}
-/* Checkout Guide Banner */
-.checkout-guide {
-  background: linear-gradient(135deg, rgba(45, 106, 79, 0.05) 0%, rgba(27, 67, 50, 0.08) 100%);
-  border: 1px dashed rgba(45, 106, 79, 0.3);
-  border-radius: 16px;
-  padding: 16px;
-  margin-top: 16px;
-  animation: pulse-soft 2s ease-in-out infinite;
-}
-@keyframes pulse-soft {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(45, 106, 79, 0.1); }
-  50% { box-shadow: 0 0 0 8px rgba(45, 106, 79, 0.05); }
-}
-.checkout-guide-title {
-  font-weight: 600;
-  color: #2d6a4f;
-  font-size: 14px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.checkout-guide-steps {
-  display: flex;
-  gap: 12px;
-  font-size: 12px;
-  color: #6b7280;
-}
-.checkout-guide-step {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.checkout-guide-step i {
-  color: #2d6a4f;
-}
-/* Floating Checkout Button */
-.floating-checkout {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  z-index: 90;
-  transform: translateY(100px);
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.floating-checkout.show {
-  transform: translateY(0);
-  opacity: 1;
-}
-.floating-checkout-btn {
-  background: linear-gradient(145deg, #2d6a4f, #1b4332);
-  color: white;
-  padding: 16px 24px;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 15px;
-  box-shadow: 0 10px 40px rgba(45, 106, 79, 0.4);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.floating-checkout-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 50px rgba(45, 106, 79, 0.5);
-}
-.floating-checkout-btn:active {
-  transform: translateY(-1px);
-}
-.floating-checkout-count {
-  background: rgba(255,255,255,0.2);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 13px;
-}
-/* Cart badge pulse */
-.cart-badge-pulse {
-  animation: badge-pulse 0.5s ease-in-out;
-}
-@keyframes badge-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.3); }
-}
-/* Progress bar in sidebar */
-.checkout-progress {
-  height: 4px;
-  background: #e5e7eb;
-  border-radius: 2px;
-  overflow: hidden;
-  margin-top: 12px;
-}
-.checkout-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #2d6a4f, #40916c);
-  border-radius: 2px;
-  transition: width 0.4s ease;
-}
 </style>
 </head>
 <body class="antialiased">
-
-<!-- TOAST NOTIFICATIONS CONTAINER -->
-<div id="toast-container" class="toast-container"></div>
-
-<!-- FLOATING CHECKOUT BUTTON -->
-<div id="floating-checkout" class="floating-checkout">
-  <button onclick="proceedToCheckout()" class="floating-checkout-btn">
-    <i class="fas fa-bag-shopping"></i>
-    <span>Checkout Now</span>
-    <span class="floating-checkout-count" id="floating-count">0 items</span>
-  </button>
-</div>
-
 <!-- NAVIGATION -->
 <nav class="fixed w-full z-50 glass-premium border-b border-white/30">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-20 items-center">
-      <!-- Logo -->
-      <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#2d6a4f] to-[#1b4332] shadow-md flex items-center justify-center shrink-0">
-          <img src="https://placehold.co/600x400/png" alt="Urbor Essentials Logo" class="w-10 h-10 object-contain" onerror="this.parentElement.innerHTML='<i class=\'fas fa-drumstick-bite text-white text-xl\'></i>'">
-        </div>
-        <span class="text-2xl font-display font-semibold tracking-tight text-gray-900">
-          Urbor<span class="text-urbor-green"> Essentials</span>
-        </span>
-      </div>
-      <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
-        <a href="#products" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
-          Our products
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
-        </a>
-        <a href="#why-us" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
-          Why us
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
-        </a>
-        <a href="#testimonials" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
-          Testimonials
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
-        </a>
-        <a href="#faq" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
-          FAQ
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
-        </a>
-      </div>
-      <!-- Right Icons -->
-      <div class="flex items-center space-x-5">
-        <button onclick="openCartSidebar()" class="relative p-2 text-gray-800 hover:text-urbor-green transition group" aria-label="View cart">
-          <i class="fas fa-bag-shopping text-xl group-hover:scale-110 transition"></i>
-          <span id="cart-count" class="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-urbor-green rounded-full shadow-sm">0</span>
-        </button>
-        <button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800 p-2" aria-label="Toggle menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-white/30 px-4 py-5 space-y-3 text-base shadow-xl mobile-enter">
-    <a href="#products" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">Our products</a>
-    <a href="#why-us" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">Why us</a>
-    <a href="#testimonials" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">Testimonials</a>
-    <a href="#faq" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">FAQ</a>
-  </div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-20 items-center">
+<!-- Logo -->
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#2d6a4f] to-[#1b4332] shadow-md flex items-center justify-center shrink-0">
+<img src="https://placehold.co/600x400/png" alt="Urbor Essentials Logo" class="w-10 h-10 object-contain" onerror="this.parentElement.innerHTML='<i class=\'fas fa-drumstick-bite text-white text-xl\'></i>'">
+</div>
+<span class="text-2xl font-display font-semibold tracking-tight text-gray-900">
+Urbor<span class="text-urbor-green"> Essentials</span>
+</span>
+</div>
+<!-- Desktop Menu -->
+<div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+<a href="#products" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
+Our products
+<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
+</a>
+<a href="#why-us" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
+Why us
+<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
+</a>
+<a href="#testimonials" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
+Testimonials
+<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
+</a>
+<a href="#faq" class="text-gray-800 hover:text-urbor-green transition-colors relative group py-2">
+FAQ
+<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-urbor-green transition-all group-hover:w-full"></span>
+</a>
+</div>
+<!-- Right Icons -->
+<div class="flex items-center space-x-5">
+<!-- Modified to open Sidebar -->
+<button onclick="openCartSidebar()" class="relative p-2 text-gray-800 hover:text-urbor-green transition group" aria-label="View cart">
+<i class="fas fa-bag-shopping text-xl group-hover:scale-110 transition"></i>
+<span id="cart-count" class="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-urbor-green rounded-full shadow-sm">0</span>
+</button>
+<button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800 p-2" aria-label="Toggle menu">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-white/30 px-4 py-5 space-y-3 text-base shadow-xl mobile-enter">
+<a href="#products" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">Our products</a>
+<a href="#why-us" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">Why us</a>
+<a href="#testimonials" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">Testimonials</a>
+<a href="#faq" class="block py-2 font-medium text-gray-800 hover:text-urbor-green">FAQ</a>
+</div>
 </nav>
 
-<!-- CART SIDEBAR -->
+<!-- CART SIDEBAR (NEW) -->
 <div id="cart-overlay" onclick="closeCartSidebar()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] hidden transition-opacity opacity-0"></div>
 <div id="cart-sidebar" class="fixed top-0 left-0 h-full w-full max-w-md bg-white z-[70] shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
-  <!-- Header -->
-  <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-urbor-cream">
-    <h2 class="text-xl font-display font-bold text-gray-900 flex items-center gap-2">
-      <i class="fas fa-shopping-basket text-urbor-green"></i> Your Cart
-    </h2>
-    <button onclick="closeCartSidebar()" class="text-gray-400 hover:text-red-500 transition p-2">
-      <i class="fas fa-times text-xl"></i>
-    </button>
-  </div>
-  <!-- Items -->
-  <div class="flex-1 overflow-y-auto p-6 cart-scroll bg-[#faf7f2]">
-    <div id="sidebar-cart-items" class="space-y-4">
-      <!-- Items injected via JS -->
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-urbor-cream">
+        <h2 class="text-xl font-display font-bold text-gray-900 flex items-center gap-2">
+            <i class="fas fa-shopping-basket text-urbor-green"></i> Your Cart
+        </h2>
+        <button onclick="closeCartSidebar()" class="text-gray-400 hover:text-red-500 transition p-2">
+            <i class="fas fa-times text-xl"></i>
+        </button>
     </div>
-    <div id="sidebar-empty-state" class="hidden text-center py-10">
-      <i class="fas fa-shopping-basket text-4xl text-gray-300 mb-3"></i>
-      <p class="text-gray-500">Your cart is empty</p>
-      <button onclick="closeCartSidebar()" class="mt-4 text-urbor-green font-medium hover:underline">Continue Shopping</button>
-    </div>
-    
-    <!-- Checkout Guide (shown when cart has items) -->
-    <div id="checkout-guide-banner" class="checkout-guide hidden">
-      <div class="checkout-guide-title">
-        <i class="fas fa-rocket"></i>
-        <span>Ready to checkout?</span>
-      </div>
-      <div class="checkout-guide-steps">
-        <div class="checkout-guide-step">
-          <i class="fas fa-check-circle"></i>
-          <span>Review items</span>
+    <!-- Items -->
+    <div class="flex-1 overflow-y-auto p-6 cart-scroll bg-[#faf7f2]">
+        <div id="sidebar-cart-items" class="space-y-4">
+            <!-- Items injected via JS -->
         </div>
-        <div class="checkout-guide-step">
-          <i class="fas fa-check-circle"></i>
-          <span>Pay with bKash</span>
+        <div id="sidebar-empty-state" class="hidden text-center py-10">
+            <i class="fas fa-shopping-basket text-4xl text-gray-300 mb-3"></i>
+            <p class="text-gray-500">Your cart is empty</p>
+            <button onclick="closeCartSidebar()" class="mt-4 text-urbor-green font-medium hover:underline">Continue Shopping</button>
         </div>
-        <div class="checkout-guide-step">
-          <i class="fas fa-check-circle"></i>
-          <span>Get delivery</span>
+    </div>
+    <!-- Footer -->
+    <div class="p-6 border-t border-gray-100 bg-white">
+        <div class="flex justify-between items-center mb-4">
+            <span class="text-gray-600">Subtotal</span>
+            <span id="sidebar-total" class="text-xl font-bold text-urbor-green">৳0.00</span>
         </div>
-      </div>
-      <div class="checkout-progress">
-        <div class="checkout-progress-bar" id="checkout-progress-bar" style="width: 33%"></div>
-      </div>
-      <button onclick="proceedToCheckout()" class="w-full mt-4 btn-premium py-3 rounded-xl text-sm font-medium flex justify-center items-center gap-2">
-        <span>Proceed to Checkout</span>
-        <i class="fas fa-arrow-right"></i>
-      </button>
+        <button onclick="proceedToCheckout()" class="w-full btn-premium py-3.5 rounded-xl text-base font-medium shadow-lg flex justify-center items-center gap-2">
+            <span>Proceed to Checkout</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        <p class="text-xs text-center text-gray-400 mt-3">Free delivery across Dhaka</p>
     </div>
-  </div>
-  <!-- Footer -->
-  <div class="p-6 border-t border-gray-100 bg-white">
-    <div class="flex justify-between items-center mb-4">
-      <span class="text-gray-600">Subtotal</span>
-      <span id="sidebar-total" class="text-xl font-bold text-urbor-green">৳0.00</span>
-    </div>
-    <button onclick="proceedToCheckout()" class="w-full btn-premium py-3.5 rounded-xl text-base font-medium shadow-lg flex justify-center items-center gap-2">
-      <span>Proceed to Checkout</span>
-      <i class="fas fa-arrow-right"></i>
-    </button>
-    <p class="text-xs text-center text-gray-400 mt-3">
-      <i class="fas fa-truck text-urbor-green mr-1"></i> Free delivery across Dhaka
-    </p>
-  </div>
 </div>
 
-<!-- HERO SECTION -->
+<!-- HERO SECTION - Image Only, No Text Overlay -->
 <section class="relative pt-20">
-  <img src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?auto=format&fit=crop&w=1920&q=80"
-    alt="Premium antibiotic-free chicken"
-    class="w-full h-auto object-cover max-h-[680px] md:max-h-[750px]"
-  >
+<img src="https://placehold.co/600x400/png"
+alt="Premium antibiotic-free chicken"
+class="w-full h-auto object-cover max-h-[680px] md:max-h-[750px]"
+>
+<!-- No overlay, no text - pure image -->
 </section>
-
 <!-- TRUST BADGES -->
 <section class="py-10 bg-white border-b border-gray-100/80">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-      <div class="float-slow">
-        <div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
-          <i class="fas fa-leaf text-2xl text-urbor-green"></i>
-        </div>
-        <p class="font-semibold text-gray-800">100% Natural</p>
-        <p class="text-xs text-gray-500 mt-1">no additives</p>
-      </div>
-      <div class="float-slow-delay">
-        <div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
-          <i class="fas fa-shield-alt text-2xl text-urbor-green"></i>
-        </div>
-        <p class="font-semibold text-gray-800">Antibiotic-Free</p>
-        <p class="text-xs text-gray-500 mt-1">raised without</p>
-      </div>
-      <div class="float-slow" style="animation-delay: 1s;">
-        <div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
-          <i class="fas fa-truck text-2xl text-urbor-green"></i>
-        </div>
-        <p class="font-semibold text-gray-800">Fresh Delivery</p>
-        <p class="text-xs text-gray-500 mt-1">chilled bags</p>
-      </div>
-      <div class="float-slow" style="animation-delay: 1.5s;">
-        <div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
-          <i class="fas fa-heart text-2xl text-urbor-green"></i>
-        </div>
-        <p class="font-semibold text-gray-800">Ethically Raised</p>
-        <p class="text-xs text-gray-500 mt-1">pasture‑raised</p>
-      </div>
-    </div>
-  </div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+<div class="float-slow">
+<div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
+<i class="fas fa-leaf text-2xl text-urbor-green"></i>
+</div>
+<p class="font-semibold text-gray-800">100% Natural</p>
+<p class="text-xs text-gray-500 mt-1">no additives</p>
+</div>
+<div class="float-slow-delay">
+<div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
+<i class="fas fa-shield-alt text-2xl text-urbor-green"></i>
+</div>
+<p class="font-semibold text-gray-800">Antibiotic-Free</p>
+<p class="text-xs text-gray-500 mt-1">raised without</p>
+</div>
+<div class="float-slow" style="animation-delay: 1s;">
+<div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
+<i class="fas fa-truck text-2xl text-urbor-green"></i>
+</div>
+<p class="font-semibold text-gray-800">Fresh Delivery</p>
+<p class="text-xs text-gray-500 mt-1">chilled bags</p>
+</div>
+<div class="float-slow" style="animation-delay: 1.5s;">
+<div class="w-16 h-16 mx-auto bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-sm flex items-center justify-center mb-3 border border-green-100">
+<i class="fas fa-heart text-2xl text-urbor-green"></i>
+</div>
+<p class="font-semibold text-gray-800">Ethically Raised</p>
+<p class="text-xs text-gray-500 mt-1">pasture‑raised</p>
+</div>
+</div>
+</div>
 </section>
-
 <!-- PRODUCTS SECTION -->
 <section id="products" class="py-20 bg-[#faf7f2]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-14 fade-up">
-      <span class="text-urbor-green uppercase tracking-[0.2em] text-sm font-semibold">Lab tested</span>
-      <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2 mb-5">Our premium <span class="text-urbor-green">selection</span></h2>
-      <p class="text-gray-600 text-lg">Thoughtfully raised, expertly cut — antibiotic‑free chicken delivered fresh.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-container"></div>
-  </div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-14 fade-up">
+<span class="text-urbor-green uppercase tracking-[0.2em] text-sm font-semibold">Lab tested</span>
+<h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2 mb-5">Our premium <span class="text-urbor-green">selection</span></h2>
+<p class="text-gray-600 text-lg">Thoughtfully raised, expertly cut — antibiotic‑free chicken delivered fresh.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-container"></div>
+</div>
 </section>
-
 <!-- TESTIMONIALS -->
 <section id="testimonials" class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-14 fade-up">
-      <span class="text-urbor-green uppercase tracking-[0.2em] text-sm font-semibold">trusted voices</span>
-      <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2 mb-5">Loved by <span class="text-urbor-green">families</span></h2>
-      <p class="text-gray-600 text-lg">Real stories from our community</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="glass-card-premium rounded-3xl p-8">
-        <div class="flex text-amber-400 text-lg mb-5">★★★★★</div>
-        <p class="text-gray-700 mb-7 italic">"The quality is exceptional! My family loves the taste and I love that it's antibiotic-free."</p>
-        <div class="flex items-center">
-          <span class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-xl mr-4">SR</span>
-          <div><h4 class="font-bold text-gray-900">Sadia Rahman</h4><p class="text-gray-500 text-sm">Gulshan, Dhaka</p></div>
-        </div>
-      </div>
-      <div class="glass-card-premium rounded-3xl p-8">
-        <div class="flex text-amber-400 text-lg mb-5">★★★★★</div>
-        <p class="text-gray-700 mb-7 italic">"Fresh delivery every time. The bKash payment process is so convenient!"</p>
-        <div class="flex items-center">
-          <span class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-xl mr-4">AK</span>
-          <div><h4 class="font-bold text-gray-900">Ahmed Khan</h4><p class="text-gray-500 text-sm">Banani, Dhaka</p></div>
-        </div>
-      </div>
-      <div class="glass-card-premium rounded-3xl p-8">
-        <div class="flex text-amber-400 text-lg mb-5">★★★★★</div>
-        <p class="text-gray-700 mb-7 italic">"Finally found a reliable chicken supplier. Worth every taka!"</p>
-        <div class="flex items-center">
-          <span class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-xl mr-4">NT</span>
-          <div><h4 class="font-bold text-gray-900">Nusrat Tasnim</h4><p class="text-gray-500 text-sm">Dhanmondi</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-14 fade-up">
+<span class="text-urbor-green uppercase tracking-[0.2em] text-sm font-semibold">trusted voices</span>
+<h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2 mb-5">Loved by <span class="text-urbor-green">families</span></h2>
+<p class="text-gray-600 text-lg">Real stories from our community</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="glass-card-premium rounded-3xl p-8">
+<div class="flex text-amber-400 text-lg mb-5">★★★★★</div>
+<p class="text-gray-700 mb-7 italic">"blah blah blah blah blab blah!"</p>
+<div class="flex items-center">
+<span class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-xl mr-4">SR</span>
+<div><h4 class="font-bold text-gray-900">Sadia Rahman</h4><p class="text-gray-500 text-sm">Gulshan, Dhaka</p></div>
+</div>
+</div>
+<div class="glass-card-premium rounded-3xl p-8">
+<div class="flex text-amber-400 text-lg mb-5">★★★★★</div>
+<p class="text-gray-700 mb-7 italic">"blah blah blah blah blab blah!."</p>
+<div class="flex items-center">
+<span class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-xl mr-4">AK</span>
+<div><h4 class="font-bold text-gray-900">Ahmed Khan</h4><p class="text-gray-500 text-sm">Banani, Dhaka</p></div>
+</div>
+</div>
+<div class="glass-card-premium rounded-3xl p-8">
+<div class="flex text-amber-400 text-lg mb-5">★★★★★</div>
+<p class="text-gray-700 mb-7 italic">"blah blah blah blah blab blah!!"</p>
+<div class="flex items-center">
+<span class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-xl mr-4">NT</span>
+<div><h4 class="font-bold text-gray-900">Nusrat Tasnim</h4><p class="text-gray-500 text-sm">Dhanmondi</p></div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <!-- FAQ SECTION -->
 <section id="faq" class="py-20 bg-[#faf7f2]">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12 fade-up">
-      <span class="text-urbor-green uppercase tracking-[0.2em] text-sm font-semibold">answers</span>
-      <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2">Frequently asked <span class="text-urbor-green">questions</span></h2>
-    </div>
-    <div class="space-y-5">
-      <div class="glass-card-premium rounded-2xl overflow-hidden">
-        <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
-          <span>What does "antibiotic‑free" really mean?</span>
-          <i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
-        </button>
-        <div class="faq-content hidden px-6 pb-6 text-gray-600">Our chickens are never given antibiotics at any stage. Raised in clean, spacious environments with natural feed — cleaner, safer chicken for your family.</div>
-      </div>
-      <div class="glass-card-premium rounded-2xl overflow-hidden">
-        <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
-          <span>How is the chicken delivered and stored?</span>
-          <i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
-        </button>
-        <div class="faq-content hidden px-6 pb-6 text-gray-600">We use blast‑freeze packaging with ice packs. Refrigerate upon arrival. Best within 2‑3 days or freeze for longer storage.</div>
-      </div>
-      <div class="glass-card-premium rounded-2xl overflow-hidden">
-        <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
-          <span>Do you deliver nationwide in Bangladesh?</span>
-          <i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
-        </button>
-        <div class="faq-content hidden px-6 pb-6 text-gray-600">Currently serving Dhaka city (Gulshan, Banani, Dhanmondi, Uttara, Mirpur). Expanding soon — follow us on social media for updates!</div>
-      </div>
-      <div class="glass-card-premium rounded-2xl overflow-hidden">
-        <button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
-          <span>How do I pay with bKash?</span>
-          <i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
-        </button>
-        <div class="faq-content hidden px-6 pb-6 text-gray-600">At checkout you'll see our bKash number. Send exact amount via "Send Money", paste the 10‑digit Transaction ID into the form. We verify within 30 minutes.</div>
-      </div>
-    </div>
-  </div>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-12 fade-up">
+<span class="text-urbor-green uppercase tracking-[0.2em] text-sm font-semibold">answers</span>
+<h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mt-2">Frequently asked <span class="text-urbor-green">questions</span></h2>
+</div>
+<div class="space-y-5">
+<div class="glass-card-premium rounded-2xl overflow-hidden">
+<button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
+<span>What does "antibiotic‑free" really mean?</span>
+<i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
+</button>
+<div class="faq-content hidden px-6 pb-6 text-gray-600">Our chickens are never given antibiotics at any stage. Raised in clean, spacious environments with natural feed — cleaner, safer chicken for your family.</div>
+</div>
+<div class="glass-card-premium rounded-2xl overflow-hidden">
+<button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
+<span>How is the chicken delivered and stored?</span>
+<i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
+</button>
+<div class="faq-content hidden px-6 pb-6 text-gray-600">We use blast‑freeze packaging with ice packs. Refrigerate upon arrival. Best within 2‑3 days or freeze for longer storage.</div>
+</div>
+<div class="glass-card-premium rounded-2xl overflow-hidden">
+<button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
+<span>Do you deliver nationwide in Bangladesh?</span>
+<i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
+</button>
+<div class="faq-content hidden px-6 pb-6 text-gray-600">Currently serving Dhaka city (Gulshan, Banani, Dhanmondi, Uttara, Mirpur). Expanding soon — follow us on social media for updates!</div>
+</div>
+<div class="glass-card-premium rounded-2xl overflow-hidden">
+<button class="faq-btn w-full flex justify-between items-center p-6 text-left font-medium text-gray-900 hover:bg-green-50/60 transition" aria-expanded="false">
+<span>How do I pay with bKash?</span>
+<i class="fas fa-chevron-down text-urbor-green transition-transform duration-300"></i>
+</button>
+<div class="faq-content hidden px-6 pb-6 text-gray-600">At checkout you'll see our bKash number. Send exact amount via "Send Money", paste the 10‑digit Transaction ID into the form. We verify within 30 minutes.</div>
+</div>
+</div>
+</div>
 </section>
-
 <!-- CHECKOUT MODAL -->
 <div id="checkout-modal" class="fixed inset-0 bg-black/70 hidden z-50 overflow-y-auto backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
-  <div class="relative top-4 md:top-12 mx-auto p-6 w-full max-w-lg shadow-2xl rounded-3xl bg-white m-4 border border-white/40">
-    <div class="flex justify-between items-center mb-6 pb-3 border-b border-gray-100">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-urbor-green flex items-center justify-center"><i class="fas fa-lock text-white text-sm"></i></div>
-        <h3 id="checkout-title" class="text-xl font-display font-bold text-gray-900">Secure checkout</h3>
-      </div>
-      <button onclick="toggleCheckoutModal()" class="text-gray-400 hover:text-urbor-green p-1 transition" aria-label="Close checkout">
-        <i class="fas fa-times text-2xl"></i>
-      </button>
-    </div>
-    <!-- bKash instructions -->
-    <div class="bg-gradient-to-br from-green-50 to-amber-50 border border-green-200 rounded-2xl p-5 mb-6">
-      <h4 class="font-bold text-urbor-green flex items-center gap-2 text-base"><i class="fas fa-mobile-alt"></i> bKash payment</h4>
-      <ol class="list-decimal list-inside text-sm text-gray-700 space-y-2 mt-3">
-        <li>Open bKash → <span class="font-medium">Send Money</span></li>
-        <li>Send <span class="font-bold text-gray-900" id="instruction-total">0.00</span> BDT to <span class="font-mono font-bold text-urbor-green bg-white/50 px-1.5 py-0.5 rounded" id="merchant-number">01700000000</span></li>
-        <li>Copy the 10‑digit Transaction ID</li>
-        <li>Paste below</li>
-      </ol>
-    </div>
-    <!-- Order summary -->
-    <div class="bg-gray-50/90 rounded-2xl p-5 mb-5 border border-gray-200">
-      <h4 class="font-semibold text-gray-800 flex items-center gap-2"><i class="fas fa-receipt text-urbor-green"></i> Order summary</h4>
-      <ul id="cart-items-list" class="text-sm text-gray-700 space-y-2 my-4 max-h-36 overflow-y-auto cart-scroll pr-1"></ul>
-      <div class="border-t border-gray-200 pt-3 flex justify-between font-bold text-lg">
-        <span>Total payable</span>
-        <span id="cart-total-display" class="text-urbor-green">0.00 BDT</span>
-      </div>
-    </div>
-    <!-- Checkout form -->
-    <form id="order-form" onsubmit="handleCheckout(event)" novalidate>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-        <div>
-          <label for="name" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Name *</label>
-          <input type="text" id="name" name="name" required minlength="2" maxlength="100" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white">
-        </div>
-        <div>
-          <label for="phone" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Phone *</label>
-          <input type="tel" id="phone" name="phone" placeholder="017XXXXXXXX" required pattern="^01[3-9]\d{8}$" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white">
-        </div>
-      </div>
-      <div class="mb-4">
-        <label for="email" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Email *</label>
-        <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white">
-      </div>
-      <div class="mb-4">
-        <label for="address" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Delivery address *</label>
-        <textarea id="address" name="address" required rows="2" minlength="10" maxlength="300" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white"></textarea>
-      </div>
-      <div class="mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200">
-        <label for="bkash-trx" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">bKash transaction ID *</label>
-        <input type="text" id="bkash-trx" name="transactionId" placeholder="10-digit ID (e.g., 8H5K2L9P4R)" pattern="[0-9a-zA-Z]{8,12}" required class="block w-full rounded-xl border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 font-mono uppercase bg-white">
-        <p class="text-xs text-gray-500 mt-2 flex items-center"><i class="fas fa-info-circle mr-1 text-urbor-green"></i> from your bKash confirmation SMS</p>
-      </div>
-      <input type="hidden" name="total" id="form-total">
-      <button type="submit" id="submit-btn" class="w-full flex justify-center py-4 px-4 rounded-xl text-base font-medium text-white btn-premium shadow-lg transition-all">
-        Confirm order & pay with bKash
-      </button>
-      <div id="loading-spinner" class="premium-loader mx-auto mt-4 hidden" aria-live="polite"></div>
-      <p id="status-msg" class="text-center text-sm mt-3 font-medium min-h-[24px]" role="status" aria-live="polite"></p>
-    </form>
-    <div class="mt-6 pt-4 border-t border-gray-100 text-center text-xs text-gray-400">
-      <i class="fas fa-lock text-green-500 mr-1"></i> secure checkout · data protected · payment on delivery
-    </div>
-  </div>
+<div class="relative top-4 md:top-12 mx-auto p-6 w-full max-w-lg shadow-2xl rounded-3xl bg-white m-4 border border-white/40">
+<div class="flex justify-between items-center mb-6 pb-3 border-b border-gray-100">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-urbor-green flex items-center justify-center"><i class="fas fa-lock text-white text-sm"></i></div>
+<h3 id="checkout-title" class="text-xl font-display font-bold text-gray-900">Secure checkout</h3>
 </div>
-
+<button onclick="toggleCheckoutModal()" class="text-gray-400 hover:text-urbor-green p-1 transition" aria-label="Close checkout">
+<i class="fas fa-times text-2xl"></i>
+</button>
+</div>
+<!-- bKash instructions -->
+<div class="bg-gradient-to-br from-green-50 to-amber-50 border border-green-200 rounded-2xl p-5 mb-6">
+<h4 class="font-bold text-urbor-green flex items-center gap-2 text-base"><i class="fas fa-mobile-alt"></i> bKash payment</h4>
+<ol class="list-decimal list-inside text-sm text-gray-700 space-y-2 mt-3">
+<li>Open bKash → <span class="font-medium">Send Money</span></li>
+<li>Send <span class="font-bold text-gray-900" id="instruction-total">0.00</span> BDT to <span class="font-mono font-bold text-urbor-green bg-white/50 px-1.5 py-0.5 rounded" id="merchant-number">01700000000</span></li>
+<li>Copy the 10‑digit Transaction ID</li>
+<li>Paste below</li>
+</ol>
+</div>
+<!-- Order summary -->
+<div class="bg-gray-50/90 rounded-2xl p-5 mb-5 border border-gray-200">
+<h4 class="font-semibold text-gray-800 flex items-center gap-2"><i class="fas fa-receipt text-urbor-green"></i> Order summary</h4>
+<ul id="cart-items-list" class="text-sm text-gray-700 space-y-2 my-4 max-h-36 overflow-y-auto cart-scroll pr-1"></ul>
+<div class="border-t border-gray-200 pt-3 flex justify-between font-bold text-lg">
+<span>Total payable</span>
+<span id="cart-total-display" class="text-urbor-green">0.00 BDT</span>
+</div>
+</div>
+<!-- Checkout form -->
+<form id="order-form" onsubmit="handleCheckout(event)" novalidate>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+<div>
+<label for="name" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Name *</label>
+<input type="text" id="name" name="name" required minlength="2" maxlength="100" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white">
+</div>
+<div>
+<label for="phone" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Phone *</label>
+<input type="tel" id="phone" name="phone" placeholder="017XXXXXXXX" required pattern="^01[3-9]\d{8}$" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white">
+</div>
+</div>
+<div class="mb-4">
+<label for="email" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Email *</label>
+<input type="email" id="email" name="email" required class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white">
+</div>
+<div class="mb-4">
+<label for="address" class="block text-xs font-medium text-gray-500 uppercase tracking-wide">Delivery address *</label>
+<textarea id="address" name="address" required rows="2" minlength="10" maxlength="300" class="mt-1 block w-full rounded-xl border-gray-200 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 bg-white"></textarea>
+</div>
+<div class="mb-5 p-4 bg-gray-50 rounded-xl border border-gray-200">
+<label for="bkash-trx" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">bKash transaction ID *</label>
+<input type="text" id="bkash-trx" name="transactionId" placeholder="10-digit ID (e.g., 8H5K2L9P4R)" pattern="[0-9a-zA-Z]{8,12}" required class="block w-full rounded-xl border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm border p-3 font-mono uppercase bg-white">
+<p class="text-xs text-gray-500 mt-2 flex items-center"><i class="fas fa-info-circle mr-1 text-urbor-green"></i> from your bKash confirmation SMS</p>
+</div>
+<input type="hidden" name="total" id="form-total">
+<button type="submit" id="submit-btn" class="w-full flex justify-center py-4 px-4 rounded-xl text-base font-medium text-white btn-premium shadow-lg transition-all">
+Confirm order & pay with bKash
+</button>
+<div id="loading-spinner" class="premium-loader mx-auto mt-4 hidden" aria-live="polite"></div>
+<p id="status-msg" class="text-center text-sm mt-3 font-medium min-h-[24px]" role="status" aria-live="polite"></p>
+</form>
+<div class="mt-6 pt-4 border-t border-gray-100 text-center text-xs text-gray-400">
+<i class="fas fa-lock text-green-500 mr-1"></i> secure checkout · data protected · payment on delivery
+</div>
+</div>
+</div>
 <!-- FOOTER -->
 <footer class="bg-gray-950 text-gray-300 pt-16 pb-8">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12">
-      <div class="md:col-span-2">
-        <div class="flex items-center space-x-3 mb-5">
-          <span class="text-2xl font-display font-semibold text-white">Urbor<span class="text-urbor-green">Essentials</span></span>
-        </div>
-        <p class="text-gray-400 max-w-md">Premium antibiotic‑free chicken, ethically raised and delivered fresh across Dhaka.</p>
-        <div class="flex mt-6 space-x-4">
-          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-green transition" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-green transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-green transition" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        </div>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-4">Explore</h4>
-        <ul class="space-y-2 text-gray-400">
-          <li><a href="#products" class="hover:text-white transition">Our products</a></li>
-          <li><a href="#why-us" class="hover:text-white transition">Why us</a></li>
-          <li><a href="#testimonials" class="hover:text-white transition">Testimonials</a></li>
-          <li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-4">Contact</h4>
-        <ul class="space-y-2 text-gray-400">
-          <li class="flex"><i class="fas fa-map-marker-alt mt-1 mr-3 text-urbor-green"></i>Dhaka, Bangladesh</li>
-          <li class="flex"><i class="fas fa-phone-alt mr-3 text-urbor-green"></i>+880 1700-000000</li>
-          <li class="flex"><i class="fas fa-envelope mr-3 text-urbor-green"></i>hello@urboressentials.com</li>
-        </ul>
-      </div>
-    </div>
-    <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-      © <span id="year"></span> Urbor Essentials — purity, naturally.
-    </div>
-  </div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12">
+<div class="md:col-span-2">
+<div class="flex items-center space-x-3 mb-5">
+<span class="text-2xl font-display font-semibold text-white">Urbor<span class="text-urbor-green">Essentials</span></span>
+</div>
+<p class="text-gray-400 max-w-md">Premium antibiotic‑free chicken, ethically raised and delivered fresh across Dhaka.</p>
+<div class="flex mt-6 space-x-4">
+<a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-green transition" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+<a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-green transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+<a href="#" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-urbor-green transition" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-white mb-4">Explore</h4>
+<ul class="space-y-2 text-gray-400">
+<li><a href="#products" class="hover:text-white transition">Our products</a></li>
+<li><a href="#why-us" class="hover:text-white transition">Why us</a></li>
+<li><a href="#testimonials" class="hover:text-white transition">Testimonials</a></li>
+<li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-white mb-4">Contact</h4>
+<ul class="space-y-2 text-gray-400">
+<li class="flex"><i class="fas fa-map-marker-alt mt-1 mr-3 text-urbor-green"></i>Dhaka, Bangladesh</li>
+<li class="flex"><i class="fas fa-phone-alt mr-3 text-urbor-green"></i>+880 1700-000000</li>
+<li class="flex"><i class="fas fa-envelope mr-3 text-urbor-green"></i>hello@urboressentials.com</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+© <span id="year"></span> Urbor Essentials — purity, naturally.
+</div>
+</div>
 </footer>
-
+<!-- Test API button (hidden in production)
+<div class="fixed bottom-4 right-4 z-40">
+<button onclick="testAPI()" class="bg-gray-800 text-white px-4 py-2 rounded-xl shadow-lg text-sm hover:bg-urbor-green transition hidden md:block" title="Test API endpoint">🧪 Test</button>
+</div>
+-->
 <script>
 // ================== CONFIG ==================
-const API_ENDPOINT = '/api/sub';
+const API_ENDPOINT = '/api/submit'; // Vercel serverless function
 const MERCHANT_BKASH_NUMBER = '01700000000';
 const products = [
-  { id:1, name:"Whole Chicken (3kg)", price:1260, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Farm‑fresh whole chicken, perfect for roasts & curries." },
-  { id:2, name:"Whole Chicken (5kg)", price:2100, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Ideal for family meals and gatherings." },
-  { id:3, name:"Whole Chicken (8kg)", price:3300, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Best value for large families or events." }
+{ id:1, name:"Whole Chicken (3kg)", price:1260, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Farm‑fresh whole chicken, perfect for roasts & curries." },
+{ id:2, name:"Whole Chicken (5kg)", price:2100, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Ideal for family meals and gatherings." },
+{ id:3, name:"Whole Chicken (8kg)", price:3300, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Best value for large families or events." }
 ];
-
-// Cart stores: { productId: {product, quantity} }
-let cart = {};
-
-// Track quantities on product cards
-let productQuantities = {};
-
-// Toast queue for managing multiple notifications
-let toastQueue = [];
-let toastTimeout = null;
+let cart = [];
 
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('year').textContent = new Date().getFullYear();
-  document.getElementById('merchant-number').textContent = MERCHANT_BKASH_NUMBER;
-  renderProducts();
-  setupFAQ();
-  setupMobileMenu();
-  updateCartUI();
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('merchant-number').textContent = MERCHANT_BKASH_NUMBER;
+renderProducts();
+setupFAQ();
+setupMobileMenu();
+updateCartUI();
 });
 
 function renderProducts() {
-  const container = document.getElementById('product-container');
-  container.innerHTML = products.map((p, i) => {
-    const qty = productQuantities[p.id] || 0;
-    return `
-    <article class="glass-card-premium rounded-3xl overflow-hidden flex flex-col h-full fade-up" style="animation-delay:${i*0.1}s">
-      <div class="image-shine bg-gray-100">
-        <img src="${p.image}" alt="${p.name}" class="w-full h-56 object-cover transition duration-700 hover:scale-105" loading="lazy"
-          onerror="this.style.display='none'; this.parentElement.style.backgroundImage='linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%)'; this.parentElement.innerHTML='<div class=\'w-full h-56 flex items-center justify-center\'><i class=\'fas fa-drumstick-bite text-6xl text-white/50\'></i></div>'">
-      </div>
-      <div class="p-6 flex flex-col flex-grow">
-        <div class="flex justify-between items-start mb-3">
-          <h3 class="text-xl font-display font-bold text-gray-900">${p.name}</h3>
-          <span class="bg-green-50 text-urbor-green text-xs font-semibold px-3 py-1 rounded-full border border-green-200">premium</span>
-        </div>
-        <p class="text-gray-600 mb-5 flex-grow text-sm">${p.desc}</p>
-        <div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-          <span class="text-2xl font-bold text-urbor-green">৳${p.price.toLocaleString()}</span>
-          <div class="qty-control" id="qty-control-${p.id}">
-            <button onclick="decreaseQty(${p.id})" class="qty-btn" ${qty === 0 ? 'disabled' : ''}>
-              <i class="fas fa-minus"></i>
-            </button>
-            <span class="qty-value" id="qty-value-${p.id}">${qty}</span>
-            <button onclick="increaseQty(${p.id})" class="qty-btn">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </article>`;
-  }).join('');
+const container = document.getElementById('product-container');
+container.innerHTML = products.map((p, i) => `
+<article class="glass-card-premium rounded-3xl overflow-hidden flex flex-col h-full fade-up" style="animation-delay:${i*0.1}s">
+<div class="image-shine bg-gray-100">
+<img src="${p.image}" alt="${p.name}" class="w-full h-56 object-cover transition duration-700 hover:scale-105" loading="lazy"
+onerror="this.style.display='none'; this.parentElement.style.backgroundImage='linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%)'; this.parentElement.innerHTML='<div class=\'w-full h-56 flex items-center justify-center\'><i class=\'fas fa-drumstick-bite text-6xl text-white/50\'></i></div>'">
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-3">
+<h3 class="text-xl font-display font-bold text-gray-900">${p.name}</h3>
+<span class="bg-green-50 text-urbor-green text-xs font-semibold px-3 py-1 rounded-full border border-green-200">premium</span>
+</div>
+<p class="text-gray-600 mb-5 flex-grow text-sm">${p.desc}</p>
+<div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
+<span class="text-2xl font-bold text-urbor-green">৳${p.price.toLocaleString()}</span>
+<button onclick="addToCart(${p.id})" class="btn-premium text-white px-5 py-2.5 rounded-xl text-sm font-medium flex items-center space-x-2" aria-label="Add ${p.name} to cart">
+<i class="fas fa-plus text-xs"></i><span>Add</span>
+</button>
+</div>
+</div>
+</article>`).join('');
 }
 
-// Increase quantity on product card
-function increaseQty(productId) {
-  const product = products.find(p => p.id === productId);
-  productQuantities[productId] = (productQuantities[productId] || 0) + 1;
-  updateProductCardQty(productId);
-  updateCartFromProductCards();
-  
-  // Show notification
-  showToast({
-    type: 'success',
-    title: 'Added to cart!',
-    message: `${product.name} added successfully`,
-    icon: 'fa-check-circle'
-  });
-  
-  // Pulse animation on cart badge
-  pulseCartBadge();
-}
+// Add product to cart
+function addToCart(id) {
+const product = products.find(p => p.id === id);
+if (!product) return;
+cart.push(product);
+updateCartUI();
+openCartSidebar(); // Open sidebar automatically
 
-// Decrease quantity on product card
-function decreaseQty(productId) {
-  const product = products.find(p => p.id === productId);
-  if (productQuantities[productId] > 0) {
-    productQuantities[productId]--;
-    updateProductCardQty(productId);
-    updateCartFromProductCards();
-    
-    if (productQuantities[productId] === 0) {
-      showToast({
-        type: 'info',
-        title: 'Removed from cart',
-        message: `${product.name} removed`,
-        icon: 'fa-trash-alt'
-      });
-    }
-  }
-}
-
-// Update quantity display on product card
-function updateProductCardQty(productId) {
-  const qty = productQuantities[productId] || 0;
-  const valueEl = document.getElementById(`qty-value-${productId}`);
-  const minusBtn = document.querySelector(`#qty-control-${productId} .qty-btn:first-child`);
-  const qtyControl = document.getElementById(`qty-control-${productId}`);
-  
-  if (valueEl) {
-    valueEl.textContent = qty;
-    // Pop animation
-    valueEl.classList.remove('pop');
-    void valueEl.offsetWidth; // Trigger reflow
-    if (qty > 0) valueEl.classList.add('pop');
-  }
-  if (minusBtn) minusBtn.disabled = qty === 0;
-  if (qtyControl) {
-    qtyControl.classList.remove('highlight');
-    if (qty > 0) {
-      void qtyControl.offsetWidth;
-      qtyControl.classList.add('highlight');
-    }
-  }
-}
-
-// Sync cart with product card quantities
-function updateCartFromProductCards() {
-  cart = {};
-  products.forEach(p => {
-    const qty = productQuantities[p.id] || 0;
-    if (qty > 0) {
-      cart[p.id] = { ...p, quantity: qty };
-    }
-  });
-  updateCartUI();
+// Visual feedback on button
+const btn = event.currentTarget;
+const original = btn.innerHTML;
+btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+btn.classList.add('bg-emerald-600', 'opacity-90');
+setTimeout(() => {
+btn.innerHTML = original;
+btn.classList.remove('bg-emerald-600', 'opacity-90');
+}, 800);
 }
 
 // Remove product from cart
-function removeFromCart(productId) {
-  if (cart[productId]) {
-    const productName = cart[productId].name;
-    delete cart[productId];
-    productQuantities[productId] = 0;
-    updateProductCardQty(productId);
-    updateCartUI();
-    
-    showToast({
-      type: 'info',
-      title: 'Removed',
-      message: `${productName} removed from cart`,
-      icon: 'fa-trash-alt'
-    });
-  }
+function removeFromCart(index) {
+cart.splice(index, 1);
+updateCartUI();
 }
 
 // Update cart UI (Sidebar & Modal)
 function updateCartUI() {
-  const cartItems = Object.values(cart);
-  const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+const total = cart.reduce((sum, item) => sum + item.price, 0);
+const count = cart.length;
 
-  // Update Badge
-  const cartCountEl = document.getElementById('cart-count');
-  cartCountEl.textContent = count;
-  
-  // Update Floating Checkout Button
-  const floatingCheckout = document.getElementById('floating-checkout');
-  const floatingCount = document.getElementById('floating-count');
-  if (count > 0) {
-    floatingCheckout.classList.add('show');
-    floatingCount.textContent = `${count} item${count > 1 ? 's' : ''}`;
-  } else {
-    floatingCheckout.classList.remove('show');
-  }
+// Update Badge
+document.getElementById('cart-count').textContent = count;
 
-  // Update Sidebar
-  const sidebarList = document.getElementById('sidebar-cart-items');
-  const sidebarEmpty = document.getElementById('sidebar-empty-state');
-  const sidebarTotal = document.getElementById('sidebar-total');
-  const checkoutGuide = document.getElementById('checkout-guide-banner');
-  const progressBar = document.getElementById('checkout-progress-bar');
+// Update Sidebar
+const sidebarList = document.getElementById('sidebar-cart-items');
+const sidebarEmpty = document.getElementById('sidebar-empty-state');
+const sidebarTotal = document.getElementById('sidebar-total');
 
-  sidebarTotal.textContent = '৳' + total.toFixed(2);
+sidebarTotal.textContent = '৳' + total.toFixed(2);
 
-  if (count === 0) {
-    sidebarList.innerHTML = "";
-    sidebarEmpty.classList.remove('hidden');
-    checkoutGuide.classList.add('hidden');
-    if (progressBar) progressBar.style.width = '0%';
-  } else {
-    sidebarEmpty.classList.add('hidden');
-    checkoutGuide.classList.remove('hidden');
-    
-    // Update progress bar based on cart value
-    const progress = Math.min(100, (count / 5) * 100); // 5 items = 100%
-    if (progressBar) progressBar.style.width = `${progress}%`;
-    
-    sidebarList.innerHTML = cartItems.map((item) => `
-      <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-gray-100 shadow-sm fade-up">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-urbor-green">
-            <i class="fas fa-drumstick-bite"></i>
-          </div>
-          <div>
-            <p class="font-medium text-gray-900 text-sm">${item.name}</p>
-            <p class="text-xs text-urbor-green font-bold">৳${item.price.toLocaleString()} × ${item.quantity}</p>
-          </div>
-        </div>
-        <button onclick="removeFromCart(${item.id})" class="text-gray-400 hover:text-red-500 transition p-2" title="Remove item">
-          <i class="fas fa-trash-alt"></i>
-        </button>
-      </div>
-    `).join('');
-  }
-
-  // Update Modal Summary
-  document.getElementById('cart-total-display').textContent = '৳' + total.toFixed(2);
-  document.getElementById('instruction-total').textContent = total.toFixed(2);
-  document.getElementById('form-total').value = total.toFixed(2);
-
-  const modalList = document.getElementById('cart-items-list');
-  if (count === 0) {
-    modalList.innerHTML = "<li class='text-gray-400 text-center py-4'>Your cart is empty</li>";
-    return;
-  }
-
-  modalList.innerHTML = cartItems.map(item => `
-    <li class='flex justify-between py-2 border-b border-gray-100 text-sm'>
-      <span>${item.name} <span class='text-gray-400'>×${item.quantity}</span></span>
-      <span class='font-semibold text-urbor-green'>৳${(item.price * item.quantity).toLocaleString()}</span>
-    </li>
-  `).join('');
+if (count === 0) {
+sidebarList.innerHTML = "";
+sidebarEmpty.classList.remove('hidden');
+} else {
+sidebarEmpty.classList.add('hidden');
+sidebarList.innerHTML = cart.map((item, index) => `
+<div class="flex items-center justify-between bg-white p-3 rounded-xl border border-gray-100 shadow-sm fade-up">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-urbor-green">
+<i class="fas fa-drumstick-bite"></i>
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">${item.name}</p>
+<p class="text-xs text-urbor-green font-bold">৳${item.price.toLocaleString()}</p>
+</div>
+</div>
+<button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 transition p-2" title="Remove item">
+<i class="fas fa-trash-alt"></i>
+</button>
+</div>
+`).join('');
 }
 
-// Pulse animation on cart badge
-function pulseCartBadge() {
-  const badge = document.getElementById('cart-count');
-  badge.classList.remove('cart-badge-pulse');
-  void badge.offsetWidth;
-  badge.classList.add('cart-badge-pulse');
+// Update Modal Summary (Read Only)
+document.getElementById('cart-total-display').textContent = '৳' + total.toFixed(2);
+document.getElementById('instruction-total').textContent = total.toFixed(2);
+document.getElementById('form-total').value = total.toFixed(2);
+
+const modalList = document.getElementById('cart-items-list');
+if (count === 0) {
+modalList.innerHTML = "<li class='text-gray-400 text-center py-4'>Your cart is empty</li>";
+return;
 }
 
-// Toast Notification System
-function showToast({ type = 'success', title, message, icon, duration = 3500 }) {
-  const container = document.getElementById('toast-container');
-  const toastId = 'toast-' + Date.now();
-  
-  const typeClasses = {
-    success: 'success',
-    info: 'info',
-    warning: 'warning'
-  };
-  
-  const toastHTML = `
-    <div id="${toastId}" class="toast">
-      <div class="toast-icon ${typeClasses[type]}">
-        <i class="fas ${icon}"></i>
-      </div>
-      <div class="toast-content">
-        <div class="toast-title">${title}</div>
-        <div class="toast-message">${message}</div>
-      </div>
-      <button class="toast-close" onclick="removeToast('${toastId}')">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-  `;
-  
-  container.insertAdjacentHTML('beforeend', toastHTML);
-  
-  // Show animation
-  setTimeout(() => {
-    const toast = document.getElementById(toastId);
-    if (toast) toast.classList.add('show');
-  }, 10);
-  
-  // Auto hide
-  setTimeout(() => {
-    removeToast(toastId);
-  }, duration);
-}
-
-function removeToast(toastId) {
-  const toast = document.getElementById(toastId);
-  if (toast) {
-    toast.classList.remove('show');
-    toast.classList.add('hide');
-    setTimeout(() => {
-      toast.remove();
-    }, 400);
-  }
+// Group items for modal summary
+const counts = {};
+cart.forEach(item => {
+counts[item.name] = (counts[item.name] || 0) + 1;
+});
+modalList.innerHTML = Object.entries(counts).map(([name, qty]) => {
+const item = products.find(p => p.name === name);
+return `<li class='flex justify-between py-2 border-b border-gray-100 text-sm'>
+<span>${name} <span class='text-gray-400'>×${qty}</span></span>
+<span class='font-semibold text-urbor-green'>৳${(item.price * qty).toLocaleString()}</span>
+</li>`;
+}).join('');
 }
 
 // Sidebar Functions
 function openCartSidebar() {
-  const sidebar = document.getElementById('cart-sidebar');
-  const overlay = document.getElementById('cart-overlay');
-  sidebar.classList.remove('-translate-x-full');
-  sidebar.classList.add('translate-x-0');
-  overlay.classList.remove('hidden');
-  setTimeout(() => {
-    overlay.classList.remove('opacity-0');
-  }, 10);
-  document.body.style.overflow = 'hidden';
-  updateCartUI();
-  
-  // Show guide notification if cart has items
-  const count = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
-  if (count > 0) {
-    showToast({
-      type: 'info',
-      title: 'Ready to checkout?',
-      message: `${count} item${count > 1 ? 's' : ''} in cart. Complete your order!`,
-      icon: 'fa-shopping-bag',
-      duration: 4000
-    });
-  }
+const sidebar = document.getElementById('cart-sidebar');
+const overlay = document.getElementById('cart-overlay');
+sidebar.classList.remove('-translate-x-full');
+sidebar.classList.add('translate-x-0');
+overlay.classList.remove('hidden');
+// Small delay to allow display:block to apply before opacity transition
+setTimeout(() => {
+overlay.classList.remove('opacity-0');
+}, 10);
+document.body.style.overflow = 'hidden';
+updateCartUI();
 }
 
 function closeCartSidebar() {
-  const sidebar = document.getElementById('cart-sidebar');
-  const overlay = document.getElementById('cart-overlay');
-  sidebar.classList.add('-translate-x-full');
-  sidebar.classList.remove('translate-x-0');
-  overlay.classList.add('opacity-0');
-  setTimeout(() => {
-    overlay.classList.add('hidden');
-  }, 300);
-  document.body.style.overflow = 'auto';
+const sidebar = document.getElementById('cart-sidebar');
+const overlay = document.getElementById('cart-overlay');
+sidebar.classList.add('-translate-x-full');
+sidebar.classList.remove('translate-x-0');
+overlay.classList.add('opacity-0');
+setTimeout(() => {
+overlay.classList.add('hidden');
+}, 300);
+document.body.style.overflow = 'auto';
 }
 
 function proceedToCheckout() {
-  const count = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
-  if (count === 0) {
-    showToast({
-      type: 'warning',
-      title: 'Cart is empty',
-      message: 'Add some products first!',
-      icon: 'fa-exclamation-circle'
-    });
-    return;
-  }
-  closeCartSidebar();
-  toggleCheckoutModal();
-  
-  showToast({
-    type: 'success',
-    title: 'Checkout started',
-    message: 'Complete your order details below',
-    icon: 'fa-lock',
-    duration: 3000
-  });
+if (cart.length === 0) {
+alert("Your cart is empty!");
+return;
+}
+closeCartSidebar();
+toggleCheckoutModal();
 }
 
+// Toggle Checkout Modal (Renamed from toggleCart)
 function toggleCheckoutModal() {
-  const modal = document.getElementById('checkout-modal');
-  const isHidden = modal.classList.toggle('hidden');
-  document.body.style.overflow = isHidden ? 'auto' : 'hidden';
-  if (!isHidden) {
-    updateCartUI();
-  }
+const modal = document.getElementById('checkout-modal');
+const isHidden = modal.classList.toggle('hidden');
+document.body.style.overflow = isHidden ? 'auto' : 'hidden';
+if (!isHidden) {
+updateCartUI();
+}
 }
 
 // Setup FAQ accordion
 function setupFAQ() {
-  document.querySelectorAll('.faq-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const content = btn.nextElementSibling;
-      const icon = btn.querySelector('i');
-      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !isExpanded);
-      content.classList.toggle('hidden');
-      icon.classList.toggle('rotate-180');
-    });
-  });
+document.querySelectorAll('.faq-btn').forEach(btn => {
+btn.addEventListener('click', () => {
+const content = btn.nextElementSibling;
+const icon = btn.querySelector('i');
+const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+// Toggle current
+btn.setAttribute('aria-expanded', !isExpanded);
+content.classList.toggle('hidden');
+icon.classList.toggle('rotate-180');
+});
+});
 }
 
 // Setup mobile menu toggle
 function setupMobileMenu() {
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  const icon = btn.querySelector('i');
-  btn.addEventListener('click', () => {
-    const isHidden = menu.classList.toggle('hidden');
-    icon.classList.toggle('fa-bars');
-    icon.classList.toggle('fa-times');
-    btn.setAttribute('aria-expanded', !isHidden);
-  });
-  menu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      menu.classList.add('hidden');
-      icon.classList.add('fa-bars');
-      icon.classList.remove('fa-times');
-      btn.setAttribute('aria-expanded', 'false');
-    });
-  });
+const btn = document.getElementById('mobile-menu-btn');
+const menu = document.getElementById('mobile-menu');
+const icon = btn.querySelector('i');
+btn.addEventListener('click', () => {
+const isHidden = menu.classList.toggle('hidden');
+icon.classList.toggle('fa-bars');
+icon.classList.toggle('fa-times');
+btn.setAttribute('aria-expanded', !isHidden);
+});
+// Close menu when clicking a link
+menu.querySelectorAll('a').forEach(link => {
+link.addEventListener('click', () => {
+menu.classList.add('hidden');
+icon.classList.add('fa-bars');
+icon.classList.remove('fa-times');
+btn.setAttribute('aria-expanded', 'false');
+});
+});
 }
 
 // Handle checkout form submission
 async function handleCheckout(e) {
-  e.preventDefault();
-  
-  const count = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
-  if (count === 0) {
-    showStatus("Your cart is empty", "error");
-    return;
-  }
-  
-  const btn = document.getElementById('submit-btn');
-  const spinner = document.getElementById('loading-spinner');
-  const trxInput = document.getElementById('bkash-trx');
-  
-  const trx = trxInput.value.trim();
-  if (trx.length < 8) {
-    showStatus("Invalid transaction ID", "error");
-    trxInput.focus();
-    return;
-  }
-  
-  btn.disabled = true;
-  btn.classList.add('opacity-60', 'cursor-not-allowed');
-  spinner.classList.remove('hidden');
-  showStatus("Verifying payment...", "info");
-  
-  try {
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    
-    // Format items with quantities
-    const cartItems = Object.values(cart);
-    data.items = cartItems
-      .map(item => `${item.name} (×${item.quantity})`)
-      .join(', ');
-    
-    const response = await fetch(API_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data),
-    });
-    
-    const result = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(result.error || 'Order submission failed');
-    }
-    
-    showStatus(`✓ Order placed! Ref: ${result.transactionId}`, "success");
-    
-    // Show success toast
-    showToast({
-      type: 'success',
-      title: 'Order Confirmed! 🎉',
-      message: `Your order has been placed successfully. Ref: ${result.transactionId}`,
-      icon: 'fa-check-circle',
-      duration: 5000
-    });
-    
-    // Clear cart
-    cart = {};
-    productQuantities = {};
-    renderProducts();
-    updateCartUI();
-    e.target.reset();
-    
-    setTimeout(() => {
-      toggleCheckoutModal();
-      btn.disabled = false;
-      btn.classList.remove('opacity-60', 'cursor-not-allowed');
-      spinner.classList.add('hidden');
-      showStatus("", "info");
-    }, 3000);
-    
-  } catch (error) {
-    console.error('Checkout error:', error);
-    showStatus(`✗ ${error.message}`, "error");
-    
-    showToast({
-      type: 'warning',
-      title: 'Order Failed',
-      message: error.message,
-      icon: 'fa-exclamation-circle',
-      duration: 5000
-    });
-    
-    btn.disabled = false;
-    btn.classList.remove('opacity-60', 'cursor-not-allowed');
-    spinner.classList.add('hidden');
-  }
+e.preventDefault();
+if (cart.length === 0) {
+showStatus("Your cart is empty", "error");
+return;
+}
+const btn = document.getElementById('submit-btn');
+const spinner = document.getElementById('loading-spinner');
+const trxInput = document.getElementById('bkash-trx');
+// Client-side validation
+const trx = trxInput.value.trim();
+if (trx.length < 8) {
+showStatus("Invalid transaction ID", "error");
+trxInput.focus();
+return;
+}
+// Set loading state
+btn.disabled = true;
+btn.classList.add('opacity-60', 'cursor-not-allowed');
+spinner.classList.remove('hidden');
+showStatus("Verifying payment...", "info");
+try {
+const formData = new FormData(e.target);
+const data = Object.fromEntries(formData);
+// Format items for backend
+const itemCounts = {};
+cart.forEach(item => {
+itemCounts[item.name] = (itemCounts[item.name] || 0) + 1;
+});
+data.items = Object.entries(itemCounts)
+.map(([name, qty]) => `${name} (×${qty})`)
+.join(', ');
+// Call secure serverless endpoint
+const response = await fetch(API_ENDPOINT, {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json'
+},
+body: JSON.stringify(data),
+});
+const result = await response.json();
+if (!response.ok) {
+throw new Error(result.error || 'Order submission failed');
+}
+// Success
+showStatus(`✓ Order placed! Ref: ${result.transactionId}`, "success");
+// Clear cart and reset form
+cart = [];
+updateCartUI();
+e.target.reset();
+// Close modal after delay
+setTimeout(() => {
+toggleCheckoutModal();
+btn.disabled = false;
+btn.classList.remove('opacity-60', 'cursor-not-allowed');
+spinner.classList.add('hidden');
+showStatus("", "info");
+}, 3000);
+} catch (error) {
+console.error('Checkout error:', error);
+showStatus(`✗ ${error.message}`, "error");
+btn.disabled = false;
+btn.classList.remove('opacity-60', 'cursor-not-allowed');
+spinner.classList.add('hidden');
+}
 }
 
 // Show status message with styling
 function showStatus(message, type) {
-  const el = document.getElementById('status-msg');
-  const icons = {
-    success: '<i class="fas fa-check-circle text-green-600 mr-1"></i>',
-    error: '<i class="fas fa-exclamation-circle text-red-500 mr-1"></i>',
-    info: ''
-  };
-  const colors = {
-    success: 'text-green-700 font-medium',
-    error: 'text-red-600 font-medium',
-    info: 'text-gray-600'
-  };
-  el.innerHTML = icons[type] + message;
-  el.className = `text-center text-sm mt-3 min-h-[24px] ${colors[type]}`;
+const el = document.getElementById('status-msg');
+const icons = {
+success: '<i class="fas fa-check-circle text-green-600 mr-1"></i>',
+error: '<i class="fas fa-exclamation-circle text-red-500 mr-1"></i>',
+info: ''
+};
+const colors = {
+success: 'text-green-700 font-medium',
+error: 'text-red-600 font-medium',
+info: 'text-gray-600'
+};
+el.innerHTML = icons[type] + message;
+el.className = `text-center text-sm mt-3 min-h-[24px] ${colors[type]}`;
+}
+
+// Test API endpoint (development only)
+async function testAPI() {
+const btn = event.currentTarget;
+const originalText = btn.innerHTML;
+btn.innerHTML = 'Testing...';
+btn.disabled = true;
+try {
+const response = await fetch(API_ENDPOINT, {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json'
+},
+body: JSON.stringify({
+transactionId: 'TEST' + Date.now().toString().slice(-6),
+name: 'Test User',
+email: 'test@urboressentials.com',
+phone: '01711111111',
+address: 'Test Address, Dhaka',
+total: '1.00',
+items: 'Test Item (×1)'
+})
+});
+const result = await response.json();
+const status = response.ok ? '✓ Success' : '✗ Failed';
+const color = response.ok ? 'text-green-600' : 'text-red-600';
+alert(`${status}
+Response: ${JSON.stringify(result, null, 2)}`);
+btn.innerHTML = `<i class="fas fa-check mr-1"></i>${status}`;
+btn.classList.add(color);
+} catch (error) {
+alert(`✗ Error: ${error.message}`);
+btn.innerHTML = '✗ Failed';
+btn.classList.add('text-red-600');
+} finally {
+setTimeout(() => {
+btn.innerHTML = originalText;
+btn.disabled = false;
+btn.className = 'bg-gray-800 text-white px-4 py-2 rounded-xl shadow-lg text-sm hover:bg-urbor-green transition';
+}, 2000);
+}
 }
 
 // Close modal when clicking outside
 document.getElementById('checkout-modal')?.addEventListener('click', (e) => {
-  if (e.target.id === 'checkout-modal') {
-    toggleCheckoutModal();
-  }
+if (e.target.id === 'checkout-modal') {
+toggleCheckoutModal();
+}
 });
 
 // Close modal on Escape key
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    const modal = document.getElementById('checkout-modal');
-    const sidebar = document.getElementById('cart-sidebar');
-    if (!modal?.classList.contains('hidden')) {
-      toggleCheckoutModal();
-    } else if (!sidebar.classList.contains('-translate-x-full')) {
-      closeCartSidebar();
-    }
-  }
+if (e.key === 'Escape') {
+const modal = document.getElementById('checkout-modal');
+const sidebar = document.getElementById('cart-sidebar');
+if (!modal?.classList.contains('hidden')) {
+toggleCheckoutModal();
+} else if (!sidebar.classList.contains('-translate-x-full')) {
+closeCartSidebar();
+}
+}
 });
 </script>
 </body>
