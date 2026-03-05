@@ -1,6 +1,6 @@
 // test.js - Run with: node test.js
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbzjifcgdtEvb68ZSypcyowVTtSH0RfU2NK8y6f5ixI8vwEtCcsJrkr21F3d2OKiFk2M/exec'; // ← Replace with YOUR actual Vercel URL
+const API_URL = 'https://script.google.com/macros/s/AKfycbwuTodU2_Rlr4dGOyF4hgVKPs7A4hzd8uurKymE3ZsTiuxpleu03WBB4ijEdFisfEC4/exec'; // ← Replace with YOUR actual Vercel URL
 const API_KEY = 'urbor-secure-key-2026-abc123xyz789'; // ← Must match Vercel env var
 
 async function testOrder() {

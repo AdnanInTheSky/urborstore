@@ -1,15 +1,11 @@
-// api/submit.js
-// Vercel Edge Function - Secure proxy to Google Apps Script
-// NO API KEY - Uses rate limiting for basic protection
-
+// api/submit.js - WITH ENHANCED DEBUGGING
 export const config = {
   runtime: 'edge',
 };
 
-// ✅ Clean URL - NO trailing spaces
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjifcgdtEvb68ZSypcyowVTtSH0RfU2NK8y6f5ixI8vwEtCcsJrkr21F3d2OKiFk2M/exec';
+// ✅ PASTE YOUR FRESH GAS URL HERE (no trailing spaces!)
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwuTodU2_Rlr4dGOyF4hgVKPs7A4hzd8uurKymE3ZsTiuxpleu03WBB4ijEdFisfEC4/exec';
 
-// In-memory rate limiting (resets on cold start)
 const rateLimitStore = new Map();
 
 function isRateLimited(identifier, limit = 15, windowMs = 60000) {
@@ -26,7 +22,6 @@ function isRateLimited(identifier, limit = 15, windowMs = 60000) {
 }
 
 export default async function handler(request) {
-  // ✅ CORS Headers - MUST be on EVERY response
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -34,90 +29,91 @@ export default async function handler(request) {
     'Content-Type': 'application/json',
   };
 
-  // ✅ 1. Handle OPTIONS preflight FIRST
   if (request.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers: corsHeaders });
   }
 
-  // ✅ 2. Only allow POST
   if (request.method !== 'POST') {
     return new Response(
-      JSON.stringify({ error: 'Method not allowed', allowed: ['POST', 'OPTIONS'] }),
+      JSON.stringify({ error: 'Method not allowed' }),
       { status: 405, headers: corsHeaders }
     );
   }
 
   try {
-    // ✅ 3. Rate limiting
     const clientIP = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown';
     if (isRateLimited(clientIP)) {
       return new Response(
-        JSON.stringify({ error: 'Too many requests. Please wait 60 seconds.' }),
+        JSON.stringify({ error: 'Too many requests' }),
         { status: 429, headers: corsHeaders }
       );
     }
 
-    // ✅ 4. Parse request body
     let body;
     try {
       body = await request.json();
-    } catch (parseError) {
+    } catch {
       return new Response(
-        JSON.stringify({ error: 'Invalid JSON in request body' }),
+        JSON.stringify({ error: 'Invalid JSON body' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    // ✅ 5. Basic validation
     const required = ['transactionId', 'name', 'email', 'phone', 'address', 'total'];
     const missing = required.filter(field => !body[field]?.toString().trim());
     if (missing.length > 0) {
       return new Response(
-        JSON.stringify({ error: `Missing required fields: ${missing.join(', ')}` }),
+        JSON.stringify({ error: `Missing: ${missing.join(', ')}` }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    // ✅ 6. Forward to Google Apps Script
-    console.log('[FORWARDING] To Google Script:', {
-      transactionId: body.transactionId?.slice(0, 4) + '****',
-      total: body.total
-    });
+    console.log('[FORWARDING] To GAS:', SCRIPT_URL);
 
-    const gasResponse = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+    let gasResponse;
+    try {
+      gasResponse = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+    } catch (fetchErr) {
+      console.error('[FETCH_ERROR]', fetchErr.message);
+      throw new Error(`Cannot reach Google Script: ${fetchErr.message}`);
+    }
 
-    // ✅ 7. Read response as text first
     const gasText = await gasResponse.text();
-    console.log('[SCRIPT_RESPONSE] Status:', gasResponse.status, 'Preview:', gasText.slice(0, 300));
+    console.log('[GAS_RESPONSE] Status:', gasResponse.status);
+    console.log('[GAS_RESPONSE] Body:', gasText.slice(0, 500));
+    console.log('[GAS_RESPONSE] Content-Type:', gasResponse.headers.get('content-type'));
 
-    // ✅ 8. Parse GAS response
+    // ✅ Check if response is HTML (common GAS error)
+    if (gasText.trim().startsWith('<!DOCTYPE') || gasText.trim().startsWith('<html')) {
+      console.error('[GAS_ERROR] Returned HTML instead of JSON!');
+      throw new Error('Google Script returned HTML. Check deployment settings (must be "Anyone" access)');
+    }
+
     let gasResult;
     try {
       gasResult = JSON.parse(gasText);
     } catch (parseErr) {
-      console.error('[PARSE_ERROR] Invalid JSON from Google Script:', gasText.slice(0, 500));
-      throw new Error('Order processor returned invalid response');
+      console.error('[PARSE_ERROR]', parseErr.message, 'Raw:', gasText.slice(0, 200));
+      throw new Error(`Invalid response from Google Script: ${parseErr.message}`);
     }
 
-    // ✅ 9. Handle response
     if (gasResult?.result === 'success') {
       return new Response(
         JSON.stringify({
           success: true,
-          message: 'Order received successfully',
+          message: 'Order received',
           transactionId: body.transactionId?.slice(0, 4) + '****',
-          timestamp: new Date().toISOString(),
         }),
         { status: 200, headers: corsHeaders }
       );
     } else {
       return new Response(
         JSON.stringify({
-          error: gasResult?.message || 'Order processing failed',
+          error: gasResult?.message || 'Order failed',
           details: gasResult
         }),
         { status: 400, headers: corsHeaders }
@@ -125,18 +121,18 @@ export default async function handler(request) {
     }
 
   } catch (error) {
-    console.error('[ORDER_API_ERROR]', {
+    console.error('[API_ERROR]', {
       message: error.message,
-      type: error.name,
-      ip: request.headers.get('x-forwarded-for')?.split(',')[0],
+      stack: error.stack?.split('\n')[0],
     });
 
     return new Response(
       JSON.stringify({
-        error: error.message || 'Order submission failed. Please try again.'
+        error: error.message || 'Order submission failed',
+        hint: 'Check Vercel logs for details'
       }),
       {
-        status: error.message?.includes('Google Script') ? 502 : 500,
+        status: 500,
         headers: corsHeaders,
       }
     );
