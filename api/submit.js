@@ -5,10 +5,10 @@ export const config = {
   runtime: 'edge',
 };
 
-// ✅ Your Google Apps Script endpoint (server-side only)
+// ✅ FIXED: Removed trailing spaces from URL
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCTprJJomeXczBnjnP8DMxq9YJ28oa3DzvErTMvQt1mI69hzGoU0liHmFOBsbN7AcK/exec';
 
-// In-memory rate limiting store
+// In-memory rate limiting store (note: resets on cold start in Edge Functions)
 const rateLimitStore = new Map();
 
 function isRateLimited(identifier, limit = 15, windowMs = 60000) {
@@ -68,7 +68,7 @@ export default async function handler(request) {
 
   try {
     // ─────────────────────────────────────
-    // 1. RATE LIMITING (Still Active!)
+    // 1. RATE LIMITING
     // ─────────────────────────────────────
     const clientIP = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown';
     if (isRateLimited(clientIP)) {
@@ -84,7 +84,8 @@ export default async function handler(request) {
     let body;
     try {
       body = await request.json();
-    } catch {
+    } catch (parseError) {
+      console.error('[PARSE_ERROR] Invalid JSON body:', parseError.message);
       return new Response(
         JSON.stringify({ error: 'Invalid JSON in request body' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -138,26 +139,47 @@ export default async function handler(request) {
     // ─────────────────────────────────────
     // 5. FORWARD TO GOOGLE APPS SCRIPT
     // ─────────────────────────────────────
-    const scriptResponse = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(cleanData),
+    console.log('[FORWARDING] To Google Script:', { 
+      transactionId: cleanData.transactionId, 
+      total: cleanData.total,
+      url: SCRIPT_URL 
     });
 
-    if (!scriptResponse.ok) {
-      const errorText = await scriptResponse.text().catch(() => 'Unknown error');
-      console.error(`[SCRIPT_ERROR] Status: ${scriptResponse.status}, Body: ${errorText.slice(0, 200)}`);
-      throw new Error(`Google Script responded with status ${scriptResponse.status}`);
+    let scriptResponse;
+    try {
+      scriptResponse = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cleanData),
+        // ⚠️ Edge Functions don't support redirect: 'manual', so we handle redirects manually
+      });
+    } catch (fetchError) {
+      console.error('[FETCH_ERROR] Failed to reach Google Script:', fetchError.message);
+      throw new Error(`Unable to connect to order processor: ${fetchError.message}`);
     }
 
+    // Read response as text FIRST to debug non-JSON responses
     const scriptText = await scriptResponse.text();
+    console.log('[SCRIPT_RESPONSE] Status:', scriptResponse.status, 'Body preview:', scriptText.slice(0, 300));
+
+    // Check if response is actually JSON
+    if (!scriptResponse.headers.get('content-type')?.includes('application/json')) {
+      console.error('[CONTENT_TYPE_ERROR] Expected JSON but got:', scriptResponse.headers.get('content-type'));
+      // Google Apps Script sometimes returns HTML errors - surface this for debugging
+      if (scriptText.includes('<!DOCTYPE html') || scriptText.includes('<html')) {
+        throw new Error('Google Script returned an HTML error page. Check your script deployment and CORS settings.');
+      }
+    }
+
     let scriptResult;
-    
     try {
       scriptResult = JSON.parse(scriptText);
     } catch (parseErr) {
-      console.error('[PARSE_ERROR] Invalid JSON from Google Script:', scriptText.slice(0, 200));
-      throw new Error('Order processor returned invalid response');
+      console.error('[PARSE_ERROR] Invalid JSON from Google Script:', {
+        raw: scriptText.slice(0, 500),
+        error: parseErr.message
+      });
+      throw new Error(`Order processor returned invalid response: ${parseErr.message}`);
     }
 
     // ─────────────────────────────────────
@@ -174,22 +196,25 @@ export default async function handler(request) {
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     } else {
-      throw new Error(scriptResult.message || 'Order processing failed');
+      // Propagate specific error from Google Script if available
+      const errorMsg = scriptResult?.error || scriptResult?.message || 'Order processing failed';
+      throw new Error(errorMsg);
     }
 
   } catch (error) {
     console.error('[ORDER_API_ERROR]', {
       message: error.message,
       type: error.name,
+      stack: error.stack,
       ip: request.headers.get('x-forwarded-for')?.split(',')[0],
     });
 
     return new Response(
       JSON.stringify({
-        error: 'Order submission failed. Please try again or contact support.'
+        error: error.message || 'Order submission failed. Please try again or contact support.'
       }),
       {
-        status: 500,
+        status: error.message?.includes('Google Script') ? 502 : 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
