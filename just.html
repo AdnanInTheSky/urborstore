@@ -97,7 +97,29 @@
     }
     .quantity-control button { transition: all 0.15s ease; }
     .quantity-control button:active { transform: scale(0.95); }
-    @media (max-width: 640px) { .product-grid { grid-template-columns: 1fr !important; } }
+    
+    /* Quantity input enhancements */
+    .quantity-control input[type="number"]::-webkit-inner-spin-button,
+    .quantity-control input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .quantity-control input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    .scale-\[1\.02\] {
+      animation: pulse-soft 0.15s ease-in-out;
+    }
+    
+    @media (max-width: 640px) { 
+      .product-grid { grid-template-columns: 1fr !important; }
+      .quantity-control { flex-wrap: wrap; gap: 8px !important; }
+      .quantity-control span:first-child { width: 100%; margin-bottom: 4px; }
+    }
   </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -157,7 +179,7 @@
         <div class="bg-gray-50 rounded-2xl p-5 mb-6 border border-gray-200">
           <div class="flex justify-between items-center mb-3">
             <span class="font-semibold text-gray-800">Order Total</span>
-            <span id="live-total" class="text-2xl font-bold text-urbor-green">৳0.00</span>
+            <span id="live-total" class="text-2xl font-bold text-urbor-green transition-opacity duration-100">৳0.00</span>
           </div>
           <p class="text-xs text-gray-500 flex items-center gap-1">
             <i class="fas fa-truck text-urbor-green"></i>
@@ -227,7 +249,7 @@
           <span class="premium-loader mr-2"></span>
           <span class="text-gray-600 text-sm">Verifying payment...</span>
         </div>
-        <p id="status-msg" class="text-center text-sm mt-4 min-h-[24px] font-medium" role="status" aria-live="polite"></p>
+        <p id="status-msg" class="text-center text-sm mt-4 min-h-[24px] font-medium transition-all duration-200" role="status" aria-live="polite"></p>
 
         <!-- Trust Badges -->
         <div class="mt-8 pt-6 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
@@ -251,12 +273,12 @@
     const API_ENDPOINT = '/api/submit';
     const MERCHANT_BKASH_NUMBER = '01700000000';
     
-    // Product Catalog (matches your offerings)
+    // Product Catalog - FIXED: corrected duplicate 3kg entry for 10kg
     const PRODUCTS = [
-      { id: 'whole-3kg', name: 'Whole Chicken (3kg)', price: 1260, desc: 'Perfect for small families', image: "" },
-      { id: 'whole-5kg', name: 'Whole Chicken (5kg)', price: 2100, desc: 'Ideal for family gatherings', image:"" },
-      { id: 'whole-8kg', name: 'Whole Chicken (8kg)', price: 3300, desc: 'Best value for events', image:"" },
-      { id: 'whole-10kg', name: 'Whole Chicken (3kg)', price: 1260, desc: 'Perfect for small families', image:"" }
+      { id: 'whole-3kg', name: 'Whole Chicken (3kg)', price: 1260, desc: 'Perfect for small families', image: '<i class="fas fa-drumstick-bite text-urbor-green"></i>' },
+      { id: 'whole-5kg', name: 'Whole Chicken (5kg)', price: 2100, desc: 'Ideal for family gatherings', image: '<i class="fas fa-drumstick-bite text-urbor-green"></i>' },
+      { id: 'whole-8kg', name: 'Whole Chicken (8kg)', price: 3300, desc: 'Best value for events', image: '<i class="fas fa-drumstick-bite text-urbor-green"></i>' },
+      { id: 'whole-10kg', name: 'Whole Chicken (10kg)', price: 4100, desc: 'Maximum value for large events', image: '<i class="fas fa-drumstick-bite text-urbor-green"></i>' }
     ];
 
     // Initialize
@@ -267,35 +289,42 @@
       calculateTotal();
     });
 
-    // Render product selection
+    // Render product selection with enhanced quantity UI
     function renderProducts() {
       const container = document.getElementById('product-list');
       container.innerHTML = PRODUCTS.map(product => `
-        <div class="product-option relative">
+        <div class="product-option relative group">
           <input type="checkbox" id="prod-${product.id}" name="products" value="${product.id}" 
                  data-price="${product.price}" data-name="${product.name}"
                  class="absolute opacity-0 peer" onchange="calculateTotal()">
-          <label for="prod-${product.id}" class="flex items-center gap-4 p-4 rounded-2xl border border-gray-200 bg-white cursor-pointer select-none">
-            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-50 to-amber-50 flex items-center justify-center text-2xl flex-shrink-0">
+          <label for="prod-${product.id}" class="flex items-start gap-4 p-4 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer select-none hover:border-urbor-green/40 transition-all duration-200">
+            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-50 to-amber-50 flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">
               ${product.image}
             </div>
             <div class="flex-1 min-w-0">
-              <div class="flex justify-between items-start">
+              <div class="flex justify-between items-start gap-2">
                 <div>
                   <p class="font-semibold text-gray-900">${product.name}</p>
-                  <p class="text-xs text-gray-500">${product.desc}</p>
+                  <p class="text-xs text-gray-500 mt-0.5">${product.desc}</p>
                 </div>
-                <span class="font-bold text-urbor-green">৳${product.price.toLocaleString()}</span>
+                <span class="font-bold text-urbor-green whitespace-nowrap">৳${product.price.toLocaleString()}</span>
               </div>
-              <div class="quantity-control hidden peer-checked:flex items-center gap-3 mt-3 pt-3 border-t border-gray-100">
-                <button type="button" onclick="adjustQty('${product.id}', -1)" 
-                        class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold transition">−</button>
-                <input type="number" id="qty-${product.id}" name="qty-${product.id}" value="1" min="1" max="10" 
-                       class="w-12 text-center rounded-lg border border-gray-300 py-1 text-sm focus:border-urbor-green focus:ring-urbor-green"
-                       onchange="calculateTotal()" oninput="calculateTotal()">
-                <button type="button" onclick="adjustQty('${product.id}', 1)" 
-                        class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 font-bold transition">+</button>
-                <span class="text-xs text-gray-500 ml-2">units</span>
+              
+              <!-- Quantity Controls - Enhanced Visibility -->
+              <div class="quantity-control hidden peer-checked:flex items-center gap-3 mt-4 pt-3 border-t border-gray-100">
+                <span class="text-xs font-medium text-gray-600">Quantity:</span>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="adjustQty('${product.id}', -1)" 
+                          class="w-9 h-9 rounded-lg bg-gray-100 hover:bg-urbor-green hover:text-white flex items-center justify-center text-gray-700 font-bold transition-all duration-150 active:scale-95 shadow-sm"
+                          aria-label="Decrease quantity">−</button>
+                  <input type="number" id="qty-${product.id}" name="qty-${product.id}" value="1" min="1" max="10" 
+                         class="w-14 text-center rounded-lg border-2 border-gray-200 py-2 text-sm font-semibold focus:border-urbor-green focus:ring-2 focus:ring-urbor-green/20 transition-all"
+                         oninput="calculateTotal()">
+                  <button type="button" onclick="adjustQty('${product.id}', 1)" 
+                          class="w-9 h-9 rounded-lg bg-gray-100 hover:bg-urbor-green hover:text-white flex items-center justify-center text-gray-700 font-bold transition-all duration-150 active:scale-95 shadow-sm"
+                          aria-label="Increase quantity">+</button>
+                </div>
+                <span class="text-xs text-gray-400 ml-1">units</span>
               </div>
             </div>
           </label>
@@ -303,12 +332,22 @@
       `).join('');
     }
 
+    // Enhanced quantity adjustment with visual feedback
     function adjustQty(productId, delta) {
       const input = document.getElementById(`qty-${productId}`);
+      const label = document.querySelector(`label[for="prod-${productId}"]`);
       if (!input) return;
+      
       let val = parseInt(input.value) || 1;
       val = Math.max(1, Math.min(10, val + delta));
       input.value = val;
+      
+      // Visual feedback animation
+      if (label) {
+        label.classList.add('scale-[1.02]');
+        setTimeout(() => label.classList.remove('scale-[1.02]'), 150);
+      }
+      
       calculateTotal();
     }
 
@@ -327,11 +366,15 @@
         }
       });
       
-      // Update UI
-      document.getElementById('live-total').textContent = `৳${total.toLocaleString('en-BD', {minimumFractionDigits: 2})}`;
-      document.getElementById('form-total').value = total; // API expects number for parseFloat()
+      // Update UI with smooth transition
+      const totalEl = document.getElementById('live-total');
+      totalEl.style.opacity = '0.7';
+      setTimeout(() => {
+        totalEl.textContent = `৳${total.toLocaleString('en-BD', {minimumFractionDigits: 2})}`;
+        totalEl.style.opacity = '1';
+      }, 100);
       
-      // ⚠️ API expects items as a STRING, not JSON array
+      document.getElementById('form-total').value = total;
       document.getElementById('form-items').value = itemsArray.join(', ');
       
       return { total, items: itemsArray.join(', ') };
@@ -423,7 +466,7 @@
       };
       const colors = { success: 'text-green-700', error: 'text-red-600', info: 'text-urbor-green' };
       el.innerHTML = `${icons[type] || ''}${message}`;
-      el.className = `text-center text-sm mt-4 min-h-[24px] font-medium ${colors[type]}`;
+      el.className = `text-center text-sm mt-4 min-h-[24px] font-medium ${colors[type]} transition-all duration-200`;
     }
 
     // Auto-format phone input

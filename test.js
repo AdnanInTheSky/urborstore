@@ -1,6 +1,6 @@
 // test.js - Run with: node test.js
 
-const API_URL = 'https://urborstore-dji3.vercel.app//api/submit'; // ← Replace with YOUR actual Vercel URL
+const API_URL = 'https://script.google.com/macros/s/AKfycbwCTprJJomeXczBnjnP8DMxq9YJ28oa3DzvErTMvQt1mI69hzGoU0liHmFOBsbN7AcK/exec'; // ← Replace with YOUR actual Vercel URL
 const API_KEY = 'urbor-secure-key-2026-abc123xyz789'; // ← Must match Vercel env var
 
 async function testOrder() {

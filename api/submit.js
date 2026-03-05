@@ -6,7 +6,7 @@ export const config = {
 };
 
 // ✅ Your Google Apps Script endpoint (server-side only)
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwmS4l61c_M0xxQMhfnsNSClUpxhmShPuXulv4kF8vlzqEWD3BGb4VyrneXXMUG9AOf/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCTprJJomeXczBnjnP8DMxq9YJ28oa3DzvErTMvQt1mI69hzGoU0liHmFOBsbN7AcK/exec';
 
 // In-memory rate limiting store
 const rateLimitStore = new Map();
