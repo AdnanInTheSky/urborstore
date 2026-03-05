@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Order | Urbor Essentials</title>
-  <meta name="description" content="Order premium antibiotic-free chicken with bKash"/>
+  <meta name="description" content="Order premium antibiotic-free chicken with bKash - Fresh delivery across Dhaka"/>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -37,6 +37,8 @@
       background-color: #faf7f2;
       color: #1e1b1b;
       font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     .glass-card {
       background: rgba(255, 255, 255, 0.95);
@@ -272,6 +274,7 @@
     // ================== CONFIG ==================
     const API_ENDPOINT = '/api/submit';
     const MERCHANT_BKASH_NUMBER = '01700000000';
+    const API_KEY = 'urbor-secure-key-2026-abc123xyz789'; // Match your Vercel env var
     
     // Product Catalog - FIXED: corrected duplicate 3kg entry for 10kg
     const PRODUCTS = [
@@ -380,7 +383,7 @@
       return { total, items: itemsArray.join(', ') };
     }
 
-    // Handle form submission - matches your api/submit.js expectations
+    // Handle form submission with robust error handling
     async function handleSubmit(e) {
       e.preventDefault();
       
@@ -392,7 +395,7 @@
         return;
       }
       
-      // Validate transaction ID format (matches your API validation)
+      // Validate transaction ID format
       const trx = document.getElementById('bkash-trx').value.trim().toUpperCase();
       if (!/^[0-9a-zA-Z]{8,12}$/.test(trx)) {
         showStatus("Enter a valid 8-12 character bKash Transaction ID", "error");
@@ -400,20 +403,21 @@
         return;
       }
       
-      // Build payload matching your API's expected structure
       const payload = {
         transactionId: trx,
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim().toLowerCase(),
         phone: document.getElementById('phone').value.trim(),
         address: document.getElementById('address').value.trim(),
-        total: total,  // Number, not string - your API does parseFloat()
-        items: items   // STRING format: "Product A ×2, Product B ×1"
+        total: total,
+        items: items
       };
       
       // UI: Loading state
       const btn = document.getElementById('submit-btn');
       const loading = document.getElementById('loading-container');
+      const originalBtnText = btn.innerHTML;
+      
       btn.disabled = true;
       btn.classList.add('opacity-70', 'cursor-wait');
       loading.classList.remove('hidden');
@@ -422,17 +426,33 @@
       try {
         const response = await fetch(API_ENDPOINT, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-API-Key': API_KEY  // Match your Vercel env var
+          },
           body: JSON.stringify(payload)
         });
+        
+        // 🔍 DEBUG: Check content type before parsing
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          const rawText = await response.text();
+          console.error('❌ Non-JSON response received:', {
+            status: response.status,
+            statusText: response.statusText,
+            contentType: contentType,
+            responsePreview: rawText.slice(0, 200) + '...'
+          });
+          throw new Error(`Server returned ${response.status} ${response.statusText}. Expected JSON but got: ${contentType || 'unknown'}`);
+        }
         
         const result = await response.json();
         
         if (!response.ok) {
-          throw new Error(result.error || 'Order submission failed');
+          throw new Error(result.error || result.message || `Order failed: ${response.status}`);
         }
         
-        // Success
+        // ✅ Success
         showStatus(`✓ Order confirmed! Ref: ${result.transactionId || 'UE' + Date.now().toString().slice(-6)}`, "success");
         
         // Reset form after delay
@@ -449,10 +469,28 @@
         }, 3500);
         
       } catch (error) {
-        console.error('Submit error:', error);
-        showStatus(`✗ ${error.message || 'Failed to place order. Try again.'}`, "error");
+        console.error('💥 Submit error:', error);
+        
+        // 🛠️ User-friendly error messages
+        let userMsg = error.message;
+        if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+          userMsg = "Cannot connect to server. Check your internet or try again later.";
+        } else if (error.message.includes('Expected JSON')) {
+          userMsg = "Server configuration error. Please contact support.";
+        } else if (error.message.includes('404')) {
+          userMsg = "Order endpoint not found. Please check with the site administrator.";
+        } else if (error.message.includes('401')) {
+          userMsg = "Authentication failed. Please refresh and try again.";
+        } else if (error.message.includes('405')) {
+          userMsg = "Request method error. Please refresh the page and try again.";
+        }
+        
+        showStatus(`✗ ${userMsg}`, "error");
+        
+        // Restore button
         btn.disabled = false;
         btn.classList.remove('opacity-70', 'cursor-wait');
+        btn.innerHTML = originalBtnText;
         loading.classList.add('hidden');
       }
     }
@@ -474,6 +512,14 @@
       let val = e.target.value.replace(/\D/g, '');
       if (val.startsWith('01') && val.length > 2) val = val.slice(0, 11);
       e.target.value = val;
+    });
+
+    // Prevent form submission on Enter key in quantity inputs
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type === 'number') {
+        e.preventDefault();
+        e.target.blur();
+      }
     });
   </script>
 </body>
