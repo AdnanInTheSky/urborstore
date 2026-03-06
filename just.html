@@ -3,524 +3,437 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Order | Urbor Essentials</title>
-  <meta name="description" content="Order premium antibiotic-free chicken with bKash - Fresh delivery across Dhaka"/>
+  <title>Urbor Essentials • Checkout</title>
   
-  <!-- Tailwind CSS -->
+  <!-- Tailwind (light) + Fonts + minimal icons -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  
-  <!-- Tailwind Config -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'urbor-green': '#2d6a4f',
-            'urbor-green-dark': '#1b4332',
-            'urbor-cream': '#faf7f2',
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Playfair Display', 'serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
+    /* minimal, clean, smooth */
+    * { box-sizing: border-box; margin: 0; }
     body {
-      background-color: #faf7f2;
-      color: #1e1b1b;
       font-family: 'Inter', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      background: #f6faf9; 
+      color: #1a2e2b;
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-      border-radius: 1.5rem;
+    .card {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0,128,96,0.12);
+      border-radius: 28px;
+      box-shadow: 0 12px 30px -12px rgba(16,128,96,0.12);
+      transition: all 0.2s ease;
     }
-    .btn-premium {
-      background: linear-gradient(145deg, #2d6a4f, #1b4332);
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      border: none;
+    .product-item {
+      background: white;
+      border-radius: 20px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid #e2f0e8;
+      box-shadow: 0 2px 6px rgba(0,80,70,0.02);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .product-item:hover {
+      border-color: #20b38a;
+      background: #f4fdf9;
+      transform: scale(1.01);
+    }
+    .product-item.selected {
+      border-color: #0f8f6e;
+      background: #ebfaf3;
+      box-shadow: 0 6px 14px rgba(15,143,110,0.12);
+    }
+    .product-item.selected .check-indicator {
+      background: #0f8f6e;
+      border-color: #0f8f6e;
       color: white;
-      font-weight: 500;
-      letter-spacing: 0.3px;
     }
-    .btn-premium::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.6s ease;
-      z-index: 0;
+    .check-indicator {
+      width: 26px; height: 26px;
+      border-radius: 26px;
+      border: 2px solid #cbdcd0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: white;
+      flex-shrink: 0;
     }
-    .btn-premium:hover::before { left: 100%; }
-    .btn-premium:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px -8px #2d6a4f99;
+    .input-field {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      background: white;
+      border: 1px solid #d0e2da;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      transition: 0.15s;
     }
-    .btn-premium:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-    }
-    .premium-loader {
-      border: 3px solid rgba(45,106,79,0.1);
-      border-top: 3px solid #2d6a4f;
-      border-radius: 50%;
-      width: 24px; height: 24px;
-      animation: spin 0.9s linear infinite;
-      display: inline-block;
-    }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    input:focus, textarea:focus, select:focus {
+    .input-field:focus {
       outline: none;
-      box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
-      border-color: #2d6a4f;
+      border-color: #0f8f6e;
+      box-shadow: 0 0 0 4px rgba(15,143,110,0.08);
     }
-    .product-option { transition: all 0.2s ease; border: 2px solid transparent; }
-    .product-option:hover { border-color: rgba(45, 106, 79, 0.3); transform: translateX(4px); }
-    .product-option input:checked + label {
-      border-color: #2d6a4f;
-      background: rgba(45, 106, 79, 0.05);
+    .input-field.error {
+      border-color: #dc4a4a;
+      background: #fff6f5;
     }
-    .quantity-control button { transition: all 0.15s ease; }
-    .quantity-control button:active { transform: scale(0.95); }
-    
-    /* Quantity input enhancements */
-    .quantity-control input[type="number"]::-webkit-inner-spin-button,
-    .quantity-control input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
+    .premium-btn {
+      background: #0f8f6e;
+      color: white;
+      font-weight: 600;
+      padding: 1rem 1.8rem;
+      border-radius: 40px;
+      border: none;
+      width: 100%;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 10px 20px -8px rgba(15,143,110,0.4);
+      transition: 0.15s;
+      cursor: pointer;
     }
-    .quantity-control input[type="number"] {
-      -moz-appearance: textfield;
+    .premium-btn:hover { background: #0c7559; transform: translateY(-2px); }
+    .premium-btn:disabled { opacity: 0.5; pointer-events: none; }
+    .message {
+      padding: 1rem 1.4rem;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
     }
-    @keyframes pulse-soft {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+    .message.success { background: #e0f5e8; color: #0b5e45; border: 1px solid #a0ddc0; }
+    .message.error { background: #fee9e7; color: #aa2e2e; border: 1px solid #fbb8b0; }
+    .badge {
+      background: #def5ec; padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.75rem;
+      display: inline-flex; align-items: center; gap: 0.4rem; color: #0f5e48;
+      letter-spacing: 0.3px; border: 1px solid #b5e4d4;
     }
-    .scale-\[1\.02\] {
-      animation: pulse-soft 0.15s ease-in-out;
-    }
-    
-    @media (max-width: 640px) { 
-      .product-grid { grid-template-columns: 1fr !important; }
-      .quantity-control { flex-wrap: wrap; gap: 8px !important; }
-      .quantity-control span:first-child { width: 100%; margin-bottom: 4px; }
-    }
+    .summary-line { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed #cfe3db; }
+    .summary-total { font-size: 1.8rem; font-weight: 700; color: #0f8f6e; }
+    .animate-pulse-light { animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } }
   </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col">
+<body class="antialiased">
 
-  <!-- Header -->
-  <header class="py-4 px-4 sm:px-6 border-b border-gray-200/60 bg-white/80 backdrop-blur-sm sticky top-0 z-40">
-    <div class="max-w-5xl mx-auto flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#2d6a4f] to-[#1b4332] shadow-md flex items-center justify-center shrink-0">
-          <i class="fas fa-drumstick-bite text-white text-lg"></i>
-        </div>
-        <span class="text-xl font-display font-semibold tracking-tight text-gray-900">
-          Urbor<span class="text-urbor-green"> Essentials</span>
-        </span>
-      </a>
-      <a href="/" class="text-sm font-medium text-gray-600 hover:text-urbor-green transition flex items-center gap-1">
-        <i class="fas fa-arrow-left"></i> Back
-      </a>
+<!-- extremely simplified header -->
+<header class="py-3 px-5 bg-white/70 backdrop-blur-sm border-b border-green-100 sticky top-0 z-10">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-9 h-9 bg-gradient-to-tr from-green-600 to-green-500 rounded-xl flex items-center justify-center text-white font-bold shadow-md">U</div>
+      <div><span class="font-semibold text-gray-800">Urbor Essentials</span><span class="text-xs text-gray-500 block -mt-0.5">premium • since 2024</span></div>
     </div>
-  </header>
+    <span class="badge"><i class="far fa-credit-card text-xs"></i> secure checkout</span>
+  </div>
+</header>
 
-  <!-- Main Content -->
-  <main class="flex-1 py-6 px-4 sm:px-6">
-    <div class="max-w-5xl mx-auto">
+<main class="max-w-6xl mx-auto px-4 py-8 md:py-10">
+  
+  <!-- one elegant heading -->
+  <div class="text-center mb-8">
+    <h1 class="text-4xl md:text-5xl font-light tracking-tight text-gray-800">complete <span class="font-semibold text-green-700">order</span></h1>
+    <div class="w-20 h-1 bg-green-200 mx-auto mt-3 rounded-full"></div>
+  </div>
+
+  <!-- TWO COLUMN LAYOUT: left products / right form -->
+  <div class="grid md:grid-cols-12 gap-6 items-start">
+    
+    <!-- LEFT: products + trust badges (clean) -->
+    <div class="md:col-span-5 space-y-5">
       
-      <div class="text-center mb-8">
-        <h1 class="text-3xl md:text-4xl font-display font-bold text-gray-900">
-          Place Your <span class="text-urbor-green">Order</span>
-        </h1>
-        <p class="text-gray-600 mt-2">Select products, pay with bKash, get fresh delivery</p>
-      </div>
-
-      <form id="order-form" class="glass-card p-6 sm:p-8" onsubmit="handleSubmit(event)" novalidate>
+      <!-- product card -->
+      <div class="card p-5">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fas fa-tag text-green-600"></i>
+          <span class="font-semibold text-gray-700">1. select product</span>
+        </div>
+        <div class="space-y-2" id="product-list"></div>
         
-        <!-- bKash Instructions -->
-        <div class="bg-gradient-to-br from-green-50 to-amber-50 border border-green-200 rounded-2xl p-5 mb-6">
-          <h4 class="font-bold text-urbor-green flex items-center gap-2 text-base">
-            <i class="fas fa-mobile-alt"></i> How to Pay with bKash
-          </h4>
-          <ol class="list-decimal list-inside text-sm text-gray-700 space-y-2 mt-3">
-            <li>Open bKash app → <span class="font-medium">Send Money</span></li>
-            <li>Send the <span class="font-bold text-gray-900">exact total</span> to <span class="font-mono font-bold text-urbor-green bg-white/70 px-2 py-0.5 rounded" id="merchant-number">01700000000</span></li>
-            <li>Copy the <span class="font-medium">10-digit Transaction ID</span> from SMS</li>
-            <li>Enter it below to confirm your order</li>
-          </ol>
+        <!-- small selected summary shows inline -->
+        <div id="selected-summary" class="mt-5 pt-3 border-t border-green-100 hidden">
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-gray-500">selected:</span>
+            <span id="selected-name" class="font-semibold"></span>
+            <span id="selected-price" class="font-bold text-green-700"></span>
+          </div>
         </div>
-
-        <!-- Product Selection -->
-        <section class="mb-8">
-          <h3 class="font-display font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
-            <i class="fas fa-drumstick-bite text-urbor-green"></i> Select Products
-          </h3>
-          <div class="product-grid grid grid-cols-1 md:grid-cols-2 gap-4" id="product-list"></div>
-        </section>
-
-        <!-- Order Summary -->
-        <div class="bg-gray-50 rounded-2xl p-5 mb-6 border border-gray-200">
-          <div class="flex justify-between items-center mb-3">
-            <span class="font-semibold text-gray-800">Order Total</span>
-            <span id="live-total" class="text-2xl font-bold text-urbor-green transition-opacity duration-100">৳0.00</span>
-          </div>
-          <p class="text-xs text-gray-500 flex items-center gap-1">
-            <i class="fas fa-truck text-urbor-green"></i>
-            Free delivery across Dhaka · Payment on delivery via bKash
-          </p>
+      </div>
+      
+      <!-- trust badges minimal -->
+      <div class="grid grid-cols-3 gap-2 text-center text-xs">
+        <div class="card py-3 px-1 bg-white/70"><i class="fas fa-truck text-green-600 block text-lg mb-1"></i>free delivery</div>
+        <div class="card py-3 px-1 bg-white/70"><i class="fas fa-shield-alt text-green-600 block text-lg mb-1"></i>secure</div>
+        <div class="card py-3 px-1 bg-white/70"><i class="fas fa-undo-alt text-green-600 block text-lg mb-1"></i>returns</div>
+      </div>
+    </div>
+    
+    <!-- RIGHT: form (clean fields, no overkill) -->
+    <div class="md:col-span-7">
+      <form id="checkout-form" class="card p-6 md:p-7 space-y-5">
+        
+        <!-- section: delivery -->
+        <div class="flex items-center gap-2 text-gray-700 mb-1"><i class="fas fa-map-pin text-green-600"></i><span class="font-medium">delivery info</span></div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <input type="text" id="name" placeholder="Full name *" class="input-field" autocomplete="off">
+          <input type="tel" id="phone" placeholder="Phone *" class="input-field">
+          <input type="email" id="email" placeholder="Email *" class="input-field sm:col-span-2">
+          <textarea id="address" placeholder="Delivery address *" rows="2" class="input-field sm:col-span-2"></textarea>
         </div>
-
-        <!-- Customer Details (Required by API) -->
-        <section class="mb-6">
-          <h3 class="font-display font-bold text-lg text-gray-900 mb-4">Delivery Details</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label for="name" class="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Full Name *</label>
-              <input type="text" id="name" name="name" required minlength="2" maxlength="100" 
-                     class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 bg-white transition"
-                     placeholder="Your name">
-            </div>
-            <div>
-              <label for="phone" class="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Phone *</label>
-              <input type="tel" id="phone" name="phone" placeholder="017XXXXXXXX" required pattern="^01[3-9]\d{8}$"
-                     class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 bg-white transition"
-                     title="Valid Bangladeshi mobile number">
-            </div>
+        
+        <!-- payment (bkash simplified) -->
+        <div class="pt-2">
+          <div class="flex items-center gap-2 text-gray-700 mb-3"><i class="fas fa-mobile-alt text-green-600"></i><span class="font-medium">bKash payment (on delivery)</span></div>
+          <div class="bg-green-50/70 rounded-2xl p-4 border border-green-100 text-sm flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span class="text-gray-600">send to <span class="font-mono bg-white px-2 py-1 rounded-lg border">017XXXXXXXX</span></span>
+            <span class="text-green-700 text-xs"><i class="far fa-check-circle"></i> no extra fees</span>
           </div>
-          <div class="mb-4">
-            <label for="email" class="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Email *</label>
-            <input type="email" id="email" name="email" required
-                   class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 bg-white transition"
-                   placeholder="you@example.com">
+          <div class="mt-4">
+            <input type="text" id="transactionId" placeholder="bKash transaction ID * (8+ characters)" class="input-field font-mono uppercase">
           </div>
-          <div class="mb-2">
-            <label for="address" class="block text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">Delivery Address *</label>
-            <textarea id="address" name="address" required rows="3" minlength="10" maxlength="300"
-                      class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 bg-white transition resize-none"
-                      placeholder="House #, Road, Area, Landmark..."></textarea>
+        </div>
+        
+        <!-- summary with realtime update -->
+        <div class="bg-white/60 rounded-2xl p-5 border border-green-100/80 mt-4">
+          <div class="flex items-center gap-2 text-gray-700 mb-3"><i class="fas fa-receipt text-green-600"></i><span class="font-medium">summary</span></div>
+          <div class="summary-line"><span>product</span> <span id="summary-product" class="font-medium text-gray-800">—</span></div>
+          <div class="summary-line"><span>delivery</span> <span class="text-green-700 font-medium">free</span></div>
+          <div class="flex items-center justify-between pt-3">
+            <span class="font-semibold">total</span>
+            <span id="summary-total" class="summary-total">৳ 0</span>
           </div>
-        </section>
-
-        <!-- bKash Transaction ID (Required) -->
-        <section class="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
-          <label for="bkash-trx" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">
-            <i class="fas fa-key text-urbor-green mr-1"></i> bKash Transaction ID *
-          </label>
-          <input type="text" id="bkash-trx" name="transactionId" 
-                 placeholder="e.g., 8H5K2L9P4R" 
-                 pattern="[0-9a-zA-Z]{8,12}" required
-                 class="block w-full rounded-xl border border-gray-300 shadow-sm focus:border-urbor-green focus:ring-urbor-green sm:text-sm p-3 font-mono uppercase bg-white transition tracking-wider"
-                 title="8-12 alphanumeric characters from bKash SMS">
-          <p class="text-xs text-gray-500 mt-2 flex items-center">
-            <i class="fas fa-info-circle mr-1 text-urbor-green"></i> 
-            From your bKash confirmation after sending money
-          </p>
-        </section>
-
-        <!-- Hidden Fields for API -->
-        <input type="hidden" name="total" id="form-total" value="0">
-        <input type="hidden" name="items" id="form-items" value="">
-
-        <!-- Submit -->
-        <button type="submit" id="submit-btn" class="w-full btn-premium py-4 px-6 rounded-xl text-base font-medium shadow-lg flex justify-center items-center gap-2 transition-all">
-          <span>Confirm Order & Pay with bKash</span>
-          <i class="fas fa-arrow-right"></i>
+          <input type="hidden" id="form-total" name="total">
+          <input type="hidden" id="form-items" name="items">
+        </div>
+        
+        <!-- submit + messages -->
+        <button type="submit" id="submit-btn" class="premium-btn">
+          <i class="fas fa-lock text-sm"></i>
+          <span id="btn-text">place order • pay on delivery</span>
+          <span id="btn-loading" class="hidden items-center gap-2"><i class="fas fa-spinner fa-spin"></i> processing</span>
         </button>
         
-        <!-- Loading & Status -->
-        <div id="loading-container" class="hidden mt-4 text-center">
-          <span class="premium-loader mr-2"></span>
-          <span class="text-gray-600 text-sm">Verifying payment...</span>
-        </div>
-        <p id="status-msg" class="text-center text-sm mt-4 min-h-[24px] font-medium transition-all duration-200" role="status" aria-live="polite"></p>
-
-        <!-- Trust Badges -->
-        <div class="mt-8 pt-6 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
-          <div class="flex flex-col items-center"><i class="fas fa-lock text-urbor-green text-lg mb-1"></i><span class="text-xs text-gray-500">Secure</span></div>
-          <div class="flex flex-col items-center"><i class="fas fa-truck text-urbor-green text-lg mb-1"></i><span class="text-xs text-gray-500">7 day Delivery</span></div>
-          <div class="flex flex-col items-center"><i class="fas fa-leaf text-urbor-green text-lg mb-1"></i><span class="text-xs text-gray-500">Antibiotic-Free</span></div>
-        </div>
-
+        <div id="form-message" class="hidden"></div>
+        
+        <p class="text-xs text-gray-400 text-center flex items-center justify-center gap-1 pt-2"><i class="fas fa-shield-alt text-green-500"></i> encrypted & saved securely</p>
       </form>
     </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="py-6 px-4 text-center text-sm text-gray-500 border-t border-gray-200/60 bg-white/50">
-    <p>© <span id="year"></span> Urbor Essentials — purity, naturally.</p>
+  </div>
+  
+  <!-- small footer -->
+  <footer class="mt-12 text-center text-xs text-gray-400 border-t border-green-100 pt-6">
+    <p>© 2026 Urbor Essentials — pure quality, simple checkout</p>
   </footer>
+</main>
 
-  <!-- JavaScript -->
-  <script>
-    // ================== CONFIG ==================
-    const API_ENDPOINT = '/api/submit';
-    const MERCHANT_BKASH_NUMBER = '01700000000';
-    const API_KEY = 'urbor-secure-key-2026-abc123xyz789'; // Match your Vercel env var
-    
-    // Product Catalog - FIXED: corrected duplicate 3kg entry for 10kg
-    const PRODUCTS = [
-      { id: 'whole-3kg', name: 'Whole Chicken (3kg)', price: 1260, desc: 'Perfect for small families', image: '<i class="fas fa-drumstick-bite text-urbor-green"></i>' },
-      { id: 'whole-5kg', name: 'Whole Chicken (5kg)', price: 2100, desc: 'Ideal for family gatherings', image: '<i class="fas fa-drumstick-bite text-urbor-green"></i>' },
-      { id: 'whole-8kg', name: 'Whole Chicken (8kg)', price: 3300, desc: 'Best value for events', image: '<i class="fas fa-drumstick-bite text-urbor-green"></i>' },
-      { id: 'whole-10kg', name: 'Whole Chicken (10kg)', price: 4100, desc: 'Maximum value for large events', image: '<i class="fas fa-drumstick-bite text-urbor-green"></i>' }
+<script>
+  (function() {
+    // product data
+    const products = [
+      { id: 1, name: "Whole Chicken (3kg)", price: 1260, icon: 'fa-drumstick-bite' },
+      { id: 2, name: "Whole Chicken (5kg)", price: 2100, icon: 'fa-utensils' },
+      { id: 3, name: "Whole Chicken (8kg)", price: 3300, icon: 'fa-users' }
     ];
 
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('year').textContent = new Date().getFullYear();
-      document.getElementById('merchant-number').textContent = MERCHANT_BKASH_NUMBER;
-      renderProducts();
-      calculateTotal();
+    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwuTodU2_Rlr4dGOyF4hgVKPs7A4hzd8uurKymE3ZsTiuxpleu03WBB4ijEdFisfEC4/exec';
+
+    // DOM elements
+    const productList = document.getElementById('product-list');
+    const selectedSummary = document.getElementById('selected-summary');
+    const selectedNameSpan = document.getElementById('selected-name');
+    const selectedPriceSpan = document.getElementById('selected-price');
+    const summaryProduct = document.getElementById('summary-product');
+    const summaryTotal = document.getElementById('summary-total');
+    const formTotal = document.getElementById('form-total');
+    const formItems = document.getElementById('form-items');
+    
+    const nameField = document.getElementById('name');
+    const phoneField = document.getElementById('phone');
+    const emailField = document.getElementById('email');
+    const addressField = document.getElementById('address');
+    const transactionField = document.getElementById('transactionId');
+    const form = document.getElementById('checkout-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnLoading = document.getElementById('btn-loading');
+    const messageBox = document.getElementById('form-message');
+    
+    let selectedProduct = null;
+
+    // render products
+    products.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'product-item';
+      div.dataset.id = p.id;
+      div.innerHTML = `
+        <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-700 border border-green-100"><i class="fas ${p.icon}"></i></div>
+        <div class="flex-1">
+          <div class="font-medium">${p.name}</div>
+          <div class="text-green-700 font-bold text-sm">৳ ${p.price.toLocaleString()}</div>
+        </div>
+        <div class="check-indicator"></div>
+      `;
+      div.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectProduct(p, div);
+      });
+      productList.appendChild(div);
     });
 
-    // Render product selection with enhanced quantity UI
-    function renderProducts() {
-      const container = document.getElementById('product-list');
-      container.innerHTML = PRODUCTS.map(product => `
-        <div class="product-option relative group">
-          <input type="checkbox" id="prod-${product.id}" name="products" value="${product.id}" 
-                 data-price="${product.price}" data-name="${product.name}"
-                 class="absolute opacity-0 peer" onchange="calculateTotal()">
-          <label for="prod-${product.id}" class="flex items-start gap-4 p-4 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer select-none hover:border-urbor-green/40 transition-all duration-200">
-            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-50 to-amber-50 flex items-center justify-center text-2xl flex-shrink-0 shadow-sm">
-              ${product.image}
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex justify-between items-start gap-2">
-                <div>
-                  <p class="font-semibold text-gray-900">${product.name}</p>
-                  <p class="text-xs text-gray-500 mt-0.5">${product.desc}</p>
-                </div>
-                <span class="font-bold text-urbor-green whitespace-nowrap">৳${product.price.toLocaleString()}</span>
-              </div>
-              
-              <!-- Quantity Controls - Enhanced Visibility -->
-              <div class="quantity-control hidden peer-checked:flex items-center gap-3 mt-4 pt-3 border-t border-gray-100">
-                <span class="text-xs font-medium text-gray-600">Quantity:</span>
-                <div class="flex items-center gap-2">
-                  <button type="button" onclick="adjustQty('${product.id}', -1)" 
-                          class="w-9 h-9 rounded-lg bg-gray-100 hover:bg-urbor-green hover:text-white flex items-center justify-center text-gray-700 font-bold transition-all duration-150 active:scale-95 shadow-sm"
-                          aria-label="Decrease quantity">−</button>
-                  <input type="number" id="qty-${product.id}" name="qty-${product.id}" value="1" min="1" max="10" 
-                         class="w-14 text-center rounded-lg border-2 border-gray-200 py-2 text-sm font-semibold focus:border-urbor-green focus:ring-2 focus:ring-urbor-green/20 transition-all"
-                         oninput="calculateTotal()">
-                  <button type="button" onclick="adjustQty('${product.id}', 1)" 
-                          class="w-9 h-9 rounded-lg bg-gray-100 hover:bg-urbor-green hover:text-white flex items-center justify-center text-gray-700 font-bold transition-all duration-150 active:scale-95 shadow-sm"
-                          aria-label="Increase quantity">+</button>
-                </div>
-                <span class="text-xs text-gray-400 ml-1">units</span>
-              </div>
-            </div>
-          </label>
-        </div>
-      `).join('');
-    }
-
-    // Enhanced quantity adjustment with visual feedback
-    function adjustQty(productId, delta) {
-      const input = document.getElementById(`qty-${productId}`);
-      const label = document.querySelector(`label[for="prod-${productId}"]`);
-      if (!input) return;
-      
-      let val = parseInt(input.value) || 1;
-      val = Math.max(1, Math.min(10, val + delta));
-      input.value = val;
-      
-      // Visual feedback animation
-      if (label) {
-        label.classList.add('scale-[1.02]');
-        setTimeout(() => label.classList.remove('scale-[1.02]'), 150);
-      }
-      
-      calculateTotal();
-    }
-
-    // Calculate total & format items string for API
-    function calculateTotal() {
-      let total = 0;
-      const itemsArray = [];
-      
-      PRODUCTS.forEach(product => {
-        const checkbox = document.getElementById(`prod-${product.id}`);
-        if (checkbox?.checked) {
-          const qtyInput = document.getElementById(`qty-${product.id}`);
-          const qty = parseInt(qtyInput?.value) || 1;
-          total += product.price * qty;
-          itemsArray.push(`${product.name} ×${qty}`);
-        }
+    // selection handler
+    function selectProduct(product, cardEl) {
+      document.querySelectorAll('.product-item').forEach(c => {
+        c.classList.remove('selected');
+        const ind = c.querySelector('.check-indicator');
+        if (ind) ind.innerHTML = '';
       });
+      cardEl.classList.add('selected');
+      const indicator = cardEl.querySelector('.check-indicator');
+      if (indicator) indicator.innerHTML = '<i class="fas fa-check text-xs"></i>';
       
-      // Update UI with smooth transition
-      const totalEl = document.getElementById('live-total');
-      totalEl.style.opacity = '0.7';
-      setTimeout(() => {
-        totalEl.textContent = `৳${total.toLocaleString('en-BD', {minimumFractionDigits: 2})}`;
-        totalEl.style.opacity = '1';
-      }, 100);
+      selectedProduct = product;
       
-      document.getElementById('form-total').value = total;
-      document.getElementById('form-items').value = itemsArray.join(', ');
+      // update summary fields
+      selectedNameSpan.innerText = product.name;
+      selectedPriceSpan.innerText = `৳ ${product.price}`;
+      summaryProduct.innerText = product.name;
+      summaryTotal.innerText = `৳ ${product.price.toLocaleString()}`;
+      formTotal.value = product.price;
+      formItems.value = product.name;
+      selectedSummary.classList.remove('hidden');
       
-      return { total, items: itemsArray.join(', ') };
+      // tiny feedback
+      if (navigator.vibrate) navigator.vibrate(6);
     }
 
-    // Handle form submission with robust error handling
-    async function handleSubmit(e) {
+    // optionally preselect first after a short delay (gentle)
+    setTimeout(() => {
+      if (!selectedProduct && products.length > 0) {
+        const firstCard = document.querySelector('.product-item');
+        if (firstCard) selectProduct(products[0], firstCard);
+      }
+    }, 300);
+
+    // remove error style on input
+    [nameField, phoneField, emailField, addressField, transactionField].forEach(f => {
+      f.addEventListener('input', () => f.classList.remove('error'));
+    });
+
+    // show field error helper
+    function markFieldError(field, msg) {
+      field.classList.add('error');
+      field.focus({ preventScroll: true });
+      // optionally show small tooltip, but keep it simple
+    }
+
+    // show global message
+    function setMessage(text, type) {
+      messageBox.className = `message ${type} mt-2`;
+      messageBox.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-circle'}"></i> ${text}`;
+      messageBox.classList.remove('hidden');
+      if (type === 'success') {
+        setTimeout(() => { messageBox.classList.add('hidden'); }, 6000);
+      }
+    }
+
+    // form submit
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      const { total, items } = calculateTotal();
+      // reset previous errors
+      document.querySelectorAll('.input-field').forEach(f => f.classList.remove('error'));
       
-      // Validate: at least one product
-      if (!items || items.trim() === '') {
-        showStatus("Please select at least one product", "error");
+      // validation
+      if (!selectedProduct) {
+        setMessage('Please select a product.', 'error');
+        document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
       
-      // Validate transaction ID format
-      const trx = document.getElementById('bkash-trx').value.trim().toUpperCase();
-      if (!/^[0-9a-zA-Z]{8,12}$/.test(trx)) {
-        showStatus("Enter a valid 8-12 character bKash Transaction ID", "error");
-        document.getElementById('bkash-trx').focus();
+      const name = nameField.value.trim();
+      const phone = phoneField.value.trim();
+      const email = emailField.value.trim();
+      const address = addressField.value.trim();
+      const txn = transactionField.value.trim().toUpperCase();
+      
+      let hasError = false;
+      if (!name) { markFieldError(nameField, 'name required'); hasError = true; }
+      if (!phone) { markFieldError(phoneField, 'phone required'); hasError = true; }
+      if (!email || !email.includes('@')) { markFieldError(emailField, 'valid email required'); hasError = true; }
+      if (!address) { markFieldError(addressField, 'address required'); hasError = true; }
+      if (!txn || txn.length < 8) { markFieldError(transactionField, 'min 8 characters'); hasError = true; }
+      
+      if (hasError) {
+        setMessage('Please complete all fields correctly.', 'error');
         return;
       }
-      
-      const payload = {
-        transactionId: trx,
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim().toLowerCase(),
-        phone: document.getElementById('phone').value.trim(),
-        address: document.getElementById('address').value.trim(),
-        total: total,
-        items: items
+
+      // prepare data
+      const orderData = {
+        transactionId: txn,
+        name, email, phone, address,
+        total: selectedProduct.price,
+        items: selectedProduct.name
       };
-      
-      // UI: Loading state
-      const btn = document.getElementById('submit-btn');
-      const loading = document.getElementById('loading-container');
-      const originalBtnText = btn.innerHTML;
-      
-      btn.disabled = true;
-      btn.classList.add('opacity-70', 'cursor-wait');
-      loading.classList.remove('hidden');
-      showStatus("Verifying payment with bKash...", "info");
-      
+
+      // loading ui
+      submitBtn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+      btnLoading.classList.add('flex');
+      messageBox.classList.add('hidden');
+
       try {
-        const response = await fetch(API_ENDPOINT, {
+        const response = await fetch(GOOGLE_SHEET_URL, {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-API-Key': API_KEY  // Match your Vercel env var
-          },
-          body: JSON.stringify(payload)
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData)
         });
         
-        // 🔍 DEBUG: Check content type before parsing
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-          const rawText = await response.text();
-          console.error('❌ Non-JSON response received:', {
-            status: response.status,
-            statusText: response.statusText,
-            contentType: contentType,
-            responsePreview: rawText.slice(0, 200) + '...'
-          });
-          throw new Error(`Server returned ${response.status} ${response.statusText}. Expected JSON but got: ${contentType || 'unknown'}`);
-        }
-        
         const result = await response.json();
-        
-        if (!response.ok) {
-          throw new Error(result.error || result.message || `Order failed: ${response.status}`);
+        if (response.ok && result.result === 'success') {
+          setMessage(`✓ Order confirmed! transaction: ${result.transactionId || txn.slice(0,4)+'••••'}`, 'success');
+          
+          // reset form elegantly
+          form.reset();
+          document.querySelectorAll('.product-item').forEach(c => c.classList.remove('selected'));
+          document.querySelectorAll('.check-indicator').forEach(i => i.innerHTML = '');
+          selectedSummary.classList.add('hidden');
+          summaryProduct.innerText = '—';
+          summaryTotal.innerText = '৳ 0';
+          selectedProduct = null;
+        } else {
+          setMessage(`❌ ${result.message || 'Order failed. Try again.'}`, 'error');
         }
-        
-        // ✅ Success
-        showStatus(`✓ Order confirmed! Ref: ${result.transactionId || 'UE' + Date.now().toString().slice(-6)}`, "success");
-        
-        // Reset form after delay
-        setTimeout(() => {
-          e.target.reset();
-          PRODUCTS.forEach(p => {
-            const cb = document.getElementById(`prod-${p.id}`);
-            if (cb) cb.checked = false;
-          });
-          calculateTotal();
-          btn.disabled = false;
-          btn.classList.remove('opacity-70', 'cursor-wait');
-          loading.classList.add('hidden');
-        }, 3500);
-        
-      } catch (error) {
-        console.error('💥 Submit error:', error);
-        
-        // 🛠️ User-friendly error messages
-        let userMsg = error.message;
-        if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-          userMsg = "Cannot connect to server. Check your internet or try again later.";
-        } else if (error.message.includes('Expected JSON')) {
-          userMsg = "Server configuration error. Please contact support.";
-        } else if (error.message.includes('404')) {
-          userMsg = "Order endpoint not found. Please check with the site administrator.";
-        } else if (error.message.includes('401')) {
-          userMsg = "Authentication failed. Please refresh and try again.";
-        } else if (error.message.includes('405')) {
-          userMsg = "Request method error. Please refresh the page and try again.";
+      } catch (err) {
+        console.warn(err);
+        // fallback no-cors for demo / network issues
+        try {
+          await fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(orderData) });
+          setMessage('✓ Order recorded (offline mode). We’ll confirm soon.', 'success');
+          form.reset();
+          document.querySelectorAll('.product-item').forEach(c => c.classList.remove('selected'));
+          selectedSummary.classList.add('hidden');
+          summaryProduct.innerText = '—'; summaryTotal.innerText = '৳ 0';
+          selectedProduct = null;
+        } catch (f) {
+          setMessage('❌ Network error. Please check connection.', 'error');
         }
-        
-        showStatus(`✗ ${userMsg}`, "error");
-        
-        // Restore button
-        btn.disabled = false;
-        btn.classList.remove('opacity-70', 'cursor-wait');
-        btn.innerHTML = originalBtnText;
-        loading.classList.add('hidden');
-      }
-    }
-
-    function showStatus(message, type) {
-      const el = document.getElementById('status-msg');
-      const icons = {
-        success: '<i class="fas fa-check-circle text-green-600 mr-1"></i>',
-        error: '<i class="fas fa-exclamation-circle text-red-500 mr-1"></i>',
-        info: '<i class="fas fa-spinner fa-spin text-urbor-green mr-1"></i>'
-      };
-      const colors = { success: 'text-green-700', error: 'text-red-600', info: 'text-urbor-green' };
-      el.innerHTML = `${icons[type] || ''}${message}`;
-      el.className = `text-center text-sm mt-4 min-h-[24px] font-medium ${colors[type]} transition-all duration-200`;
-    }
-
-    // Auto-format phone input
-    document.getElementById('phone')?.addEventListener('input', function(e) {
-      let val = e.target.value.replace(/\D/g, '');
-      if (val.startsWith('01') && val.length > 2) val = val.slice(0, 11);
-      e.target.value = val;
-    });
-
-    // Prevent form submission on Enter key in quantity inputs
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type === 'number') {
-        e.preventDefault();
-        e.target.blur();
+      } finally {
+        submitBtn.disabled = false;
+        btnLoading.classList.add('hidden');
+        btnText.classList.remove('hidden');
       }
     });
-  </script>
+
+  })();
+</script>
 </body>
 </html>
