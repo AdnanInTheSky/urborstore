@@ -3,28 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Urbor Essentials • Checkout</title>
-  
-  <!-- Tailwind (light) + Fonts + minimal icons -->
+  <title>Urbor • Checkout</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
   <style>
-    /* minimal, clean, smooth */
     * { box-sizing: border-box; margin: 0; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
       background: #f6faf9; 
       color: #1a2e2b;
     }
     .card {
-      background: rgba(255,255,255,0.9);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(0,128,96,0.12);
-      border-radius: 28px;
-      box-shadow: 0 12px 30px -12px rgba(16,128,96,0.12);
-      transition: all 0.2s ease;
+      background: white;
+      border-radius: 24px;
+      border: 1px solid #e2f0e8;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02);
     }
     .product-item {
       background: white;
@@ -34,19 +27,11 @@
       align-items: center;
       gap: 1rem;
       border: 1px solid #e2f0e8;
-      box-shadow: 0 2px 6px rgba(0,80,70,0.02);
       cursor: pointer;
-      transition: all 0.2s;
-    }
-    .product-item:hover {
-      border-color: #20b38a;
-      background: #f4fdf9;
-      transform: scale(1.01);
     }
     .product-item.selected {
       border-color: #0f8f6e;
       background: #ebfaf3;
-      box-shadow: 0 6px 14px rgba(15,143,110,0.12);
     }
     .product-item.selected .check-indicator {
       background: #0f8f6e;
@@ -54,13 +39,12 @@
       color: white;
     }
     .check-indicator {
-      width: 26px; height: 26px;
-      border-radius: 26px;
+      width: 24px; height: 24px;
+      border-radius: 24px;
       border: 2px solid #cbdcd0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
       background: white;
       flex-shrink: 0;
     }
@@ -70,94 +54,56 @@
       background: white;
       border: 1px solid #d0e2da;
       border-radius: 20px;
-      font-size: 0.95rem;
-      transition: 0.15s;
     }
     .input-field:focus {
       outline: none;
       border-color: #0f8f6e;
-      box-shadow: 0 0 0 4px rgba(15,143,110,0.08);
+      box-shadow: 0 0 0 3px rgba(15,143,110,0.1);
     }
     .input-field.error {
       border-color: #dc4a4a;
-      background: #fff6f5;
     }
     .premium-btn {
       background: #0f8f6e;
       color: white;
       font-weight: 600;
-      padding: 1rem 1.8rem;
+      padding: 1rem;
       border-radius: 40px;
-      border: none;
       width: 100%;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      box-shadow: 0 10px 20px -8px rgba(15,143,110,0.4);
-      transition: 0.15s;
+      box-shadow: 0 8px 16px rgba(15,143,110,0.2);
       cursor: pointer;
+      border: none;
     }
-    .premium-btn:hover { background: #0c7559; transform: translateY(-2px); }
-    .premium-btn:disabled { opacity: 0.5; pointer-events: none; }
+    .premium-btn:hover { background: #0c7559; }
+    .premium-btn:disabled { opacity: 0.5; }
     .message {
-      padding: 1rem 1.4rem;
+      padding: 1rem;
       border-radius: 40px;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
     }
-    .message.success { background: #e0f5e8; color: #0b5e45; border: 1px solid #a0ddc0; }
-    .message.error { background: #fee9e7; color: #aa2e2e; border: 1px solid #fbb8b0; }
-    .badge {
-      background: #def5ec; padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.75rem;
-      display: inline-flex; align-items: center; gap: 0.4rem; color: #0f5e48;
-      letter-spacing: 0.3px; border: 1px solid #b5e4d4;
-    }
+    .message.success { background: #e0f5e8; color: #0b5e45; }
+    .message.error { background: #fee9e7; color: #aa2e2e; }
     .summary-line { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed #cfe3db; }
     .summary-total { font-size: 1.8rem; font-weight: 700; color: #0f8f6e; }
-    .animate-pulse-light { animation: pulse 2s infinite; }
-    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } }
   </style>
 </head>
 <body class="antialiased">
 
-<!-- extremely simplified header -->
-<header class="py-3 px-5 bg-white/70 backdrop-blur-sm border-b border-green-100 sticky top-0 z-10">
-  <div class="max-w-6xl mx-auto flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="w-9 h-9 bg-gradient-to-tr from-green-600 to-green-500 rounded-xl flex items-center justify-center text-white font-bold shadow-md">U</div>
-      <div><span class="font-semibold text-gray-800">Urbor Essentials</span><span class="text-xs text-gray-500 block -mt-0.5">premium • since 2024</span></div>
-    </div>
-    <span class="badge"><i class="far fa-credit-card text-xs"></i> secure checkout</span>
-  </div>
-</header>
-
-<main class="max-w-6xl mx-auto px-4 py-8 md:py-10">
+<div class="max-w-6xl mx-auto px-4 py-6">
   
-  <!-- one elegant heading -->
   <div class="text-center mb-8">
-    <h1 class="text-4xl md:text-5xl font-light tracking-tight text-gray-800">complete <span class="font-semibold text-green-700">order</span></h1>
-    <div class="w-20 h-1 bg-green-200 mx-auto mt-3 rounded-full"></div>
+    <h1 class="text-4xl font-light">complete <span class="font-semibold text-green-700">order</span></h1>
   </div>
 
-  <!-- TWO COLUMN LAYOUT: left products / right form -->
-  <div class="grid md:grid-cols-12 gap-6 items-start">
+  <div class="grid md:grid-cols-12 gap-6">
     
-    <!-- LEFT: products + trust badges (clean) -->
     <div class="md:col-span-5 space-y-5">
-      
-      <!-- product card -->
       <div class="card p-5">
         <div class="flex items-center gap-2 mb-4">
           <i class="fas fa-tag text-green-600"></i>
-          <span class="font-semibold text-gray-700">1. select product</span>
+          <span class="font-semibold">select product</span>
         </div>
         <div class="space-y-2" id="product-list"></div>
         
-        <!-- small selected summary shows inline -->
         <div id="selected-summary" class="mt-5 pt-3 border-t border-green-100 hidden">
           <div class="flex items-center justify-between text-sm">
             <span class="text-gray-500">selected:</span>
@@ -166,76 +112,51 @@
           </div>
         </div>
       </div>
-      
-      <!-- trust badges minimal -->
-      <div class="grid grid-cols-3 gap-2 text-center text-xs">
-        <div class="card py-3 px-1 bg-white/70"><i class="fas fa-truck text-green-600 block text-lg mb-1"></i>free delivery</div>
-        <div class="card py-3 px-1 bg-white/70"><i class="fas fa-shield-alt text-green-600 block text-lg mb-1"></i>secure</div>
-        <div class="card py-3 px-1 bg-white/70"><i class="fas fa-undo-alt text-green-600 block text-lg mb-1"></i>returns</div>
-      </div>
     </div>
-    
-    <!-- RIGHT: form (clean fields, no overkill) -->
+
     <div class="md:col-span-7">
-      <form id="checkout-form" class="card p-6 md:p-7 space-y-5">
+      <form id="checkout-form" class="card p-6 space-y-5">
         
-        <!-- section: delivery -->
-        <div class="flex items-center gap-2 text-gray-700 mb-1"><i class="fas fa-map-pin text-green-600"></i><span class="font-medium">delivery info</span></div>
+        <div class="flex items-center gap-2"><i class="fas fa-map-pin text-green-600"></i><span class="font-medium">delivery</span></div>
         <div class="grid sm:grid-cols-2 gap-4">
-          <input type="text" id="name" placeholder="Full name *" class="input-field" autocomplete="off">
+          <input type="text" id="name" placeholder="Full name *" class="input-field">
           <input type="tel" id="phone" placeholder="Phone *" class="input-field">
           <input type="email" id="email" placeholder="Email *" class="input-field sm:col-span-2">
           <textarea id="address" placeholder="Delivery address *" rows="2" class="input-field sm:col-span-2"></textarea>
         </div>
         
-        <!-- payment (bkash simplified) -->
-        <div class="pt-2">
-          <div class="flex items-center gap-2 text-gray-700 mb-3"><i class="fas fa-mobile-alt text-green-600"></i><span class="font-medium">bKash payment (on delivery)</span></div>
-          <div class="bg-green-50/70 rounded-2xl p-4 border border-green-100 text-sm flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span class="text-gray-600">send to <span class="font-mono bg-white px-2 py-1 rounded-lg border">017XXXXXXXX</span></span>
-            <span class="text-green-700 text-xs"><i class="far fa-check-circle"></i> no extra fees</span>
+        <div>
+          <div class="flex items-center gap-2 mb-3"><i class="fas fa-mobile-alt text-green-600"></i><span class="font-medium">bKash (on delivery)</span></div>
+          <div class="bg-green-50 p-4 rounded-2xl border border-green-100 text-sm mb-3">
+            send to <span class="font-mono">017XXXXXXXX</span>
           </div>
-          <div class="mt-4">
-            <input type="text" id="transactionId" placeholder="bKash transaction ID * (8+ characters)" class="input-field font-mono uppercase">
-          </div>
+          <input type="text" id="transactionId" placeholder="bKash transaction ID *" class="input-field">
         </div>
         
-        <!-- summary with realtime update -->
-        <div class="bg-white/60 rounded-2xl p-5 border border-green-100/80 mt-4">
-          <div class="flex items-center gap-2 text-gray-700 mb-3"><i class="fas fa-receipt text-green-600"></i><span class="font-medium">summary</span></div>
-          <div class="summary-line"><span>product</span> <span id="summary-product" class="font-medium text-gray-800">—</span></div>
-          <div class="summary-line"><span>delivery</span> <span class="text-green-700 font-medium">free</span></div>
-          <div class="flex items-center justify-between pt-3">
+        <div class="bg-white p-5 rounded-2xl border border-green-100">
+          <div class="summary-line"><span>product</span> <span id="summary-product" class="font-medium">—</span></div>
+          <div class="summary-line"><span>delivery</span> <span class="text-green-700">free</span></div>
+          <div class="flex justify-between pt-3">
             <span class="font-semibold">total</span>
             <span id="summary-total" class="summary-total">৳ 0</span>
           </div>
-          <input type="hidden" id="form-total" name="total">
-          <input type="hidden" id="form-items" name="items">
+          <input type="hidden" id="form-total">
+          <input type="hidden" id="form-items">
         </div>
         
-        <!-- submit + messages -->
         <button type="submit" id="submit-btn" class="premium-btn">
-          <i class="fas fa-lock text-sm"></i>
-          <span id="btn-text">place order • pay on delivery</span>
-          <span id="btn-loading" class="hidden items-center gap-2"><i class="fas fa-spinner fa-spin"></i> processing</span>
+          <span id="btn-text">place order</span>
+          <span id="btn-loading" class="hidden"><i class="fas fa-spinner fa-spin"></i> processing</span>
         </button>
         
         <div id="form-message" class="hidden"></div>
-        
-        <p class="text-xs text-gray-400 text-center flex items-center justify-center gap-1 pt-2"><i class="fas fa-shield-alt text-green-500"></i> encrypted & saved securely</p>
       </form>
     </div>
   </div>
-  
-  <!-- small footer -->
-  <footer class="mt-12 text-center text-xs text-gray-400 border-t border-green-100 pt-6">
-    <p>© 2026 Urbor Essentials — pure quality, simple checkout</p>
-  </footer>
-</main>
+</div>
 
 <script>
   (function() {
-    // product data
     const products = [
       { id: 1, name: "Whole Chicken (3kg)", price: 1260, icon: 'fa-drumstick-bite' },
       { id: 2, name: "Whole Chicken (5kg)", price: 2100, icon: 'fa-utensils' },
@@ -244,7 +165,6 @@
 
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwuTodU2_Rlr4dGOyF4hgVKPs7A4hzd8uurKymE3ZsTiuxpleu03WBB4ijEdFisfEC4/exec';
 
-    // DOM elements
     const productList = document.getElementById('product-list');
     const selectedSummary = document.getElementById('selected-summary');
     const selectedNameSpan = document.getElementById('selected-name');
@@ -267,27 +187,22 @@
     
     let selectedProduct = null;
 
-    // render products
     products.forEach(p => {
       const div = document.createElement('div');
       div.className = 'product-item';
       div.dataset.id = p.id;
       div.innerHTML = `
-        <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-700 border border-green-100"><i class="fas ${p.icon}"></i></div>
+        <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-700"><i class="fas ${p.icon}"></i></div>
         <div class="flex-1">
           <div class="font-medium">${p.name}</div>
-          <div class="text-green-700 font-bold text-sm">৳ ${p.price.toLocaleString()}</div>
+          <div class="text-green-700 font-bold">৳ ${p.price.toLocaleString()}</div>
         </div>
         <div class="check-indicator"></div>
       `;
-      div.addEventListener('click', (e) => {
-        e.stopPropagation();
-        selectProduct(p, div);
-      });
+      div.addEventListener('click', () => selectProduct(p, div));
       productList.appendChild(div);
     });
 
-    // selection handler
     function selectProduct(product, cardEl) {
       document.querySelectorAll('.product-item').forEach(c => {
         c.classList.remove('selected');
@@ -300,7 +215,6 @@
       
       selectedProduct = product;
       
-      // update summary fields
       selectedNameSpan.innerText = product.name;
       selectedPriceSpan.innerText = `৳ ${product.price}`;
       summaryProduct.innerText = product.name;
@@ -308,12 +222,8 @@
       formTotal.value = product.price;
       formItems.value = product.name;
       selectedSummary.classList.remove('hidden');
-      
-      // tiny feedback
-      if (navigator.vibrate) navigator.vibrate(6);
     }
 
-    // optionally preselect first after a short delay (gentle)
     setTimeout(() => {
       if (!selectedProduct && products.length > 0) {
         const firstCard = document.querySelector('.product-item');
@@ -321,39 +231,28 @@
       }
     }, 300);
 
-    // remove error style on input
     [nameField, phoneField, emailField, addressField, transactionField].forEach(f => {
       f.addEventListener('input', () => f.classList.remove('error'));
     });
 
-    // show field error helper
-    function markFieldError(field, msg) {
+    function markFieldError(field) {
       field.classList.add('error');
       field.focus({ preventScroll: true });
-      // optionally show small tooltip, but keep it simple
     }
 
-    // show global message
     function setMessage(text, type) {
       messageBox.className = `message ${type} mt-2`;
       messageBox.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-circle'}"></i> ${text}`;
       messageBox.classList.remove('hidden');
-      if (type === 'success') {
-        setTimeout(() => { messageBox.classList.add('hidden'); }, 6000);
-      }
     }
 
-    // form submit
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      // reset previous errors
       document.querySelectorAll('.input-field').forEach(f => f.classList.remove('error'));
       
-      // validation
       if (!selectedProduct) {
         setMessage('Please select a product.', 'error');
-        document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
       
@@ -364,18 +263,17 @@
       const txn = transactionField.value.trim().toUpperCase();
       
       let hasError = false;
-      if (!name) { markFieldError(nameField, 'name required'); hasError = true; }
-      if (!phone) { markFieldError(phoneField, 'phone required'); hasError = true; }
-      if (!email || !email.includes('@')) { markFieldError(emailField, 'valid email required'); hasError = true; }
-      if (!address) { markFieldError(addressField, 'address required'); hasError = true; }
-      if (!txn || txn.length < 8) { markFieldError(transactionField, 'min 8 characters'); hasError = true; }
+      if (!name) { markFieldError(nameField); hasError = true; }
+      if (!phone) { markFieldError(phoneField); hasError = true; }
+      if (!email || !email.includes('@')) { markFieldError(emailField); hasError = true; }
+      if (!address) { markFieldError(addressField); hasError = true; }
+      if (!txn || txn.length < 8) { markFieldError(transactionField); hasError = true; }
       
       if (hasError) {
         setMessage('Please complete all fields correctly.', 'error');
         return;
       }
 
-      // prepare data
       const orderData = {
         transactionId: txn,
         name, email, phone, address,
@@ -383,11 +281,9 @@
         items: selectedProduct.name
       };
 
-      // loading ui
       submitBtn.disabled = true;
       btnText.classList.add('hidden');
       btnLoading.classList.remove('hidden');
-      btnLoading.classList.add('flex');
       messageBox.classList.add('hidden');
 
       try {
@@ -399,9 +295,8 @@
         
         const result = await response.json();
         if (response.ok && result.result === 'success') {
-          setMessage(`✓ Order confirmed! transaction: ${result.transactionId || txn.slice(0,4)+'••••'}`, 'success');
+          setMessage(`✓ Order confirmed!`, 'success');
           
-          // reset form elegantly
           form.reset();
           document.querySelectorAll('.product-item').forEach(c => c.classList.remove('selected'));
           document.querySelectorAll('.check-indicator').forEach(i => i.innerHTML = '');
@@ -410,21 +305,19 @@
           summaryTotal.innerText = '৳ 0';
           selectedProduct = null;
         } else {
-          setMessage(`❌ ${result.message || 'Order failed. Try again.'}`, 'error');
+          setMessage(`❌ ${result.message || 'Order failed.'}`, 'error');
         }
       } catch (err) {
-        console.warn(err);
-        // fallback no-cors for demo / network issues
         try {
           await fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(orderData) });
-          setMessage('✓ Order recorded (offline mode). We’ll confirm soon.', 'success');
+          setMessage('✓ Order recorded.', 'success');
           form.reset();
           document.querySelectorAll('.product-item').forEach(c => c.classList.remove('selected'));
           selectedSummary.classList.add('hidden');
           summaryProduct.innerText = '—'; summaryTotal.innerText = '৳ 0';
           selectedProduct = null;
         } catch (f) {
-          setMessage('❌ Network error. Please check connection.', 'error');
+          setMessage('❌ Network error.', 'error');
         }
       } finally {
         submitBtn.disabled = false;
@@ -432,7 +325,6 @@
         btnText.classList.remove('hidden');
       }
     });
-
   })();
 </script>
 </body>
