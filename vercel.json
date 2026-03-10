@@ -31,6 +31,14 @@
       "dest": "/$1"
     },
     {
+      "src": "/images/(.*)",
+      "dest": "/images/$1"
+    },
+    {
+      "src": "/(.*\\.(png|jpg|jpeg|gif|svg|css|js|ico|webp))",
+      "dest": "/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html",
       "headers": {
