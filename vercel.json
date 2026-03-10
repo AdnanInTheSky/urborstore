@@ -6,14 +6,12 @@
       "use": "@vercel/static"
     },
     {
+      "src": "image/**/*",
+      "use": "@vercel/static"
+    },
+    {
       "src": "api/sub.js",
       "use": "@vercel/node"
-    }
-  ],
-  "assets": [
-    {
-      "src": "images/**",
-      "dest": "/images"
     }
   ],
   "routes": [
@@ -33,11 +31,8 @@
       "headers": { "X-Content-Type-Options": "nosniff" }
     },
     {
-      "src": "/images/(.*)",
-      "dest": "/images/$1",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      }
+      "src": "/image/(.*)",
+      "dest": "/image/$1"
     },
     {
       "src": "/(.+\\.html)",
