@@ -5,17 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Urbor Essentials | Purveyors of Antibiotic‑Free Chicken</title>
 <meta name="description" content="Premium antibiotic-free chicken, ethically raised and delivered fresh across Dhaka. Order online with bKash.">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="images/Screenshot 2026-03-10 224249.png">
-<link rel="apple-touch-icon" sizes="180x180" href="images/Screenshot 2026-03-10 224249.png">
-
 <!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com  "></script>
+<script src="https://cdn.tailwindcss.com"></script>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css  ">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter  :opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Tailwind Config -->
 <script>
 tailwind.config = {
@@ -109,29 +104,19 @@ input:focus, textarea:focus {
   box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
 }
 
-/* HERO SECTION - AUTO-FIT IMAGE */
+/* HERO SECTION */
 .hero-section {
   height: 70vh;
   min-height: 500px;
-  position: relative;
-}
-.hero-section img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-@media (min-width: 768px) {
-  .hero-section {
-    height: 75vh;
-    min-height: 600px;
-  }
 }
 @media (min-width: 1024px) {
   .hero-section {
-    height: 80vh;
-    min-height: 700px;
+    height: 85vh;
+    min-height: 650px;
   }
+}
+.hero-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
 }
 
 /* PRODUCT CARDS */
@@ -227,15 +212,6 @@ input:focus, textarea:focus {
   min-width: 28px;
   font-size: 11px;
 }
-
-/* Logo hover effect */
-nav img[alt="Urbor Essentials"] {
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-nav img[alt="Urbor Essentials"]:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 4px 6px rgba(45, 106, 79, 0.2));
-}
 </style>
 </head>
 <body class="antialiased">
@@ -245,12 +221,9 @@ nav img[alt="Urbor Essentials"]:hover {
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16 items-center">
       <!-- Logo -->
-      <div class="flex items-center gap-3">
-        <img src="/images/Screenshot 2026-03-10 224249.png" alt="Urbor Essentials" class="w-10 h-10 object-contain">
-        <span class="text-xl font-display font-semibold text-gray-900">
-          Urbor<span class="text-urbor-green"> Essentials</span>
-        </span>
-      </div>
+      <a href="#" class="flex items-center">
+        <img src="/images/Screenshot 2026-03-10 224249.png" alt="Urbor Essentials Logo" class="h-12 w-auto object-contain">
+      </a>
 
       <!-- Desktop Menu -->
       <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
@@ -283,45 +256,76 @@ nav img[alt="Urbor Essentials"]:hover {
   </div>
 </nav>
 
-<!-- HERO SECTION - IMAGE ONLY -->
-<section class="relative hero-section pt-16 overflow-hidden">
+<!-- CART SIDEBAR -->
+<div id="cart-overlay" onclick="closeCartSidebar()" class="fixed inset-0 bg-black/40 z-[60] hidden"></div>
+<div id="cart-sidebar" class="fixed top-0 left-0 h-full w-full max-w-md bg-white z-[70] shadow-xl transform -translate-x-full transition-transform duration-200 flex flex-col">
+  <div class="px-5 py-4 border-b flex justify-between items-center bg-urbor-cream">
+    <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+      <i class="fas fa-shopping-cart text-urbor-green"></i> Your Cart
+    </h2>
+    <button onclick="closeCartSidebar()" class="text-gray-400 hover:text-red-500 p-1"><i class="fas fa-times text-xl"></i></button>
+  </div>
+  <div class="flex-1 overflow-y-auto p-5 cart-scroll bg-[#faf7f2]">
+    <div id="sidebar-cart-items" class="space-y-3"></div>
+    <div id="sidebar-empty" class="hidden text-center py-8">
+      <i class="fas fa-shopping-cart text-3xl text-gray-300 mb-2"></i>
+      <p class="text-gray-500 text-sm">Your cart is empty</p>
+    </div>
+  </div>
+  <div class="p-5 border-t bg-white">
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-gray-600 text-sm">Subtotal</span>
+      <span id="sidebar-total" class="text-lg font-bold text-urbor-green">৳0.00</span>
+    </div>
+    <button onclick="proceedToCheckout()" class="w-full btn-premium py-3 rounded-lg text-sm font-medium flex justify-center items-center gap-2">
+      Proceed to Checkout
+      <i class="fas fa-arrow-right"></i>
+    </button>
+    <p class="text-xs text-center text-gray-400 mt-3">
+      <i class="fas fa-truck text-urbor-green mr-1"></i> Free delivery across Dhaka
+    </p>
+  </div>
+</div>
+
+<!-- HERO SECTION -->
+<section class="relative hero-section pt-16">
   <img src="/images/hero_ess.jpeg"
     alt="Premium antibiotic-free chicken"
-    class="absolute inset-0 w-full h-full object-cover object-center"
-    loading="eager"
+    class="w-full h-full object-cover"
   >
+ 
 </section>
 
-<!-- USP / TRUST BADGES - NOW VISIBLE BELOW HERO -->
-<section id="why-us" class="py-10 bg-white border-b">
+<!-- USP / TRUST BADGES -->
+<section id="why-us" class="py-12 bg-white border-b">
   <div class="max-w-7xl mx-auto px-4">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
       <div>
-        <div class="w-14 h-14 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-2 border border-green-100">
-          <i class="fas fa-snowflake text-xl text-urbor-green"></i>
+        <div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100">
+          <i class="fas fa-snowflake text-2xl text-urbor-green"></i>
         </div>
-        <p class="font-semibold text-gray-800 text-sm">Blast Freezing</p>
-        <p class="text-xs text-gray-500 mt-1">Locks in taste & freshness</p>
+        <p class="font-semibold text-gray-800">Blast Freezing</p>
+        <p class="text-xs text-gray-500 mt-1">Locks in taste & protects from bacterial attack</p>
       </div>
       <div>
-        <div class="w-14 h-14 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-2 border border-green-100">
-          <i class="fas fa-shield-alt text-xl text-urbor-green"></i>
+        <div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100">
+          <i class="fas fa-shield-alt text-2xl text-urbor-green"></i>
         </div>
-        <p class="font-semibold text-gray-800 text-sm">100% Antibiotic-Free</p>
+        <p class="font-semibold text-gray-800">100% Antibiotic-Free</p>
         <p class="text-xs text-gray-500 mt-1">Raised without antibiotics</p>
       </div>
       <div>
-        <div class="w-14 h-14 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-2 border border-green-100">
-          <i class="fas fa-kaaba text-xl text-urbor-green"></i>
+        <div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100">
+          <i class="fas fa-kaaba text-2xl text-urbor-green"></i>
         </div>
-        <p class="font-semibold text-gray-800 text-sm">Halal Slaughter</p>
-        <p class="text-xs text-gray-500 mt-1">Ensuring complete halal</p>
+        <p class="font-semibold text-gray-800">Halal Slaughter</p>
+        <p class="text-xs text-gray-500 mt-1">Ensuring complete halal slaughter</p>
       </div>
       <div>
-        <div class="w-14 h-14 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-2 border border-green-100">
-          <i class="fas fa-box-open text-xl text-urbor-green"></i>
+        <div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100">
+          <i class="fas fa-box-open text-2xl text-urbor-green"></i>
         </div>
-        <p class="font-semibold text-gray-800 text-sm">Vacuum Pack</p>
+        <p class="font-semibold text-gray-800">Vacuum Pack</p>
         <p class="text-xs text-gray-500 mt-1">Keeps fresh for longer</p>
       </div>
     </div>
@@ -432,19 +436,9 @@ nav img[alt="Urbor Essentials"]:hover {
     <div class="bg-gray-50 rounded-xl p-4 mb-4">
       <h4 class="font-semibold text-gray-800 text-sm flex items-center gap-2"><i class="fas fa-receipt text-urbor-green"></i> Order Summary</h4>
       <ul id="cart-items-list" class="text-xs text-gray-700 space-y-2 my-3 max-h-32 overflow-y-auto cart-scroll"></ul>
-      <div class="border-t pt-2 space-y-1">
-        <div class="flex justify-between text-xs">
-          <span class="text-gray-600">Subtotal</span>
-          <span id="modal-subtotal" class="text-gray-800">৳0.00</span>
-        </div>
-        <div class="flex justify-between text-xs">
-          <span class="text-gray-600">Delivery (Dhaka)</span>
-          <span class="text-gray-800">৳120</span>
-        </div>
-        <div class="flex justify-between font-bold text-base pt-1 border-t mt-1">
-          <span>Total Payable</span>
-          <span id="cart-total-display" class="text-urbor-green">৳0.00</span>
-        </div>
+      <div class="border-t pt-2 flex justify-between font-bold text-base">
+        <span>Total Payable</span>
+        <span id="cart-total-display" class="text-urbor-green">0.00 BDT</span>
       </div>
     </div>
     <form id="order-form" onsubmit="handleCheckout(event)">
@@ -488,7 +482,7 @@ nav img[alt="Urbor Essentials"]:hover {
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8">
       <div class="md:col-span-2">
         <div class="flex items-center gap-2 mb-3">
-          <span class="text-xl font-display font-semibold text-white">Urbor<span class="text-urbor-green">Essentials</span></span>
+          <img src="/images/Screenshot 2026-03-10 224249.png" alt="Urbor Essentials" class="h-8 w-auto object-contain">
         </div>
         <p class="text-gray-400 text-sm max-w-md">Premium antibiotic‑free chicken, ethically raised and delivered fresh across Dhaka.</p>
       </div>
@@ -519,12 +513,11 @@ nav img[alt="Urbor Essentials"]:hover {
 // ================== CONFIG ==================
 const API_ENDPOINT = '/api/sub';
 const MERCHANT_BKASH_NUMBER = '01700000000';
-const DELIVERY_COST = 120; // Delivery cost in BDT
 
 const products = [
-  { id:1, name: "Whole Chicken (3kg)", price:1260, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80    ", desc:"Farm‑fresh whole chicken, perfect for roasts & curries." },
-  { id:2, name: "Whole Chicken (5kg)", price:2100, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80    ", desc:"Ideal for family meals and gatherings." },
-  { id:3, name: "Whole Chicken (10kg)", price:4050, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80    ", desc:"Best value for large families or events." }
+  { id:1, name: "Whole Chicken (3kg)", price:1260, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Farm‑fresh whole chicken, perfect for roasts & curries." },
+  { id:2, name: "Whole Chicken (5kg)", price:2100, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Ideal for family meals and gatherings." },
+  { id:3, name: "Whole Chicken (10kg)", price:4050, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Best value for large families or events." }
 ];
 
 let cart = {};
@@ -581,24 +574,16 @@ function updateCartFromCards() {
   updateCartUI();
 }
 
-function calculateTotals() {
-  const items = Object.values(cart);
-  const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
-  const total = subtotal + (items.length > 0 ? DELIVERY_COST : 0);
-  const count = items.reduce((s, i) => s + i.quantity, 0);
-  return { subtotal, total, count, items };
-}
-
 function updateCartUI() {
-  const { subtotal, total, count, items } = calculateTotals();
+  const items = Object.values(cart);
+  const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
+  const count = items.reduce((s, i) => s + i.quantity, 0);
   
   document.getElementById('cart-count').textContent = count;
-  document.getElementById('sidebar-subtotal').textContent = '৳' + subtotal.toFixed(2);
   document.getElementById('sidebar-total').textContent = '৳' + total.toFixed(2);
   document.getElementById('instruction-total').textContent = total.toFixed(2);
   document.getElementById('form-total').value = total.toFixed(2);
   document.getElementById('cart-total-display').textContent = '৳' + total.toFixed(2);
-  document.getElementById('modal-subtotal').textContent = '৳' + subtotal.toFixed(2);
   
   // Sidebar cart items
   const list = document.getElementById('sidebar-cart-items');
@@ -679,7 +664,7 @@ function closeCartSidebar() {
 }
 
 function proceedToCheckout() {
-  const { count } = calculateTotals();
+  const count = Object.values(cart).reduce((s,i)=>s+i.quantity,0);
   if (count === 0) { alert('Your cart is empty'); return; }
   closeCartSidebar();
   toggleCheckoutModal();
@@ -726,8 +711,8 @@ async function handleCheckout(e) {
   try {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    const { items } = calculateTotals();
-    data.items = items.map(item => `${item.name} (×${item.quantity})`).join(', ');
+    const cartItems = Object.values(cart);
+    data.items = cartItems.map(item => `${item.name} (×${item.quantity})`).join(', ');
     
     const response = await fetch(API_ENDPOINT, {
       method: 'POST',
