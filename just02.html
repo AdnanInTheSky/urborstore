@@ -213,6 +213,9 @@
       font-size: 0.8rem;
       font-weight: 500;
     }
+    .delivery-badge.discount {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    }
   </style>
 </head>
 <body class="antialiased">
@@ -278,13 +281,25 @@
         <!-- Order Summary -->
         <div class="bg-white p-5 rounded-2xl border border-green-100">
           <div id="order-items-summary"></div>
-          <div class="summary-line"><span class="flex items-center gap-2">delivery <span class="delivery-badge">fixed</span></span> <span class="font-medium text-green-700">৳ 120</span></div>
+          <div class="summary-line">
+            <span class="flex items-center gap-2">
+              delivery 
+              <span id="delivery-badge" class="delivery-badge">weight-based</span>
+            </span> 
+            <span class="font-medium text-green-700">৳ <span id="delivery-cost">120</span></span>
+          </div>
+          <div class="summary-line text-xs text-gray-500">
+            <span id="weight-display">Total weight: 0 kg</span>
+            <span id="delivery-note">Under 5kg: ৳120 | 5kg+: ৳100</span>
+          </div>
           <div class="flex justify-between pt-3 border-t border-green-200 mt-2">
             <span class="font-semibold text-lg">total</span>
             <span id="summary-total" class="summary-total">৳ 120</span>
           </div>
           <input type="hidden" id="form-total">
           <input type="hidden" id="form-items">
+          <input type="hidden" id="form-delivery-cost">
+          <input type="hidden" id="form-total-weight">
         </div>
         
         <!-- Submit Button -->
@@ -302,15 +317,20 @@
 
 <script>
   (function() {
-    // Product catalog
+    // Product catalog with weight in kg
     const products = [
-      { id: 1, name: "Whole Chicken (3kg)", price: 1260, icon: 'fa-drumstick-bite' },
-      { id: 2, name: "Whole Chicken (5kg)", price: 2075, icon: 'fa-utensils' },
-      { id: 3, name: "Whole Chicken (10kg)", price: 3650, icon: 'fa-users' }
+      { id: 1, name: "Whole Chicken (3kg)", price: 1260, weight: 3, icon: 'fa-drumstick-bite' },
+      { id: 2, name: "Whole Chicken (5kg)", price: 2075, weight: 5, icon: 'fa-utensils' },
+      { id: 3, name: "Whole Chicken (10kg)", price: 3650, weight: 10, icon: 'fa-users' }
     ];
 
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwuTodU2_Rlr4dGOyF4hgVKPs7A4hzd8uurKymE3ZsTiuxpleu03WBB4ijEdFisfEC4/exec';
-    const DELIVERY_COST = 120;
+    
+    // Delivery cost constants
+    const DELIVERY_UNDER_5KG = 120;
+    const DELIVERY_5KG_PLUS = 100;
+    const WEIGHT_THRESHOLD = 5;
+    
     const MIN_QTY = 1;
     const MAX_QTY = 99;
 
@@ -324,7 +344,12 @@
     const summaryTotal = document.getElementById('summary-total');
     const formTotal = document.getElementById('form-total');
     const formItems = document.getElementById('form-items');
+    const formDeliveryCost = document.getElementById('form-delivery-cost');
+    const formTotalWeight = document.getElementById('form-total-weight');
     const cartCount = document.getElementById('cart-count');
+    const deliveryCostEl = document.getElementById('delivery-cost');
+    const deliveryBadge = document.getElementById('delivery-badge');
+    const weightDisplay = document.getElementById('weight-display');
     
     const nameField = document.getElementById('name');
     const phoneField = document.getElementById('phone');
@@ -336,6 +361,19 @@
     const btnText = document.getElementById('btn-text');
     const btnLoading = document.getElementById('btn-loading');
     const messageBox = document.getElementById('form-message');
+
+    // Calculate delivery cost based on total weight
+    function calculateDeliveryCost(totalWeight) {
+      return totalWeight < WEIGHT_THRESHOLD ? DELIVERY_UNDER_5KG : DELIVERY_5KG_PLUS;
+    }
+
+    // Calculate total weight in cart
+    function calculateTotalWeight() {
+      return Object.keys(cart).reduce((total, id) => {
+        const { product, quantity } = cart[id];
+        return total + (product.weight * quantity);
+      }, 0);
+    }
 
     // Render product list
     function renderProducts() {
@@ -352,6 +390,7 @@
           <div class="flex-1 min-w-0">
             <div class="font-medium truncate">${p.name}</div>
             <div class="text-green-700 font-bold">৳ ${p.price.toLocaleString()}</div>
+            <div class="text-xs text-gray-500">${p.weight}kg</div>
           </div>
           <div class="check-indicator flex-shrink-0">
             ${inCart ? '<i class="fas fa-check text-xs"></i>' : ''}
@@ -368,10 +407,8 @@
       if (!product) return;
 
       if (cart[productId]) {
-        // Remove from cart
         delete cart[productId];
       } else {
-        // Add to cart with quantity 1
         cart[productId] = { product, quantity: 1 };
       }
       
@@ -404,11 +441,9 @@
     function renderCart() {
       const cartIds = Object.keys(cart);
       
-      // Update cart count badge
       const totalItems = cartIds.reduce((sum, id) => sum + cart[id].quantity, 0);
       cartCount.innerText = `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
       
-      // Empty state
       if (cartIds.length === 0) {
         cartItemsContainer.innerHTML = `
           <div class="empty-cart">
@@ -420,7 +455,6 @@
         return;
       }
 
-      // Render cart items list
       cartItemsContainer.innerHTML = cartIds.map(id => {
         const { product, quantity } = cart[id];
         const itemTotal = product.price * quantity;
@@ -449,7 +483,6 @@
         `;
       }).join('');
 
-      // Render order summary (compact)
       orderItemsSummary.innerHTML = cartIds.map(id => {
         const { product, quantity } = cart[id];
         return `
@@ -460,7 +493,6 @@
         `;
       }).join('');
 
-      // Attach event listeners to cart controls
       cartItemsContainer.querySelectorAll('[data-qty-decrease]').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -489,17 +521,36 @@
         return sum + (product.price * quantity);
       }, 0);
       
-      const total = subtotal + DELIVERY_COST;
+      // Calculate weight and delivery cost
+      const totalWeight = calculateTotalWeight();
+      const deliveryCost = calculateDeliveryCost(totalWeight);
+      const total = subtotal + deliveryCost;
       
-      // Update displays
+      // Update delivery display
+      deliveryCostEl.innerText = deliveryCost.toLocaleString();
+      weightDisplay.innerText = `Total weight: ${totalWeight} kg`;
+      
+      // Update badge
+      if (totalWeight >= WEIGHT_THRESHOLD) {
+        deliveryBadge.innerText = '5kg+ discount';
+        deliveryBadge.classList.add('discount');
+      } else {
+        deliveryBadge.innerText = 'weight-based';
+        deliveryBadge.classList.remove('discount');
+      }
+      
+      // Update totals display
       summaryTotal.innerText = `৳ ${total.toLocaleString()}`;
       formTotal.value = total;
+      formDeliveryCost.value = deliveryCost;
+      formTotalWeight.value = totalWeight;
       
       // Prepare items data for form submission
       const itemsData = cartIds.map(id => ({
         productId: id,
         name: cart[id].product.name,
         unitPrice: cart[id].product.price,
+        weight: cart[id].product.weight,
         quantity: cart[id].quantity,
         subtotal: cart[id].product.price * cart[id].quantity
       }));
@@ -534,20 +585,17 @@
       
       document.querySelectorAll('.input-field').forEach(f => f.classList.remove('error'));
       
-      // Validate cart
       if (Object.keys(cart).length === 0) {
         setMessage('Please add at least one product to your cart.', 'error');
         return;
       }
       
-      // Get form values
       const name = nameField?.value.trim();
       const phone = phoneField?.value.trim();
       const email = emailField?.value.trim();
       const address = addressField?.value.trim();
       const txn = transactionField?.value.trim().toUpperCase();
       
-      // Validate fields
       let hasError = false;
       if (!name) { markFieldError(nameField); hasError = true; }
       if (!phone) { markFieldError(phoneField); hasError = true; }
@@ -560,32 +608,34 @@
         return;
       }
 
-      // Calculate totals
       const cartIds = Object.keys(cart);
       const subtotal = cartIds.reduce((sum, id) => {
         const { product, quantity } = cart[id];
         return sum + (product.price * quantity);
       }, 0);
-      const total = subtotal + DELIVERY_COST;
+      
+      const totalWeight = calculateTotalWeight();
+      const deliveryCost = calculateDeliveryCost(totalWeight);
+      const total = subtotal + deliveryCost;
 
-      // Prepare order data
       const orderData = {
         transactionId: txn,
         name, email, phone, address,
-        deliveryCost: DELIVERY_COST,
+        deliveryCost: deliveryCost,
+        totalWeight: totalWeight,
         subtotal: subtotal,
         total: total,
         items: cartIds.map(id => ({
           productId: id,
           name: cart[id].product.name,
           unitPrice: cart[id].product.price,
+          weight: cart[id].product.weight,
           quantity: cart[id].quantity,
           subtotal: cart[id].product.price * cart[id].quantity
         })),
         timestamp: new Date().toISOString()
       };
 
-      // Loading state
       submitBtn.disabled = true;
       btnText?.classList.add('hidden');
       btnLoading?.classList.remove('hidden');
@@ -603,7 +653,6 @@
         if (response.ok && result.result === 'success') {
           setMessage('✓ Order confirmed! We\'ll contact you shortly.', 'success');
           
-          // Reset everything
           form?.reset();
           Object.keys(cart).forEach(id => delete cart[id]);
           renderProducts();
