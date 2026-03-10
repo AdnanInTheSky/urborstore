@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Urbor Essentials | Purveyors of Antibiotic‑Free Chicken</title>
 <meta name="description" content="Premium antibiotic-free chicken, ethically raised and delivered fresh across Dhaka. Order online with bKash.">
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Font Awesome -->
@@ -21,6 +23,7 @@ tailwind.config = {
         'urbor-green-dark': '#1b4332',
         'urbor-green-light': '#40916c',
         'urbor-cream': '#faf7f2',
+        'whatsapp-green': '#25D366',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
@@ -212,9 +215,58 @@ input:focus, textarea:focus {
   min-width: 28px;
   font-size: 11px;
 }
+
+/* FLOATING WHATSAPP BUTTON */
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  background: #25D366;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+  z-index: 100;
+  animation: pulse 2s infinite;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
+  animation: none;
+}
+.whatsapp-float i {
+  font-size: 28px;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+@media (max-width: 640px) {
+  .whatsapp-float {
+    width: 52px;
+    height: 52px;
+    bottom: 16px;
+    right: 16px;
+  }
+  .whatsapp-float i { font-size: 24px; }
+}
 </style>
 </head>
 <body class="antialiased">
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<a href="https://api.whatsapp.com/send?phone=8801316514543&text=Hi%20Urbor%20Essentials!%20I%20want%20to%20place%20an%20order." 
+   target="_blank" 
+   class="whatsapp-float">
+   <i class="fab fa-whatsapp"></i>
+</a>
 
 <!-- NAVIGATION -->
 <nav class="fixed w-full z-50 glass-premium border-b border-white/30">
@@ -273,16 +325,24 @@ input:focus, textarea:focus {
     </div>
   </div>
   <div class="p-5 border-t bg-white">
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex justify-between items-center mb-2">
       <span class="text-gray-600 text-sm">Subtotal</span>
-      <span id="sidebar-total" class="text-lg font-bold text-urbor-green">৳0.00</span>
+      <span id="sidebar-subtotal" class="text-lg font-bold text-urbor-green">৳0.00</span>
+    </div>
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-gray-600 text-sm">Delivery</span>
+      <span class="text-sm font-medium text-gray-800">৳120</span>
+    </div>
+    <div class="flex justify-between items-center mb-4 pt-3 border-t">
+      <span class="text-gray-800 font-semibold">Total</span>
+      <span id="sidebar-total" class="text-xl font-bold text-urbor-green">৳120.00</span>
     </div>
     <button onclick="proceedToCheckout()" class="w-full btn-premium py-3 rounded-lg text-sm font-medium flex justify-center items-center gap-2">
       Proceed to Checkout
       <i class="fas fa-arrow-right"></i>
     </button>
-    <p class="text-xs text-center text-gray-400 mt-3">
-      <i class="fas fa-truck text-urbor-green mr-1"></i> Free delivery across Dhaka
+    <p class="text-xs text-center text-gray-500 mt-3">
+      <i class="fas fa-truck text-urbor-green mr-1"></i> Delivery: ৳120 across Dhaka
     </p>
   </div>
 </div>
@@ -293,7 +353,6 @@ input:focus, textarea:focus {
     alt="Premium antibiotic-free chicken"
     class="w-full h-full object-cover"
   >
- 
 </section>
 
 <!-- USP / TRUST BADGES -->
@@ -428,7 +487,7 @@ input:focus, textarea:focus {
       <h4 class="font-bold text-urbor-green text-sm flex items-center gap-2"><i class="fas fa-mobile-alt"></i> bKash Payment</h4>
       <ol class="list-decimal list-inside text-xs text-gray-700 space-y-1 mt-2">
         <li>Open bKash → <span class="font-medium">Send Money</span></li>
-        <li>Send <span class="font-bold" id="instruction-total">0.00</span> BDT to <span class="font-mono font-bold text-urbor-green" id="merchant-number">01700000000</span></li>
+        <li>Send <span class="font-bold" id="instruction-total">120.00</span> BDT to <span class="font-mono font-bold text-urbor-green" id="merchant-number">01700000000</span></li>
         <li>Copy the Transaction ID</li>
         <li>Paste below</li>
       </ol>
@@ -436,9 +495,19 @@ input:focus, textarea:focus {
     <div class="bg-gray-50 rounded-xl p-4 mb-4">
       <h4 class="font-semibold text-gray-800 text-sm flex items-center gap-2"><i class="fas fa-receipt text-urbor-green"></i> Order Summary</h4>
       <ul id="cart-items-list" class="text-xs text-gray-700 space-y-2 my-3 max-h-32 overflow-y-auto cart-scroll"></ul>
-      <div class="border-t pt-2 flex justify-between font-bold text-base">
-        <span>Total Payable</span>
-        <span id="cart-total-display" class="text-urbor-green">0.00 BDT</span>
+      <div class="border-t pt-2 space-y-1">
+        <div class="flex justify-between text-xs">
+          <span class="text-gray-600">Subtotal</span>
+          <span id="modal-subtotal" class="text-gray-800">৳0.00</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-gray-600">Delivery</span>
+          <span class="text-gray-800">৳120</span>
+        </div>
+        <div class="flex justify-between font-bold text-base pt-2 border-t">
+          <span>Total Payable</span>
+          <span id="cart-total-display" class="text-urbor-green">৳120.00</span>
+        </div>
       </div>
     </div>
     <form id="order-form" onsubmit="handleCheckout(event)">
@@ -464,7 +533,7 @@ input:focus, textarea:focus {
         <label class="block text-xs font-bold text-gray-700 mb-2">bKash Transaction ID *</label>
         <input type="text" id="bkash-trx" name="transactionId" placeholder="e.g., 8H5K2L9P4R" pattern="[0-9a-zA-Z]{8,12}" required class="w-full rounded-lg border p-2 text-sm font-mono uppercase">
       </div>
-      <input type="hidden" name="total" id="form-total">
+      <input type="hidden" name="total" id="form-total" value="120.00">
       <button type="submit" id="submit-btn" class="w-full btn-premium py-3 rounded-lg text-sm font-medium">
         Confirm Order & Pay with bKash
       </button>
@@ -513,6 +582,7 @@ input:focus, textarea:focus {
 // ================== CONFIG ==================
 const API_ENDPOINT = '/api/sub';
 const MERCHANT_BKASH_NUMBER = '01700000000';
+const DELIVERY_FEE = 120; // Delivery cost in BDT
 
 const products = [
   { id:1, name: "Whole Chicken (3kg)", price:1260, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Farm‑fresh whole chicken, perfect for roasts & curries." },
@@ -576,14 +646,17 @@ function updateCartFromCards() {
 
 function updateCartUI() {
   const items = Object.values(cart);
-  const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
+  const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
+  const total = subtotal + DELIVERY_FEE;
   const count = items.reduce((s, i) => s + i.quantity, 0);
   
   document.getElementById('cart-count').textContent = count;
+  document.getElementById('sidebar-subtotal').textContent = '৳' + subtotal.toFixed(2);
   document.getElementById('sidebar-total').textContent = '৳' + total.toFixed(2);
   document.getElementById('instruction-total').textContent = total.toFixed(2);
   document.getElementById('form-total').value = total.toFixed(2);
   document.getElementById('cart-total-display').textContent = '৳' + total.toFixed(2);
+  document.getElementById('modal-subtotal').textContent = '৳' + subtotal.toFixed(2);
   
   // Sidebar cart items
   const list = document.getElementById('sidebar-cart-items');
