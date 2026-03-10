@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Urbor Essentials | Purveyors of Antibiotic‑Free Chicken</title>
 <meta name="description" content="Premium antibiotic-free chicken, ethically raised and delivered fresh across Dhaka. Order online with bKash.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
+
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Font Awesome -->
@@ -14,175 +19,222 @@
 <!-- Tailwind Config -->
 <script>
 tailwind.config = {
-theme: {
-extend: {
-colors: {
-'urbor-green': '#2d6a4f',
-'urbor-green-dark': '#1b4332',
-'urbor-green-light': '#40916c',
-'urbor-cream': '#faf7f2',
-},
-fontFamily: {
-sans: ['Inter', 'sans-serif'],
-display: ['Playfair Display', 'serif'],
-}
-}
-}
+  theme: {
+    extend: {
+      colors: {
+        'urbor-green': '#2d6a4f',
+        'urbor-green-dark': '#1b4332',
+        'urbor-green-light': '#40916c',
+        'urbor-cream': '#faf7f2',
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
+      }
+    }
+  }
 }
 </script>
 <style>
 body {
-background-color: #faf7f2;
-color: #1e1b1b;
-scroll-behavior: smooth;
+  background-color: #faf7f2;
+  color: #1e1b1b;
+  scroll-behavior: smooth;
 }
 .glass-premium {
-background: rgba(255, 255, 255, 0.85);
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255, 255, 255, 0.5);
-box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.1);
 }
 .glass-card-premium {
-background: rgba(255, 255, 255, 0.9);
-border: 1px solid rgba(45, 106, 79, 0.15);
-transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(45, 106, 79, 0.15);
+  transition: all 0.3s ease;
 }
 .glass-card-premium:hover {
-transform: translateY(-4px);
-box-shadow: 0 20px 40px -10px rgba(45, 106, 79, 0.15);
-border-color: rgba(45, 106, 79, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(45, 106, 79, 0.15);
+  border-color: rgba(45, 106, 79, 0.3);
 }
 .btn-premium {
-background: linear-gradient(145deg, #2d6a4f, #1b4332);
-color: white;
-font-weight: 500;
-transition: all 0.3s ease;
-border: none;
+  background: linear-gradient(145deg, #2d6a4f, #1b4332);
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
 }
 .btn-premium:hover {
-transform: translateY(-2px);
-box-shadow: 0 12px 28px -8px #2d6a4f99;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px #2d6a4f99;
 }
 .btn-premium:disabled {
-opacity: 0.7;
-cursor: not-allowed;
-transform: none;
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 .qty-control {
-display: flex;
-align-items: center;
-gap: 0;
-background: #f0eae4;
-border-radius: 10px;
-overflow: hidden;
-border: 1px solid rgba(45, 106, 79, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #f0eae4;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(45, 106, 79, 0.15);
 }
 .qty-btn {
-width: 36px;
-height: 36px;
-display: flex;
-align-items: center;
-justify-content: center;
-background: transparent;
-border: none;
-color: #2d6a4f;
-font-size: 14px;
-cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #2d6a4f;
+  font-size: 14px;
+  cursor: pointer;
 }
 .qty-btn:hover { background: rgba(45, 106, 79, 0.1); }
 .qty-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .qty-value {
-min-width: 36px;
-text-align: center;
-font-weight: 600;
-font-size: 14px;
+  min-width: 36px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
 }
 .cart-scroll::-webkit-scrollbar { width: 4px; }
 .cart-scroll::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
 input:focus, textarea:focus {
-outline: none;
-box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
 }
 
-/* HERO SECTION */
+/* HERO SECTION - AUTO-FIT IMAGE */
 .hero-section {
-height: 70vh;
-min-height: 500px;
+  height: 70vh;
+  min-height: 500px;
+  position: relative;
 }
-@media (min-width: 1024px) {
-.hero-section {
-height: 85vh;
-min-height: 650px;
-}
-}
-.hero-overlay {
-background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
-}
-
-/* PRODUCT CARDS - FIXED SYMMETRIC SIZING */
-.product-grid {
-display: grid;
-grid-template-columns: 1fr;
-gap: 2rem;
+.hero-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 @media (min-width: 768px) {
-.product-grid {
-grid-template-columns: repeat(2, 1fr);
-gap: 2.5rem;
+  .hero-section {
+    height: 75vh;
+    min-height: 600px;
+  }
 }
+@media (min-width: 1024px) {
+  .hero-section {
+    height: 80vh;
+    min-height: 700px;
+  }
+}
+
+/* PRODUCT CARDS */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
 }
 @media (min-width: 1280px) {
-.product-grid {
-grid-template-columns: repeat(3, 1fr);
-gap: 2.5rem;
-}
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
 }
 .product-card {
-display: flex;
-flex-direction: column;
-height: 100%;
-min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 480px;
 }
 .product-card-image {
-height: 240px;
-width: 100%;
-object-fit: cover;
+  height: 240px;
+  width: 100%;
+  object-fit: cover;
 }
 .product-card-content {
-display: flex;
-flex-direction: column;
-flex-grow: 1;
-padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1.5rem;
 }
 .product-card-title {
-font-size: 1.125rem;
-font-weight: 700;
-color: #1e1b1b;
-margin-bottom: 0.5rem;
-min-height: 3.5rem;
-display: -webkit-box;
--webkit-line-clamp: 2;
--webkit-box-orient: vertical;
-overflow: hidden;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1e1b1b;
+  margin-bottom: 0.5rem;
+  min-height: 3.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .product-card-desc {
-font-size: 0.875rem;
-color: #6b7280;
-margin-bottom: 1.5rem;
-flex-grow: 1;
-min-height: 4rem;
-display: -webkit-box;
--webkit-line-clamp: 3;
--webkit-box-orient: vertical;
-overflow: hidden;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  min-height: 4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .product-card-footer {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding-top: 1rem;
-border-top: 1px solid rgba(45, 106, 79, 0.15);
-margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(45, 106, 79, 0.15);
+  margin-top: auto;
+}
+
+/* Sidebar qty control scaling */
+#sidebar-cart-items .qty-control {
+  transform: scale(0.95);
+  transform-origin: right center;
+}
+#sidebar-cart-items .qty-btn {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+}
+#sidebar-cart-items .qty-value {
+  min-width: 32px;
+  font-size: 13px;
+}
+#cart-items-list .qty-control {
+  transform: scale(0.9);
+  transform-origin: left center;
+}
+#cart-items-list .qty-btn {
+  width: 28px;
+  height: 28px;
+  font-size: 10px;
+}
+#cart-items-list .qty-value {
+  min-width: 28px;
+  font-size: 11px;
+}
+
+/* Logo hover effect */
+nav img[alt="Urbor Essentials"] {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+nav img[alt="Urbor Essentials"]:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 6px rgba(45, 106, 79, 0.2));
 }
 </style>
 </head>
@@ -190,508 +242,538 @@ margin-top: auto;
 
 <!-- NAVIGATION -->
 <nav class="fixed w-full z-50 glass-premium border-b border-white/30">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex justify-between h-16 items-center">
-<!-- Logo -->
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#2d6a4f] to-[#1b4332] flex items-center justify-center">
-<i class="fas fa-drumstick-bite text-white"></i>
-</div>
-<span class="text-xl font-display font-semibold text-gray-900">
-Urbor<span class="text-urbor-green"> Essentials</span>
-</span>
-</div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <img src="images/Screenshot 2026-03-10 224249.png" alt="Urbor Essentials" class="w-10 h-10 object-contain">
+        <span class="text-xl font-display font-semibold text-gray-900">
+          Urbor<span class="text-urbor-green"> Essentials</span>
+        </span>
+      </div>
 
-<!-- Desktop Menu -->
-<div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-<a href="#products" class="text-gray-800 hover:text-urbor-green">Our Products</a>
-<a href="#why-us" class="text-gray-800 hover:text-urbor-green">Why Us</a>
-<a href="#testimonials" class="text-gray-800 hover:text-urbor-green">Testimonials</a>
-<a href="#faq" class="text-gray-800 hover:text-urbor-green">FAQ</a>
-</div>
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+        <a href="#products" class="text-gray-800 hover:text-urbor-green">Our Products</a>
+        <a href="#why-us" class="text-gray-800 hover:text-urbor-green">Why Us</a>
+        <a href="#testimonials" class="text-gray-800 hover:text-urbor-green">Testimonials</a>
+        <a href="#faq" class="text-gray-800 hover:text-urbor-green">FAQ</a>
+      </div>
 
-<!-- Right: Cart (Prominent & Always Visible) -->
-<div class="flex items-center space-x-4">
-<button onclick="openCartSidebar()" class="relative flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-4 py-2 rounded-lg transition shadow-sm">
-<i class="fas fa-shopping-cart text-lg text-urbor-green"></i>
-<span class="hidden sm:inline text-sm font-bold">Cart</span>
-<span id="cart-count" class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-urbor-green rounded-full">0</span>
-</button>
-<button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800">
-<i class="fas fa-bars"></i>
-</button>
-</div>
-</div>
-</div>
+      <!-- Right: Cart -->
+      <div class="flex items-center space-x-4">
+        <button onclick="openCartSidebar()" class="relative flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-4 py-2 rounded-lg transition shadow-sm">
+          <i class="fas fa-shopping-cart text-lg text-urbor-green"></i>
+          <span class="hidden sm:inline text-sm font-bold">Cart</span>
+          <span id="cart-count" class="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-urbor-green rounded-full">0</span>
+        </button>
+        <button id="mobile-menu-btn" class="md:hidden text-xl text-gray-800">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 
-<!-- Mobile Menu -->
-<div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-3 space-y-2">
-<a href="#products" class="block py-2 text-gray-800">Our Products</a>
-<a href="#why-us" class="block py-2 text-gray-800">Why Us</a>
-<a href="#testimonials" class="block py-2 text-gray-800">Testimonials</a>
-<a href="#faq" class="block py-2 text-gray-800">FAQ</a>
-</div>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-3 space-y-2">
+    <a href="#products" class="block py-2 text-gray-800">Our Products</a>
+    <a href="#why-us" class="block py-2 text-gray-800">Why Us</a>
+    <a href="#testimonials" class="block py-2 text-gray-800">Testimonials</a>
+    <a href="#faq" class="block py-2 text-gray-800">FAQ</a>
+  </div>
 </nav>
 
-<!-- CART SIDEBAR -->
-<div id="cart-overlay" onclick="closeCartSidebar()" class="fixed inset-0 bg-black/40 z-[60] hidden"></div>
-<div id="cart-sidebar" class="fixed top-0 left-0 h-full w-full max-w-md bg-white z-[70] shadow-xl transform -translate-x-full transition-transform duration-200 flex flex-col">
-<div class="px-5 py-4 border-b flex justify-between items-center bg-urbor-cream">
-<h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
-<i class="fas fa-shopping-cart text-urbor-green"></i> Your Cart
-</h2>
-<button onclick="closeCartSidebar()" class="text-gray-400 hover:text-red-500 p-1"><i class="fas fa-times text-xl"></i></button>
-</div>
-<div class="flex-1 overflow-y-auto p-5 cart-scroll bg-[#faf7f2]">
-<div id="sidebar-cart-items" class="space-y-3"></div>
-<div id="sidebar-empty" class="hidden text-center py-8">
-<i class="fas fa-shopping-cart text-3xl text-gray-300 mb-2"></i>
-<p class="text-gray-500 text-sm">Your cart is empty</p>
-</div>
-</div>
-<div class="p-5 border-t bg-white">
-<div class="flex justify-between items-center mb-4">
-<span class="text-gray-600 text-sm">Subtotal</span>
-<span id="sidebar-total" class="text-lg font-bold text-urbor-green">৳0.00</span>
-</div>
-<button onclick="proceedToCheckout()" class="w-full btn-premium py-3 rounded-lg text-sm font-medium flex justify-center items-center gap-2">
-Proceed to Checkout
-<i class="fas fa-arrow-right"></i>
-</button>
-<p class="text-xs text-center text-gray-400 mt-3">
-<i class="fas fa-truck text-urbor-green mr-1"></i> Free delivery across Dhaka
-</p>
-</div>
-</div>
-
-<!-- HERO SECTION -->
-<section class="relative hero-section pt-16">
-<img src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?auto=format&fit=crop&w=1920&q=80"
-alt="Premium antibiotic-free chicken"
-class="w-full h-full object-cover"
->
-<div class="absolute inset-0 hero-overlay flex items-end">
-<div class="max-w-7xl mx-auto px-4 pb-16 w-full">
-<div class="max-w-3xl">
-<h1 class="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">Premium Antibiotic-Free Chicken</h1>
-<p class="text-white/90 text-lg md:text-xl mb-6">Ethically raised • Fresh delivery • Order via bKash</p>
-<a href="#products" class="inline-flex items-center gap-2 btn-premium px-8 py-4 rounded-lg text-base font-medium">
-Shop Now
-<i class="fas fa-arrow-down"></i>
-</a>
-</div>
-</div>
-</div>
+<!-- HERO SECTION - IMAGE ONLY -->
+<section class="relative hero-section pt-16 overflow-hidden">
+  <img src="/images/05-03-26.jpg (1).jpeg"
+    alt="Premium antibiotic-free chicken"
+    class="absolute inset-0 w-full h-full object-cover object-center"
+    loading="eager"
+  >
 </section>
 
-<!-- USP / TRUST BADGES -->
-<section id="why-us" class="py-12 bg-white border-b">
-<div class="max-w-7xl mx-auto px-4">
-<div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-<div>
-<div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100">
-<i class="fas fa-snowflake text-2xl text-urbor-green"></i>
-</div>
-<p class="font-semibold text-gray-800">Blast Freezing</p>
-<p class="text-xs text-gray-500 mt-1">Locks in taste & protects from bacterial attack</p>
-</div>
-<div>
-<div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100">
-<i class="fas fa-shield-alt text-2xl text-urbor-green"></i>
-</div>
-<p class="font-semibold text-gray-800">100% Antibiotic-Free</p>
-<p class="text-xs text-gray-500 mt-1">Raised without antibiotics</p>
-</div>
-<div>
-<div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100">
-<i class="fas fa-kaaba text-2xl text-urbor-green"></i>
-</div>
-<p class="font-semibold text-gray-800">Halal Slaughter</p>
-<p class="text-xs text-gray-500 mt-1">Ensuring complete halal slaughter</p>
-</div>
-<div>
-<div class="w-16 h-16 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-3 border border-green-100">
-<i class="fas fa-box-open text-2xl text-urbor-green"></i>
-</div>
-<p class="font-semibold text-gray-800">Vacuum Pack</p>
-<p class="text-xs text-gray-500 mt-1">Keeps fresh for longer</p>
-</div>
-</div>
-</div>
+<!-- USP / TRUST BADGES - NOW VISIBLE BELOW HERO -->
+<section id="why-us" class="py-10 bg-white border-b">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+      <div>
+        <div class="w-14 h-14 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-2 border border-green-100">
+          <i class="fas fa-snowflake text-xl text-urbor-green"></i>
+        </div>
+        <p class="font-semibold text-gray-800 text-sm">Blast Freezing</p>
+        <p class="text-xs text-gray-500 mt-1">Locks in taste & freshness</p>
+      </div>
+      <div>
+        <div class="w-14 h-14 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-2 border border-green-100">
+          <i class="fas fa-shield-alt text-xl text-urbor-green"></i>
+        </div>
+        <p class="font-semibold text-gray-800 text-sm">100% Antibiotic-Free</p>
+        <p class="text-xs text-gray-500 mt-1">Raised without antibiotics</p>
+      </div>
+      <div>
+        <div class="w-14 h-14 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-2 border border-green-100">
+          <i class="fas fa-kaaba text-xl text-urbor-green"></i>
+        </div>
+        <p class="font-semibold text-gray-800 text-sm">Halal Slaughter</p>
+        <p class="text-xs text-gray-500 mt-1">Ensuring complete halal</p>
+      </div>
+      <div>
+        <div class="w-14 h-14 mx-auto bg-green-50 rounded-xl flex items-center justify-center mb-2 border border-green-100">
+          <i class="fas fa-box-open text-xl text-urbor-green"></i>
+        </div>
+        <p class="font-semibold text-gray-800 text-sm">Vacuum Pack</p>
+        <p class="text-xs text-gray-500 mt-1">Keeps fresh for longer</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- PRODUCTS SECTION - FIXED SYMMETRIC CARDS -->
+<!-- PRODUCTS SECTION -->
 <section id="products" class="py-20 bg-[#faf7f2]">
-<div class="max-w-7xl mx-auto px-4">
-<div class="text-center max-w-2xl mx-auto mb-12">
-<span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Lab Tested</span>
-<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Our Premium Selection</h2>
-<p class="text-gray-600">Thoughtfully raised, expertly cut — antibiotic‑free chicken delivered fresh.</p>
-</div>
-<div class="product-grid" id="product-container"></div>
-</div>
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Lab Tested</span>
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Our Premium Selection</h2>
+      <p class="text-gray-600">Thoughtfully raised, expertly cut — antibiotic‑free chicken delivered fresh.</p>
+    </div>
+    <div class="product-grid" id="product-container"></div>
+  </div>
 </section>
 
 <!-- TESTIMONIALS -->
 <section id="testimonials" class="py-20 bg-white">
-<div class="max-w-7xl mx-auto px-4">
-<div class="text-center max-w-2xl mx-auto mb-12">
-<span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Trusted Voices</span>
-<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Loved by Families</h2>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="glass-card-premium rounded-2xl p-6">
-<p class="text-gray-700 text-sm mb-4 italic">"The quality is exceptional! My family loves the taste and I love that it's antibiotic-free."</p>
-<div class="flex items-center">
-<span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">SR</span>
-<div><h4 class="font-bold text-gray-900 text-sm">Sadia Rahman</h4><p class="text-gray-500 text-xs">Gulshan, Dhaka</p></div>
-</div>
-</div>
-<div class="glass-card-premium rounded-2xl p-6">
-<p class="text-gray-700 text-sm mb-4 italic">"Fresh delivery every time. The bKash payment process is so convenient!"</p>
-<div class="flex items-center">
-<span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">AK</span>
-<div><h4 class="font-bold text-gray-900 text-sm">Ahmed Khan</h4><p class="text-gray-500 text-xs">Banani, Dhaka</p></div>
-</div>
-</div>
-<div class="glass-card-premium rounded-2xl p-6">
-<p class="text-gray-700 text-sm mb-4 italic">"Finally found a reliable chicken supplier. Worth every taka!"</p>
-<div class="flex items-center">
-<span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">NT</span>
-<div><h4 class="font-bold text-gray-900 text-sm">Nusrat Tasnim</h4><p class="text-gray-500 text-xs">Dhanmondi</p></div>
-</div>
-</div>
-</div>
-</div>
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Trusted Voices</span>
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Loved by Families</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="glass-card-premium rounded-2xl p-6">
+        <p class="text-gray-700 text-sm mb-4 italic">"The quality is exceptional! My family loves the taste and I love that it's antibiotic-free."</p>
+        <div class="flex items-center">
+          <span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">SR</span>
+          <div><h4 class="font-bold text-gray-900 text-sm">Sadia Rahman</h4><p class="text-gray-500 text-xs">Gulshan, Dhaka</p></div>
+        </div>
+      </div>
+      <div class="glass-card-premium rounded-2xl p-6">
+        <p class="text-gray-700 text-sm mb-4 italic">"Fresh delivery every time. The bKash payment process is so convenient!"</p>
+        <div class="flex items-center">
+          <span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">AK</span>
+          <div><h4 class="font-bold text-gray-900 text-sm">Ahmed Khan</h4><p class="text-gray-500 text-xs">Banani, Dhaka</p></div>
+        </div>
+      </div>
+      <div class="glass-card-premium rounded-2xl p-6">
+        <p class="text-gray-700 text-sm mb-4 italic">"Finally found a reliable chicken supplier. Worth every taka!"</p>
+        <div class="flex items-center">
+          <span class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-urbor-green font-bold text-sm mr-3">NT</span>
+          <div><h4 class="font-bold text-gray-900 text-sm">Nusrat Tasnim</h4><p class="text-gray-500 text-xs">Dhanmondi</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- FAQ -->
 <section id="faq" class="py-20 bg-[#faf7f2]">
-<div class="max-w-3xl mx-auto px-4">
-<div class="text-center mb-8">
-<span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Answers</span>
-<h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2">Frequently Asked Questions</h2>
-</div>
-<div class="space-y-3">
-<div class="glass-card-premium rounded-xl overflow-hidden">
-<button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
-<span>What does "antibiotic‑free" really mean?</span>
-<i class="fas fa-chevron-down text-urbor-green transition-transform"></i>
-</button>
-<div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">Our chickens are never given antibiotics at any stage. Raised in clean, spacious environments with natural feed.</div>
-</div>
-<div class="glass-card-premium rounded-xl overflow-hidden">
-<button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
-<span>How is the chicken delivered and stored?</span>
-<i class="fas fa-chevron-down text-urbor-green transition-transform"></i>
-</button>
-<div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">We use blast‑freeze packaging with ice packs. Refrigerate upon arrival. Best within 2‑3 days or freeze for longer storage.</div>
-</div>
-<div class="glass-card-premium rounded-xl overflow-hidden">
-<button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
-<span>Do you deliver nationwide in Bangladesh?</span>
-<i class="fas fa-chevron-down text-urbor-green transition-transform"></i>
-</button>
-<div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">Currently serving Dhaka city (Gulshan, Banani, Dhanmondi, Uttara, Mirpur). Expanding soon!</div>
-</div>
-<div class="glass-card-premium rounded-xl overflow-hidden">
-<button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
-<span>How do I pay with bKash?</span>
-<i class="fas fa-chevron-down text-urbor-green transition-transform"></i>
-</button>
-<div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">At checkout you'll see our bKash number. Send exact amount via "Send Money", paste the Transaction ID into the form. We verify within 30 minutes.</div>
-</div>
-</div>
-</div>
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="text-center mb-8">
+      <span class="text-urbor-green uppercase tracking-wider text-xs font-semibold">Answers</span>
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mt-2">Frequently Asked Questions</h2>
+    </div>
+    <div class="space-y-3">
+      <div class="glass-card-premium rounded-xl overflow-hidden">
+        <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
+          <span>What does "antibiotic‑free" really mean?</span>
+          <i class="fas fa-chevron-down text-urbor-green transition-transform"></i>
+        </button>
+        <div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">Our chickens are never given antibiotics at any stage. Raised in clean, spacious environments with natural feed.</div>
+      </div>
+      <div class="glass-card-premium rounded-xl overflow-hidden">
+        <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
+          <span>How is the chicken delivered and stored?</span>
+          <i class="fas fa-chevron-down text-urbor-green transition-transform"></i>
+        </button>
+        <div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">We use blast‑freeze packaging with ice packs. Refrigerate upon arrival. Best within 2‑3 days or freeze for longer storage.</div>
+      </div>
+      <div class="glass-card-premium rounded-xl overflow-hidden">
+        <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
+          <span>Do you deliver nationwide in Bangladesh?</span>
+          <i class="fas fa-chevron-down text-urbor-green transition-transform"></i>
+        </button>
+        <div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">Currently serving Dhaka city (Gulshan, Banani, Dhanmondi, Uttara, Mirpur). Expanding soon!</div>
+      </div>
+      <div class="glass-card-premium rounded-xl overflow-hidden">
+        <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-medium text-gray-900 text-sm">
+          <span>How do I pay with bKash?</span>
+          <i class="fas fa-chevron-down text-urbor-green transition-transform"></i>
+        </button>
+        <div class="faq-content hidden px-4 pb-4 text-gray-600 text-sm">At checkout you'll see our bKash number. Send exact amount via "Send Money", paste the Transaction ID into the form. We verify within 30 minutes.</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- CHECKOUT MODAL -->
 <div id="checkout-modal" class="fixed inset-0 bg-black/60 hidden z-50 overflow-y-auto" role="dialog">
-<div class="relative top-8 mx-auto p-5 w-full max-w-md shadow-xl rounded-2xl bg-white m-4">
-<div class="flex justify-between items-center mb-4 pb-3 border-b">
-<h3 class="text-lg font-bold text-gray-900">Secure Checkout</h3>
-<button onclick="toggleCheckoutModal()" class="text-gray-400 hover:text-urbor-green p-1"><i class="fas fa-times text-xl"></i></button>
-</div>
-<div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
-<h4 class="font-bold text-urbor-green text-sm flex items-center gap-2"><i class="fas fa-mobile-alt"></i> bKash Payment</h4>
-<ol class="list-decimal list-inside text-xs text-gray-700 space-y-1 mt-2">
-<li>Open bKash → <span class="font-medium">Send Money</span></li>
-<li>Send <span class="font-bold" id="instruction-total">0.00</span> BDT to <span class="font-mono font-bold text-urbor-green" id="merchant-number">01700000000</span></li>
-<li>Copy the Transaction ID</li>
-<li>Paste below</li>
-</ol>
-</div>
-<div class="bg-gray-50 rounded-xl p-4 mb-4">
-<h4 class="font-semibold text-gray-800 text-sm flex items-center gap-2"><i class="fas fa-receipt text-urbor-green"></i> Order Summary</h4>
-<ul id="cart-items-list" class="text-xs text-gray-700 space-y-2 my-3 max-h-32 overflow-y-auto cart-scroll"></ul>
-<div class="border-t pt-2 flex justify-between font-bold text-base">
-<span>Total Payable</span>
-<span id="cart-total-display" class="text-urbor-green">0.00 BDT</span>
-</div>
-</div>
-<form id="order-form" onsubmit="handleCheckout(event)">
-<div class="grid grid-cols-2 gap-3 mb-3">
-<div>
-<label class="block text-xs text-gray-500 mb-1">Name *</label>
-<input type="text" id="name" name="name" required class="w-full rounded-lg border p-2 text-sm">
-</div>
-<div>
-<label class="block text-xs text-gray-500 mb-1">Phone *</label>
-<input type="tel" id="phone" name="phone" placeholder="017XXXXXXXX" required pattern="^01[3-9]\d{8}$" class="w-full rounded-lg border p-2 text-sm">
-</div>
-</div>
-<div class="mb-3">
-<label class="block text-xs text-gray-500 mb-1">Email *</label>
-<input type="email" id="email" name="email" required class="w-full rounded-lg border p-2 text-sm">
-</div>
-<div class="mb-3">
-<label class="block text-xs text-gray-500 mb-1">Address *</label>
-<textarea id="address" name="address" required rows="2" class="w-full rounded-lg border p-2 text-sm"></textarea>
-</div>
-<div class="mb-4 p-3 bg-gray-50 rounded-xl">
-<label class="block text-xs font-bold text-gray-700 mb-2">bKash Transaction ID *</label>
-<input type="text" id="bkash-trx" name="transactionId" placeholder="e.g., 8H5K2L9P4R" pattern="[0-9a-zA-Z]{8,12}" required class="w-full rounded-lg border p-2 text-sm font-mono uppercase">
-</div>
-<input type="hidden" name="total" id="form-total">
-<button type="submit" id="submit-btn" class="w-full btn-premium py-3 rounded-lg text-sm font-medium">
-Confirm Order & Pay with bKash
-</button>
-<p id="status-msg" class="text-center text-xs mt-3 min-h-[18px]"></p>
-</form>
-<div class="mt-4 pt-3 border-t text-center text-xs text-gray-400">
-<i class="fas fa-lock text-green-500 mr-1"></i> Secure Checkout · Data Protected
-</div>
-</div>
+  <div class="relative top-8 mx-auto p-5 w-full max-w-md shadow-xl rounded-2xl bg-white m-4">
+    <div class="flex justify-between items-center mb-4 pb-3 border-b">
+      <h3 class="text-lg font-bold text-gray-900">Secure Checkout</h3>
+      <button onclick="toggleCheckoutModal()" class="text-gray-400 hover:text-urbor-green p-1"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
+      <h4 class="font-bold text-urbor-green text-sm flex items-center gap-2"><i class="fas fa-mobile-alt"></i> bKash Payment</h4>
+      <ol class="list-decimal list-inside text-xs text-gray-700 space-y-1 mt-2">
+        <li>Open bKash → <span class="font-medium">Send Money</span></li>
+        <li>Send <span class="font-bold" id="instruction-total">0.00</span> BDT to <span class="font-mono font-bold text-urbor-green" id="merchant-number">01700000000</span></li>
+        <li>Copy the Transaction ID</li>
+        <li>Paste below</li>
+      </ol>
+    </div>
+    <div class="bg-gray-50 rounded-xl p-4 mb-4">
+      <h4 class="font-semibold text-gray-800 text-sm flex items-center gap-2"><i class="fas fa-receipt text-urbor-green"></i> Order Summary</h4>
+      <ul id="cart-items-list" class="text-xs text-gray-700 space-y-2 my-3 max-h-32 overflow-y-auto cart-scroll"></ul>
+      <div class="border-t pt-2 space-y-1">
+        <div class="flex justify-between text-xs">
+          <span class="text-gray-600">Subtotal</span>
+          <span id="modal-subtotal" class="text-gray-800">৳0.00</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-gray-600">Delivery (Dhaka)</span>
+          <span class="text-gray-800">৳120</span>
+        </div>
+        <div class="flex justify-between font-bold text-base pt-1 border-t mt-1">
+          <span>Total Payable</span>
+          <span id="cart-total-display" class="text-urbor-green">৳0.00</span>
+        </div>
+      </div>
+    </div>
+    <form id="order-form" onsubmit="handleCheckout(event)">
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div>
+          <label class="block text-xs text-gray-500 mb-1">Name *</label>
+          <input type="text" id="name" name="name" required class="w-full rounded-lg border p-2 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-500 mb-1">Phone *</label>
+          <input type="tel" id="phone" name="phone" placeholder="017XXXXXXXX" required pattern="^01[3-9]\d{8}$" class="w-full rounded-lg border p-2 text-sm">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="block text-xs text-gray-500 mb-1">Email *</label>
+        <input type="email" id="email" name="email" required class="w-full rounded-lg border p-2 text-sm">
+      </div>
+      <div class="mb-3">
+        <label class="block text-xs text-gray-500 mb-1">Address *</label>
+        <textarea id="address" name="address" required rows="2" class="w-full rounded-lg border p-2 text-sm"></textarea>
+      </div>
+      <div class="mb-4 p-3 bg-gray-50 rounded-xl">
+        <label class="block text-xs font-bold text-gray-700 mb-2">bKash Transaction ID *</label>
+        <input type="text" id="bkash-trx" name="transactionId" placeholder="e.g., 8H5K2L9P4R" pattern="[0-9a-zA-Z]{8,12}" required class="w-full rounded-lg border p-2 text-sm font-mono uppercase">
+      </div>
+      <input type="hidden" name="total" id="form-total">
+      <button type="submit" id="submit-btn" class="w-full btn-premium py-3 rounded-lg text-sm font-medium">
+        Confirm Order & Pay with bKash
+      </button>
+      <p id="status-msg" class="text-center text-xs mt-3 min-h-[18px]"></p>
+    </form>
+    <div class="mt-4 pt-3 border-t text-center text-xs text-gray-400">
+      <i class="fas fa-lock text-green-500 mr-1"></i> Secure Checkout · Data Protected
+    </div>
+  </div>
 </div>
 
 <!-- FOOTER -->
 <footer class="bg-gray-950 text-gray-300 pt-12 pb-6">
-<div class="max-w-7xl mx-auto px-4">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8">
-<div class="md:col-span-2">
-<div class="flex items-center gap-2 mb-3">
-<span class="text-xl font-display font-semibold text-white">Urbor<span class="text-urbor-green">Essentials</span></span>
-</div>
-<p class="text-gray-400 text-sm max-w-md">Premium antibiotic‑free chicken, ethically raised and delivered fresh across Dhaka.</p>
-</div>
-<div>
-<h4 class="font-bold text-white mb-3 text-sm">Explore</h4>
-<ul class="space-y-1 text-gray-400 text-sm">
-<li><a href="#products" class="hover:text-white">Our Products</a></li>
-<li><a href="#why-us" class="hover:text-white">Why Us</a></li>
-<li><a href="#faq" class="hover:text-white">FAQ</a></li>
-</ul>
-</div>
-<div>
-<h4 class="font-bold text-white mb-3 text-sm">Contact</h4>
-<ul class="space-y-1 text-gray-400 text-sm">
-<li><i class="fas fa-map-marker-alt mr-2 text-urbor-green"></i>Dhaka, Bangladesh</li>
-<li><i class="fas fa-phone-alt mr-2 text-urbor-green"></i>+880 1700-000000</li>
-<li><i class="fas fa-envelope mr-2 text-urbor-green"></i>hello@urboressentials.com</li>
-</ul>
-</div>
-</div>
-<div class="border-t border-gray-800 pt-4 text-center text-gray-500 text-xs">
-© <span id="year"></span> Urbor Essentials — Purity, Naturally.
-</div>
-</div>
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-xl font-display font-semibold text-white">Urbor<span class="text-urbor-green">Essentials</span></span>
+        </div>
+        <p class="text-gray-400 text-sm max-w-md">Premium antibiotic‑free chicken, ethically raised and delivered fresh across Dhaka.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3 text-sm">Explore</h4>
+        <ul class="space-y-1 text-gray-400 text-sm">
+          <li><a href="#products" class="hover:text-white">Our Products</a></li>
+          <li><a href="#why-us" class="hover:text-white">Why Us</a></li>
+          <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3 text-sm">Contact</h4>
+        <ul class="space-y-1 text-gray-400 text-sm">
+          <li><i class="fas fa-map-marker-alt mr-2 text-urbor-green"></i>Dhaka, Bangladesh</li>
+          <li><i class="fas fa-phone-alt mr-2 text-urbor-green"></i> 01794449607</li>
+          <li><i class="fas fa-envelope mr-2 text-urbor-green"></i>hello@urboressentials.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 pt-4 text-center text-gray-500 text-xs">
+      © <span id="year"></span> Urbor Essentials — Purity, Naturally.
+    </div>
+  </div>
 </footer>
 
 <script>
 // ================== CONFIG ==================
 const API_ENDPOINT = '/api/sub';
 const MERCHANT_BKASH_NUMBER = '01700000000';
+const DELIVERY_COST = 120; // Delivery cost in BDT
 
 const products = [
-{ id:1, name: "Whole Chicken (3kg)", price:1260, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Farm‑fresh whole chicken, perfect for roasts & curries." },
-{ id:2, name: "Whole Chicken (5kg)", price:2100, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Ideal for family meals and gatherings." },
-{ id:3, name: "Whole Chicken (8kg)", price:3300, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80", desc:"Best value for large families or events." }
+  { id:1, name: "Whole Chicken (3kg)", price:1260, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80  ", desc:"Farm‑fresh whole chicken, perfect for roasts & curries." },
+  { id:2, name: "Whole Chicken (5kg)", price:2100, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80  ", desc:"Ideal for family meals and gatherings." },
+  { id:3, name: "Whole Chicken (10kg)", price:4050, image:"https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80  ", desc:"Best value for large families or events." }
 ];
 
 let cart = {};
 let productQuantities = {};
 
 document.addEventListener('DOMContentLoaded', () => {
-document.getElementById('year').textContent = new Date().getFullYear();
-document.getElementById('merchant-number').textContent = MERCHANT_BKASH_NUMBER;
-renderProducts();
-setupFAQ();
-setupMobileMenu();
-updateCartUI();
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('merchant-number').textContent = MERCHANT_BKASH_NUMBER;
+  renderProducts();
+  setupFAQ();
+  setupMobileMenu();
+  updateCartUI();
 });
 
 function renderProducts() {
-const container = document.getElementById('product-container');
-container.innerHTML = products.map(p => {
-const qty = productQuantities[p.id] || 0;
-return `
-<article class="glass-card-premium rounded-2xl overflow-hidden product-card">
-<img src="${p.image}" alt="${p.name}" class="product-card-image" loading="lazy">
-<div class="product-card-content">
-<h3 class="product-card-title">${p.name}</h3>
-<p class="product-card-desc">${p.desc}</p>
-<div class="product-card-footer">
-<span class="text-xl font-bold text-urbor-green">৳${p.price.toLocaleString()}</span>
-<div class="qty-control">
-<button onclick="changeQty(${p.id}, -1)" class="qty-btn" ${qty===0?'disabled':''}><i class="fas fa-minus"></i></button>
-<span class="qty-value">${qty}</span>
-<button onclick="changeQty(${p.id}, 1)" class="qty-btn"><i class="fas fa-plus"></i></button>
-</div>
-</div>
-</div>
-</article>`;
-}).join('');
+  const container = document.getElementById('product-container');
+  container.innerHTML = products.map(p => {
+    const qty = productQuantities[p.id] || 0;
+    return `
+    <article class="glass-card-premium rounded-2xl overflow-hidden product-card">
+      <img src="${p.image}" alt="${p.name}" class="product-card-image" loading="lazy">
+      <div class="product-card-content">
+        <h3 class="product-card-title">${p.name}</h3>
+        <p class="product-card-desc">${p.desc}</p>
+        <div class="product-card-footer">
+          <span class="text-xl font-bold text-urbor-green">৳${p.price.toLocaleString()}</span>
+          <div class="qty-control">
+            <button onclick="changeQty(${p.id}, -1)" class="qty-btn" ${qty===0?'disabled':''}><i class="fas fa-minus"></i></button>
+            <span class="qty-value">${qty}</span>
+            <button onclick="changeQty(${p.id}, 1)" class="qty-btn"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
 }
 
 function changeQty(productId, delta) {
-const product = products.find(p => p.id === productId);
-productQuantities[productId] = Math.max(0, (productQuantities[productId] || 0) + delta);
-renderProducts();
-updateCartFromCards();
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+  
+  productQuantities[productId] = Math.max(0, (productQuantities[productId] || 0) + delta);
+  
+  renderProducts();
+  updateCartFromCards();
 }
 
 function updateCartFromCards() {
-cart = {};
-products.forEach(p => {
-const qty = productQuantities[p.id] || 0;
-if (qty > 0) cart[p.id] = { ...p, quantity: qty };
-});
-updateCartUI();
+  cart = {};
+  products.forEach(p => {
+    const qty = productQuantities[p.id] || 0;
+    if (qty > 0) cart[p.id] = { ...p, quantity: qty };
+  });
+  updateCartUI();
+}
+
+function calculateTotals() {
+  const items = Object.values(cart);
+  const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
+  const total = subtotal + (items.length > 0 ? DELIVERY_COST : 0);
+  const count = items.reduce((s, i) => s + i.quantity, 0);
+  return { subtotal, total, count, items };
 }
 
 function updateCartUI() {
-const items = Object.values(cart);
-const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
-const count = items.reduce((s, i) => s + i.quantity, 0);
-document.getElementById('cart-count').textContent = count;
-document.getElementById('sidebar-total').textContent = '৳' + total.toFixed(2);
-document.getElementById('instruction-total').textContent = total.toFixed(2);
-document.getElementById('form-total').value = total.toFixed(2);
-document.getElementById('cart-total-display').textContent = '৳' + total.toFixed(2);
-const list = document.getElementById('sidebar-cart-items');
-const empty = document.getElementById('sidebar-empty');
-if (count === 0) {
-list.innerHTML = '';
-empty.classList.remove('hidden');
-} else {
-empty.classList.add('hidden');
-list.innerHTML = items.map(item => {
-return `<div class="flex justify-between items-center bg-white p-3 rounded-lg border">
-<div><p class="font-medium text-sm">${item.name}</p><p class="text-xs text-urbor-green">৳${item.price} × ${item.quantity}</p></div>
-<button onclick="removeFromCart(${item.id})" class="text-gray-400 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>
-</div>`;
-}).join('');
-}
-const modalList = document.getElementById('cart-items-list');
-if (count === 0) {
-modalList.innerHTML = `<li class='text-gray-400 text-center py-2 text-xs'>Your cart is empty</li>`;
-} else {
-modalList.innerHTML = items.map(item => {
-return `<li class='flex justify-between text-xs'><span>${item.name} ×${item.quantity}</span><span class='font-semibold text-urbor-green'>৳${(item.price*item.quantity).toLocaleString()}</span></li>`;
-}).join('');
-}
+  const { subtotal, total, count, items } = calculateTotals();
+  
+  document.getElementById('cart-count').textContent = count;
+  document.getElementById('sidebar-subtotal').textContent = '৳' + subtotal.toFixed(2);
+  document.getElementById('sidebar-total').textContent = '৳' + total.toFixed(2);
+  document.getElementById('instruction-total').textContent = total.toFixed(2);
+  document.getElementById('form-total').value = total.toFixed(2);
+  document.getElementById('cart-total-display').textContent = '৳' + total.toFixed(2);
+  document.getElementById('modal-subtotal').textContent = '৳' + subtotal.toFixed(2);
+  
+  // Sidebar cart items
+  const list = document.getElementById('sidebar-cart-items');
+  const empty = document.getElementById('sidebar-empty');
+  
+  if (count === 0) {
+    list.innerHTML = '';
+    empty.classList.remove('hidden');
+  } else {
+    empty.classList.add('hidden');
+    list.innerHTML = items.map(item => {
+      return `
+      <div class="flex justify-between items-start bg-white p-3 rounded-lg border gap-3">
+        <div class="flex-1 min-w-0">
+          <p class="font-medium text-sm text-gray-900 truncate">${item.name}</p>
+          <p class="text-xs text-urbor-green mt-0.5">৳${item.price} each</p>
+        </div>
+        <div class="flex flex-col items-end gap-2">
+          <div class="qty-control">
+            <button onclick="changeQty(${item.id}, -1)" class="qty-btn" ${item.quantity <= 1 ? 'disabled' : ''}>
+              <i class="fas fa-minus"></i>
+            </button>
+            <span class="qty-value">${item.quantity}</span>
+            <button onclick="changeQty(${item.id}, 1)" class="qty-btn">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+          <button onclick="removeFromCart(${item.id})" class="text-xs text-gray-400 hover:text-red-500 transition">
+            <i class="fas fa-trash-alt mr-1"></i>Remove
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  
+  // Modal cart items
+  const modalList = document.getElementById('cart-items-list');
+  if (count === 0) {
+    modalList.innerHTML = `<li class='text-gray-400 text-center py-2 text-xs'>Your cart is empty</li>`;
+  } else {
+    modalList.innerHTML = items.map(item => {
+      return `
+      <li class='flex justify-between items-center text-xs py-1'>
+        <div class="flex items-center gap-2">
+          <span>${item.name}</span>
+          <div class="qty-control scale-90">
+            <button onclick="changeQty(${item.id}, -1)" class="qty-btn" ${item.quantity <= 1 ? 'disabled' : ''}>
+              <i class="fas fa-minus text-[10px]"></i>
+            </button>
+            <span class="qty-value text-[11px]">${item.quantity}</span>
+            <button onclick="changeQty(${item.id}, 1)" class="qty-btn">
+              <i class="fas fa-plus text-[10px]"></i>
+            </button>
+          </div>
+        </div>
+        <span class='font-semibold text-urbor-green'>৳${(item.price*item.quantity).toLocaleString()}</span>
+      </li>`;
+    }).join('');
+  }
 }
 
 function removeFromCart(id) {
-productQuantities[id] = 0;
-renderProducts();
-updateCartFromCards();
+  productQuantities[id] = 0;
+  renderProducts();
+  updateCartFromCards();
 }
 
 function openCartSidebar() {
-document.getElementById('cart-sidebar').classList.remove('-translate-x-full');
-document.getElementById('cart-overlay').classList.remove('hidden');
-document.body.style.overflow = 'hidden';
-updateCartUI();
+  document.getElementById('cart-sidebar').classList.remove('-translate-x-full');
+  document.getElementById('cart-overlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  updateCartUI();
 }
 function closeCartSidebar() {
-document.getElementById('cart-sidebar').classList.add('-translate-x-full');
-document.getElementById('cart-overlay').classList.add('hidden');
-document.body.style.overflow = 'auto';
+  document.getElementById('cart-sidebar').classList.add('-translate-x-full');
+  document.getElementById('cart-overlay').classList.add('hidden');
+  document.body.style.overflow = 'auto';
 }
 
 function proceedToCheckout() {
-const count = Object.values(cart).reduce((s,i)=>s+i.quantity,0);
-if (count === 0) { alert('Your cart is empty'); return; }
-closeCartSidebar();
-toggleCheckoutModal();
+  const { count } = calculateTotals();
+  if (count === 0) { alert('Your cart is empty'); return; }
+  closeCartSidebar();
+  toggleCheckoutModal();
 }
 
 function toggleCheckoutModal() {
-const modal = document.getElementById('checkout-modal');
-modal.classList.toggle('hidden');
-document.body.style.overflow = modal.classList.contains('hidden') ? 'auto' : 'hidden';
-if (!modal.classList.contains('hidden')) updateCartUI();
+  const modal = document.getElementById('checkout-modal');
+  modal.classList.toggle('hidden');
+  document.body.style.overflow = modal.classList.contains('hidden') ? 'auto' : 'hidden';
+  if (!modal.classList.contains('hidden')) updateCartUI();
 }
 
 function setupFAQ() {
-document.querySelectorAll('.faq-btn').forEach(btn => {
-btn.addEventListener('click', () => {
-const content = btn.nextElementSibling;
-const icon = btn.querySelector('i');
-content.classList.toggle('hidden');
-icon.classList.toggle('rotate-180');
-});
-});
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('i');
+      content.classList.toggle('hidden');
+      icon.classList.toggle('rotate-180');
+    });
+  });
 }
 
 function setupMobileMenu() {
-const btn = document.getElementById('mobile-menu-btn');
-const menu = document.getElementById('mobile-menu');
-const icon = btn.querySelector('i');
-btn.addEventListener('click', () => {
-menu.classList.toggle('hidden');
-icon.classList.toggle('fa-bars');
-icon.classList.toggle('fa-times');
-});
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const icon = btn.querySelector('i');
+  btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+  });
 }
 
 async function handleCheckout(e) {
-e.preventDefault();
-const trx = document.getElementById('bkash-trx').value.trim();
-if (trx.length < 8) { showStatus('Invalid transaction ID', 'error'); return; }
-const btn = document.getElementById('submit-btn');
-btn.disabled = true;
-showStatus('Verifying payment...', 'info');
-try {
-const formData = new FormData(e.target);
-const data = Object.fromEntries(formData);
-const cartItems = Object.values(cart);
-data.items = cartItems.map(item => `${item.name} (×${item.quantity})`).join(', ');
-const response = await fetch(API_ENDPOINT, {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify(data)
-});
-const result = await response.json();
-if (!response.ok) throw new Error(result.error || 'Order failed');
-showStatus('✓ Order placed! Ref: ' + result.transactionId, 'success');
-cart = {};
-productQuantities = {};
-renderProducts();
-updateCartUI();
-e.target.reset();
-setTimeout(() => { toggleCheckoutModal(); btn.disabled = false; showStatus('',''); }, 2500);
-} catch (err) {
-console.error(err);
-showStatus('✗ ' + err.message, 'error');
-btn.disabled = false;
-}
+  e.preventDefault();
+  const trx = document.getElementById('bkash-trx').value.trim();
+  if (trx.length < 8) { showStatus('Invalid transaction ID', 'error'); return; }
+  
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  showStatus('Verifying payment...', 'info');
+  
+  try {
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    const { items } = calculateTotals();
+    data.items = items.map(item => `${item.name} (×${item.quantity})`).join(', ');
+    
+    const response = await fetch(API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Order failed');
+    
+    showStatus('✓ Order placed! Ref: ' + result.transactionId, 'success');
+    cart = {};
+    productQuantities = {};
+    renderProducts();
+    updateCartUI();
+    e.target.reset();
+    
+    setTimeout(() => { 
+      toggleCheckoutModal(); 
+      btn.disabled = false; 
+      showStatus('',''); 
+    }, 2500);
+    
+  } catch (err) {
+    console.error(err);
+    showStatus('✗ ' + err.message, 'error');
+    btn.disabled = false;
+  }
 }
 
 function showStatus(msg, type) {
-const el = document.getElementById('status-msg');
-const colors = { success: 'text-green-700', error: 'text-red-600', info: 'text-gray-600' };
-el.textContent = msg;
-el.className = `text-center text-xs mt-2 min-h-[18px] ${colors[type]||''}`;
+  const el = document.getElementById('status-msg');
+  const colors = { success: 'text-green-700', error: 'text-red-600', info: 'text-gray-600' };
+  el.textContent = msg;
+  el.className = `text-center text-xs mt-2 min-h-[18px] ${colors[type]||''}`;
 }
 
-document.getElementById('checkout-modal')?.addEventListener('click', e => { if(e.target.id==='checkout-modal') toggleCheckoutModal(); });
+document.getElementById('checkout-modal')?.addEventListener('click', e => { 
+  if(e.target.id==='checkout-modal') toggleCheckoutModal(); 
+});
+
 document.addEventListener('keydown', e => {
-if (e.key === 'Escape') {
-if (!document.getElementById('checkout-modal').classList.contains('hidden')) toggleCheckoutModal();
-else if (!document.getElementById('cart-sidebar').classList.contains('-translate-x-full')) closeCartSidebar();
-}
+  if (e.key === 'Escape') {
+    if (!document.getElementById('checkout-modal').classList.contains('hidden')) toggleCheckoutModal();
+    else if (!document.getElementById('cart-sidebar').classList.contains('-translate-x-full')) closeCartSidebar();
+  }
 });
 </script>
 </body>

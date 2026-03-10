@@ -26,7 +26,7 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      border: 1px solid #e2f0e8;
+      border: 2px solid #e2f0e8;
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -34,11 +34,11 @@
       border-color: #0f8f6e;
       transform: translateY(-2px);
     }
-    .product-item.selected {
+    .product-item.in-cart {
       border-color: #0f8f6e;
       background: #ebfaf3;
     }
-    .product-item.selected .check-indicator {
+    .product-item.in-cart .check-indicator {
       background: #0f8f6e;
       border-color: #0f8f6e;
       color: white;
@@ -115,7 +115,7 @@
     
     /* Quantity button styles */
     .qty-btn {
-      width: 32px; height: 32px;
+      width: 28px; height: 28px;
       border-radius: 50%;
       background: white;
       border: 2px solid #0f8f6e;
@@ -125,7 +125,8 @@
       justify-content: center;
       cursor: pointer;
       transition: all 0.15s ease;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      flex-shrink: 0;
     }
     .qty-btn:hover:not(:disabled) {
       background: #0f8f6e;
@@ -138,11 +139,79 @@
       transform: none;
     }
     .qty-display {
-      min-width: 2rem;
+      min-width: 1.8rem;
       text-align: center;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #1a2e2b;
+    }
+    
+    /* Cart item styles */
+    .cart-item {
+      background: #f8faf9;
+      border-radius: 16px;
+      padding: 0.85rem;
+      margin-bottom: 0.75rem;
+      border: 1px solid #e2f0e8;
+      transition: all 0.2s ease;
+    }
+    .cart-item:hover {
+      border-color: #0f8f6e;
+      background: #ebfaf3;
+    }
+    .cart-item-name {
+      font-weight: 500;
+      color: #1a2e2b;
+      margin-bottom: 0.25rem;
+    }
+    .cart-item-price {
+      color: #0f8f6e;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .remove-btn {
+      color: #aa2e2e;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.3rem;
+      border-radius: 50%;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .remove-btn:hover {
+      background: #fee9e7;
+      transform: scale(1.1);
+    }
+    
+    /* Empty cart state */
+    .empty-cart {
+      text-align: center;
+      padding: 1.5rem;
+      color: #6b8a7a;
+    }
+    .empty-cart i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.6;
+    }
+    
+    /* Delivery badge */
+    .delivery-badge {
+      background: linear-gradient(135deg, #0f8f6e, #14b87e);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
     }
   </style>
 </head>
@@ -156,46 +225,39 @@
 
   <div class="grid md:grid-cols-12 gap-6">
     
+    <!-- Products Selection Panel -->
     <div class="md:col-span-5 space-y-5">
       <div class="card p-5">
-        <div class="flex items-center gap-2 mb-4">
-          <i class="fas fa-tag text-green-600"></i>
-          <span class="font-semibold">select product</span>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-tag text-green-600"></i>
+            <span class="font-semibold">select products</span>
+          </div>
+          <span id="cart-count" class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">0 items</span>
         </div>
-        <div class="space-y-2" id="product-list"></div>
-        
-        <div id="selected-summary" class="mt-5 pt-3 border-t border-green-100 hidden">
-          <div class="flex items-center justify-between text-sm mb-3">
-            <span class="text-gray-500">selected:</span>
-            <span id="selected-name" class="font-semibold"></span>
-            <span id="selected-price" class="font-bold text-green-700"></span>
-          </div>
-          
-          <!-- Quantity Controls -->
-          <div class="flex items-center justify-between bg-green-50 p-3 rounded-xl mb-3">
-            <span class="text-sm text-gray-600 font-medium">quantity</span>
-            <div class="flex items-center gap-2">
-              <button type="button" id="qty-decrease" class="qty-btn" title="Decrease quantity">
-                <i class="fas fa-minus"></i>
-              </button>
-              <span id="qty-display" class="qty-display">1</span>
-              <button type="button" id="qty-increase" class="qty-btn" title="Increase quantity">
-                <i class="fas fa-plus"></i>
-              </button>
-            </div>
-          </div>
-          
-          <div class="flex justify-between pt-2 border-t border-green-100">
-            <span class="font-semibold text-gray-700">subtotal</span>
-            <span id="subtotal-price" class="font-bold text-green-700 text-lg"></span>
-          </div>
-        </div>
+        <div class="space-y-2 max-h-80 overflow-y-auto pr-1" id="product-list"></div>
       </div>
     </div>
 
+    <!-- Checkout Form Panel -->
     <div class="md:col-span-7">
       <form id="checkout-form" class="card p-6 space-y-5">
         
+        <!-- Cart Summary -->
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <i class="fas fa-shopping-cart text-green-600"></i>
+            <span class="font-medium">your cart</span>
+          </div>
+          <div id="cart-items" class="space-y-2 min-h-24">
+            <div class="empty-cart">
+              <i class="fas fa-basket-shopping"></i>
+              <p class="text-sm">Select products to add to cart</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Delivery Info -->
         <div class="flex items-center gap-2"><i class="fas fa-map-pin text-green-600"></i><span class="font-medium">delivery</span></div>
         <div class="grid sm:grid-cols-2 gap-4">
           <input type="text" id="name" placeholder="Full name *" class="input-field" autocomplete="name">
@@ -204,6 +266,7 @@
           <textarea id="address" placeholder="Delivery address *" rows="2" class="input-field sm:col-span-2" autocomplete="street-address"></textarea>
         </div>
         
+        <!-- Payment Info -->
         <div>
           <div class="flex items-center gap-2 mb-3"><i class="fas fa-mobile-alt text-green-600"></i><span class="font-medium">bKash (on delivery)</span></div>
           <div class="bg-green-50 p-4 rounded-2xl border border-green-100 text-sm mb-3">
@@ -212,23 +275,25 @@
           <input type="text" id="transactionId" placeholder="bKash transaction ID *" class="input-field" autocomplete="off">
         </div>
         
+        <!-- Order Summary -->
         <div class="bg-white p-5 rounded-2xl border border-green-100">
-          <div class="summary-line"><span>product</span> <span id="summary-product" class="font-medium">—</span></div>
-          <div class="summary-line"><span>quantity</span> <span id="summary-qty" class="font-medium">1</span></div>
-          <div class="summary-line"><span>delivery</span> <span class="text-green-700">free</span></div>
-          <div class="flex justify-between pt-3 border-t border-green-100">
+          <div id="order-items-summary"></div>
+          <div class="summary-line"><span class="flex items-center gap-2">delivery <span class="delivery-badge">fixed</span></span> <span class="font-medium text-green-700">৳ 120</span></div>
+          <div class="flex justify-between pt-3 border-t border-green-200 mt-2">
             <span class="font-semibold text-lg">total</span>
-            <span id="summary-total" class="summary-total">৳ 0</span>
+            <span id="summary-total" class="summary-total">৳ 120</span>
           </div>
           <input type="hidden" id="form-total">
           <input type="hidden" id="form-items">
         </div>
         
+        <!-- Submit Button -->
         <button type="submit" id="submit-btn" class="premium-btn">
           <span id="btn-text">place order</span>
           <span id="btn-loading" class="hidden flex items-center justify-center gap-2"><i class="fas fa-spinner fa-spin"></i> processing</span>
         </button>
         
+        <!-- Message Box -->
         <div id="form-message" class="hidden"></div>
       </form>
     </div>
@@ -237,6 +302,7 @@
 
 <script>
   (function() {
+    // Product catalog
     const products = [
       { id: 1, name: "Whole Chicken (3kg)", price: 1260, icon: 'fa-drumstick-bite' },
       { id: 2, name: "Whole Chicken (5kg)", price: 2075, icon: 'fa-utensils' },
@@ -244,18 +310,21 @@
     ];
 
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwuTodU2_Rlr4dGOyF4hgVKPs7A4hzd8uurKymE3ZsTiuxpleu03WBB4ijEdFisfEC4/exec';
+    const DELIVERY_COST = 120;
+    const MIN_QTY = 1;
+    const MAX_QTY = 99;
+
+    // Cart state: { productId: { product, quantity } }
+    const cart = {};
 
     // DOM Elements
     const productList = document.getElementById('product-list');
-    const selectedSummary = document.getElementById('selected-summary');
-    const selectedNameSpan = document.getElementById('selected-name');
-    const selectedPriceSpan = document.getElementById('selected-price');
-    const summaryProduct = document.getElementById('summary-product');
-    const summaryQty = document.getElementById('summary-qty');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const orderItemsSummary = document.getElementById('order-items-summary');
     const summaryTotal = document.getElementById('summary-total');
-    const subtotalPrice = document.getElementById('subtotal-price');
     const formTotal = document.getElementById('form-total');
     const formItems = document.getElementById('form-items');
+    const cartCount = document.getElementById('cart-count');
     
     const nameField = document.getElementById('name');
     const phoneField = document.getElementById('phone');
@@ -267,122 +336,177 @@
     const btnText = document.getElementById('btn-text');
     const btnLoading = document.getElementById('btn-loading');
     const messageBox = document.getElementById('form-message');
-    
-    // Quantity state
-    let selectedProduct = null;
-    let quantity = 1;
-    const MIN_QTY = 1;
-    const MAX_QTY = 99;
 
     // Render product list
-    products.forEach(p => {
-      const div = document.createElement('div');
-      div.className = 'product-item';
-      div.dataset.id = p.id;
-      div.innerHTML = `
-        <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-700 flex-shrink-0">
-          <i class="fas ${p.icon}"></i>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="font-medium truncate">${p.name}</div>
-          <div class="text-green-700 font-bold">৳ ${p.price.toLocaleString()}</div>
-        </div>
-        <div class="check-indicator flex-shrink-0"></div>
-      `;
-      div.addEventListener('click', () => selectProduct(p, div));
-      productList.appendChild(div);
-    });
-
-    // Quantity helper functions
-    function updateQuantityDisplay() {
-      const qtyDisplay = document.getElementById('qty-display');
-      const decreaseBtn = document.getElementById('qty-decrease');
-      const increaseBtn = document.getElementById('qty-increase');
-      
-      if (qtyDisplay) qtyDisplay.innerText = quantity;
-      if (decreaseBtn) decreaseBtn.disabled = quantity <= MIN_QTY;
-      if (increaseBtn) increaseBtn.disabled = quantity >= MAX_QTY;
-    }
-
-    function updatePricing() {
-      if (!selectedProduct) return;
-      
-      const subtotal = selectedProduct.price * quantity;
-      
-      // Update all price displays
-      if (selectedPriceSpan) selectedPriceSpan.innerText = `৳ ${selectedProduct.price.toLocaleString()}`;
-      if (subtotalPrice) subtotalPrice.innerText = `৳ ${subtotal.toLocaleString()}`;
-      if (summaryTotal) summaryTotal.innerText = `৳ ${subtotal.toLocaleString()}`;
-      if (summaryQty) summaryQty.innerText = quantity;
-      
-      // Update hidden form fields
-      if (formTotal) formTotal.value = subtotal;
-      if (formItems) {
-        formItems.value = JSON.stringify({ 
-          product: selectedProduct.name, 
-          price: selectedProduct.price, 
-          quantity: quantity 
-        });
-      }
-    }
-
-    function changeQuantity(delta) {
-      const newQty = quantity + delta;
-      if (newQty >= MIN_QTY && newQty <= MAX_QTY) {
-        quantity = newQty;
-        updateQuantityDisplay();
-        updatePricing();
-      }
-    }
-
-    // Product selection
-    function selectProduct(product, cardEl) {
-      // Deselect all other products
-      document.querySelectorAll('.product-item').forEach(c => {
-        c.classList.remove('selected');
-        const ind = c.querySelector('.check-indicator');
-        if (ind) ind.innerHTML = '';
+    function renderProducts() {
+      productList.innerHTML = '';
+      products.forEach(p => {
+        const inCart = cart[p.id];
+        const div = document.createElement('div');
+        div.className = `product-item ${inCart ? 'in-cart' : ''}`;
+        div.dataset.id = p.id;
+        div.innerHTML = `
+          <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-700 flex-shrink-0">
+            <i class="fas ${p.icon}"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="font-medium truncate">${p.name}</div>
+            <div class="text-green-700 font-bold">৳ ${p.price.toLocaleString()}</div>
+          </div>
+          <div class="check-indicator flex-shrink-0">
+            ${inCart ? '<i class="fas fa-check text-xs"></i>' : ''}
+          </div>
+        `;
+        div.addEventListener('click', () => toggleProductInCart(p.id));
+        productList.appendChild(div);
       });
-      
-      // Select current product
-      cardEl.classList.add('selected');
-      const indicator = cardEl.querySelector('.check-indicator');
-      if (indicator) indicator.innerHTML = '<i class="fas fa-check text-xs"></i>';
-      
-      // Update state
-      selectedProduct = product;
-      quantity = 1; // Reset quantity when product changes
-      
-      // Update UI
-      if (selectedNameSpan) selectedNameSpan.innerText = product.name;
-      if (summaryProduct) summaryProduct.innerText = product.name;
-      
-      updateQuantityDisplay();
-      updatePricing();
-      
-      if (selectedSummary) selectedSummary.classList.remove('hidden');
     }
 
-    // Auto-select first product after render
-    setTimeout(() => {
-      if (!selectedProduct && products.length > 0) {
-        const firstCard = document.querySelector('.product-item');
-        if (firstCard) selectProduct(products[0], firstCard);
+    // Toggle product in cart
+    function toggleProductInCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      if (cart[productId]) {
+        // Remove from cart
+        delete cart[productId];
+      } else {
+        // Add to cart with quantity 1
+        cart[productId] = { product, quantity: 1 };
       }
-    }, 300);
+      
+      renderProducts();
+      renderCart();
+      updateTotals();
+    }
 
-    // Quantity button event listeners
-    document.getElementById('qty-decrease')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      changeQuantity(-1);
-    });
-    
-    document.getElementById('qty-increase')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      changeQuantity(1);
-    });
+    // Update quantity for a cart item
+    function updateCartItemQuantity(productId, delta) {
+      if (!cart[productId]) return;
+      
+      const newQty = cart[productId].quantity + delta;
+      if (newQty >= MIN_QTY && newQty <= MAX_QTY) {
+        cart[productId].quantity = newQty;
+        renderCart();
+        updateTotals();
+      }
+    }
 
-    // Real-time validation feedback
+    // Remove item from cart
+    function removeCartItem(productId) {
+      delete cart[productId];
+      renderProducts();
+      renderCart();
+      updateTotals();
+    }
+
+    // Render cart items
+    function renderCart() {
+      const cartIds = Object.keys(cart);
+      
+      // Update cart count badge
+      const totalItems = cartIds.reduce((sum, id) => sum + cart[id].quantity, 0);
+      cartCount.innerText = `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
+      
+      // Empty state
+      if (cartIds.length === 0) {
+        cartItemsContainer.innerHTML = `
+          <div class="empty-cart">
+            <i class="fas fa-basket-shopping"></i>
+            <p class="text-sm">Select products to add to cart</p>
+          </div>
+        `;
+        orderItemsSummary.innerHTML = '';
+        return;
+      }
+
+      // Render cart items list
+      cartItemsContainer.innerHTML = cartIds.map(id => {
+        const { product, quantity } = cart[id];
+        const itemTotal = product.price * quantity;
+        return `
+          <div class="cart-item">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex-1 min-w-0">
+                <div class="cart-item-name truncate">${product.name}</div>
+                <div class="cart-item-price">৳ ${product.price.toLocaleString()} × ${quantity}</div>
+              </div>
+              <button type="button" class="remove-btn" data-remove="${id}" title="Remove item">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="cart-item-controls">
+              <button type="button" class="qty-btn" data-qty-decrease="${id}" title="Decrease">
+                <i class="fas fa-minus"></i>
+              </button>
+              <span class="qty-display">${quantity}</span>
+              <button type="button" class="qty-btn" data-qty-increase="${id}" title="Increase">
+                <i class="fas fa-plus"></i>
+              </button>
+              <span class="ml-auto text-sm font-semibold text-green-700">৳ ${itemTotal.toLocaleString()}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Render order summary (compact)
+      orderItemsSummary.innerHTML = cartIds.map(id => {
+        const { product, quantity } = cart[id];
+        return `
+          <div class="summary-line text-sm">
+            <span>${product.name} × ${quantity}</span>
+            <span>৳ ${(product.price * quantity).toLocaleString()}</span>
+          </div>
+        `;
+      }).join('');
+
+      // Attach event listeners to cart controls
+      cartItemsContainer.querySelectorAll('[data-qty-decrease]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          updateCartItemQuantity(parseInt(btn.dataset.qtyDecrease), -1);
+        });
+      });
+      cartItemsContainer.querySelectorAll('[data-qty-increase]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          updateCartItemQuantity(parseInt(btn.dataset.qtyIncrease), 1);
+        });
+      });
+      cartItemsContainer.querySelectorAll('[data-remove]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          removeCartItem(parseInt(btn.dataset.remove));
+        });
+      });
+    }
+
+    // Calculate and update totals
+    function updateTotals() {
+      const cartIds = Object.keys(cart);
+      const subtotal = cartIds.reduce((sum, id) => {
+        const { product, quantity } = cart[id];
+        return sum + (product.price * quantity);
+      }, 0);
+      
+      const total = subtotal + DELIVERY_COST;
+      
+      // Update displays
+      summaryTotal.innerText = `৳ ${total.toLocaleString()}`;
+      formTotal.value = total;
+      
+      // Prepare items data for form submission
+      const itemsData = cartIds.map(id => ({
+        productId: id,
+        name: cart[id].product.name,
+        unitPrice: cart[id].product.price,
+        quantity: cart[id].quantity,
+        subtotal: cart[id].product.price * cart[id].quantity
+      }));
+      formItems.value = JSON.stringify(itemsData);
+    }
+
+    // Form field validation
     [nameField, phoneField, emailField, addressField, transactionField].forEach(f => {
       f?.addEventListener('input', () => f.classList.remove('error'));
     });
@@ -399,11 +523,8 @@
       messageBox.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-circle'} mr-2"></i>${text}`;
       messageBox.classList.remove('hidden');
       
-      // Auto-hide success messages after 5 seconds
       if (type === 'success') {
-        setTimeout(() => {
-          messageBox.classList.add('hidden');
-        }, 5000);
+        setTimeout(() => messageBox.classList.add('hidden'), 5000);
       }
     }
 
@@ -411,16 +532,15 @@
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      // Clear previous errors
       document.querySelectorAll('.input-field').forEach(f => f.classList.remove('error'));
       
-      // Validate product selection
-      if (!selectedProduct) {
-        setMessage('Please select a product.', 'error');
+      // Validate cart
+      if (Object.keys(cart).length === 0) {
+        setMessage('Please add at least one product to your cart.', 'error');
         return;
       }
       
-      // Get and trim form values
+      // Get form values
       const name = nameField?.value.trim();
       const phone = phoneField?.value.trim();
       const email = emailField?.value.trim();
@@ -440,26 +560,32 @@
         return;
       }
 
+      // Calculate totals
+      const cartIds = Object.keys(cart);
+      const subtotal = cartIds.reduce((sum, id) => {
+        const { product, quantity } = cart[id];
+        return sum + (product.price * quantity);
+      }, 0);
+      const total = subtotal + DELIVERY_COST;
+
       // Prepare order data
       const orderData = {
         transactionId: txn,
-        name, 
-        email, 
-        phone, 
-        address,
-        product: selectedProduct.name,
-        unitPrice: selectedProduct.price,
-        quantity: quantity,
-        total: selectedProduct.price * quantity,
-        items: JSON.stringify({ 
-          product: selectedProduct.name, 
-          price: selectedProduct.price, 
-          quantity: quantity 
-        }),
+        name, email, phone, address,
+        deliveryCost: DELIVERY_COST,
+        subtotal: subtotal,
+        total: total,
+        items: cartIds.map(id => ({
+          productId: id,
+          name: cart[id].product.name,
+          unitPrice: cart[id].product.price,
+          quantity: cart[id].quantity,
+          subtotal: cart[id].product.price * cart[id].quantity
+        })),
         timestamp: new Date().toISOString()
       };
 
-      // Update UI for loading state
+      // Loading state
       submitBtn.disabled = true;
       btnText?.classList.add('hidden');
       btnLoading?.classList.remove('hidden');
@@ -477,22 +603,12 @@
         if (response.ok && result.result === 'success') {
           setMessage('✓ Order confirmed! We\'ll contact you shortly.', 'success');
           
-          // Reset form
+          // Reset everything
           form?.reset();
-          document.querySelectorAll('.product-item').forEach(c => c.classList.remove('selected'));
-          document.querySelectorAll('.check-indicator').forEach(i => {
-            if (i) i.innerHTML = '';
-          });
-          
-          if (selectedSummary) selectedSummary.classList.add('hidden');
-          if (summaryProduct) summaryProduct.innerText = '—';
-          if (summaryTotal) summaryTotal.innerText = '৳ 0';
-          if (summaryQty) summaryQty.innerText = '1';
-          
-          // Reset state
-          selectedProduct = null;
-          quantity = 1;
-          updateQuantityDisplay();
+          Object.keys(cart).forEach(id => delete cart[id]);
+          renderProducts();
+          renderCart();
+          updateTotals();
           
         } else {
           setMessage(`❌ ${result.message || 'Order failed. Please try again.'}`, 'error');
@@ -500,7 +616,6 @@
       } catch (err) {
         console.warn('Primary fetch failed, trying fallback...', err);
         
-        // Fallback: no-cors request (limited response handling)
         try {
           await fetch(GOOGLE_SHEET_URL, { 
             method: 'POST', 
@@ -511,31 +626,27 @@
           
           setMessage('✓ Order recorded. We\'ll confirm via phone.', 'success');
           
-          // Reset form
           form?.reset();
-          document.querySelectorAll('.product-item').forEach(c => c.classList.remove('selected'));
-          if (selectedSummary) selectedSummary.classList.add('hidden');
-          if (summaryProduct) summaryProduct.innerText = '—'; 
-          if (summaryTotal) summaryTotal.innerText = '৳ 0';
-          
-          selectedProduct = null;
-          quantity = 1;
-          updateQuantityDisplay();
+          Object.keys(cart).forEach(id => delete cart[id]);
+          renderProducts();
+          renderCart();
+          updateTotals();
           
         } catch (fallbackErr) {
           console.error('Fallback fetch failed:', fallbackErr);
           setMessage('❌ Network error. Please check your connection and try again.', 'error');
         }
       } finally {
-        // Restore button state
         submitBtn.disabled = false;
         btnLoading?.classList.add('hidden');
         btnText?.classList.remove('hidden');
       }
     });
 
-    // Initialize quantity display on load
-    updateQuantityDisplay();
+    // Initialize
+    renderProducts();
+    renderCart();
+    updateTotals();
     
   })();
 </script>
